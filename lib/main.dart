@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:snkr_flutter/dashboard/homepage.dart';
+import 'package:snkr_flutter/CustomerDashboard/Homepage.dart';
 void main(){
   runApp(MyApp());
 }
