@@ -3,7 +3,10 @@ import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:snkr_flutter/CustomerDashboard/CategoriesWidget.dart';
 import 'package:snkr_flutter/CustomerDashboard/HomeAppBar.dart';
-import 'package:snkr_flutter/CustomerDashboard/ItemsWidget.dart';
+import 'package:snkr_flutter/CustomerDashboard/LatestSneakers.dart';
+import 'package:snkr_flutter/CustomerDashboard/MostPopular.dart';
+import 'package:snkr_flutter/CustomerDashboard/Recommended.dart';
+import 'package:snkr_flutter/CustomerDashboard/TopRated.dart';
 
 
 class Homepage extends StatelessWidget {
@@ -84,22 +87,48 @@ class Homepage extends StatelessWidget {
 
                 //CATEGORIES
 
-                  Container(
-                    alignment: Alignment.centerLeft,
-                    margin: const EdgeInsets.symmetric(vertical: 20,
-                    horizontal: 20),
-                    child: const Text("Categories",
-                    style: TextStyle(
-                      fontSize: 20,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.black,
-                    )),
-                    
+                  Row(
+                    children: [
+                      Container(
+                        alignment: Alignment.centerLeft,
+                        margin: const EdgeInsets.symmetric(vertical: 20,
+                        horizontal: 20),
+                        child: const Text("Categories",
+                        style: TextStyle(
+                          fontSize: 20,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.black,
+                        )),
+                        
+                      
+                        
+                        
+                      
+                      
+                      ),
 
-                    
-                    
+                      Spacer(),
 
+                       Container(
+                        alignment: Alignment.centerLeft,
+                        margin: const EdgeInsets.symmetric(vertical: 20,
+                        horizontal: 20),
+                        child: const Text("View All",
+                        style: TextStyle(
+                          fontSize: 15,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.blue,
+                        )),
+                        
+                      
+                        
+                        
+                      
+                      
+                      ),
 
+                      
+                    ],
                   ),
                   
                   
@@ -107,21 +136,192 @@ class Homepage extends StatelessWidget {
 
                   //ITEMS
 
-                  Container(
-                    margin: const EdgeInsets.symmetric(vertical: 20, horizontal: 10),
-                    padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 10),
-                    alignment: Alignment.centerLeft,
-                    child: const Text("Our Top Products",
-                    style: TextStyle(
-                      fontSize: 25,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.blue,
-                    ),),
+                  Row(
+                    children: [
+                      Container(
+                        margin: EdgeInsets.symmetric(vertical: 20, horizontal: 10),
+                        padding: EdgeInsets.symmetric(vertical: 10, horizontal: 10),
+                        alignment: Alignment.centerLeft,
+                        child: const Text("Most Popular",
+                        style: TextStyle(
+                          fontSize: 20,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.black,
+                        ),),
+                      
+                        
+                      ),
 
-                    
+                       Spacer(),
+
+                       Container(
+                        alignment: Alignment.centerLeft,
+                        margin: const EdgeInsets.symmetric(vertical: 20,
+                        horizontal: 20),
+                        child: const Text("View All",
+                        style: TextStyle(
+                          fontSize: 15,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.blue,
+                        )),
+                        
+                      
+                        
+                        
+                      
+                      
+                      ),
+                    ],
                   ),
 
-                  const ItemsWidget(),
+                  MostPopular(),
+
+                  /////RECOMMENDED
+                  
+
+                   Row(
+                     children: [
+                       Container(
+                        alignment: Alignment.centerLeft,
+                        margin: const EdgeInsets.symmetric(vertical: 20,
+                        horizontal: 20),
+                        child: const Text("Recommended",
+                        style: TextStyle(
+                          fontSize: 20,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.black,
+                        )),
+                        
+                       
+                        
+                        
+                       
+                       
+                                         ),
+
+                                          Spacer(),
+
+                       Container(
+                        alignment: Alignment.centerLeft,
+                        margin: const EdgeInsets.symmetric(vertical: 20,
+                        horizontal: 20),
+                        child: const Text("View All",
+                        style: TextStyle(
+                          fontSize: 15,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.blue,
+                        )),
+                        
+                      
+                        
+                        
+                      
+                      
+                      ),
+                     ],
+                   ),
+                  
+                  
+                 Recommended(),
+
+
+                     Row(
+                       children: [
+                         Container(
+                                             alignment: Alignment.centerLeft,
+                                             margin: const EdgeInsets.symmetric(vertical: 20,
+                                             horizontal: 20),
+                                             child: const Text("Latest Sneakers",
+                                             style: TextStyle(
+                          fontSize: 20,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.black,
+                                             )),
+                                             
+                         
+                                             
+                                             
+                         
+                         
+                                           ),
+
+                                            Spacer(),
+
+                       Container(
+                        alignment: Alignment.centerLeft,
+                        margin: const EdgeInsets.symmetric(vertical: 20,
+                        horizontal: 20),
+                        child: const Text("View All",
+                        style: TextStyle(
+                          fontSize: 15,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.blue,
+                        )),
+                        
+                      
+                        
+                        
+                      
+                      
+                      ),
+                       ],
+                     ),
+
+                  LatestSneakers(),
+
+                  /////////TOP RATED
+                  
+
+                  Row(
+                    children: [
+                      Container(
+                        alignment: Alignment.centerLeft,
+                        margin: const EdgeInsets.symmetric(vertical: 20,
+                        horizontal: 20),
+                        child: const Text("Top Rated",
+                        style: TextStyle(
+                          fontSize: 20,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.black,
+                        )),
+                        
+                      
+                        
+                        
+                      
+                      
+                      ),
+
+                      Spacer(),
+                       Container(
+                        alignment: Alignment.centerLeft,
+                        margin: const EdgeInsets.symmetric(vertical: 20,
+                        horizontal: 20),
+                        child: const Text("View All",
+                        style: TextStyle(
+                          fontSize: 15,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.blue,
+                          
+                          
+
+                          
+                        )),
+                        
+                      
+                        
+                        
+                      
+                      
+                      ),
+
+
+                    ],
+                  ),
+
+                  TopRated(),
+
+
               
               
               
@@ -144,7 +344,7 @@ class Homepage extends StatelessWidget {
 
       bottomNavigationBar: CurvedNavigationBar(
         backgroundColor: Colors.transparent,
-        color: Colors.blue,
+        color: Colors.black,
         height: 75,
         items: const [
           Icon(
@@ -163,7 +363,7 @@ class Homepage extends StatelessWidget {
             color: Colors.white,
             ),
              Icon(
-            Icons.card_travel,
+            Icons.person,
             size: 30,
             color: Colors.white,
             ),
