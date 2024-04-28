@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:snkr_flutter/Cart/CartPage.dart';
 import 'package:snkr_flutter/CustomerDashboard/Homepage.dart';
 void main(){
   runApp(MyApp());
@@ -16,8 +17,8 @@ class MyApp extends StatelessWidget {
         
       ),
       routes: {
-        "/" : (context) => Homepage()
-       // "cartPage" : (context) => CartPage()
+       // "/" : (context) => Homepage()
+       "/" : (context) => CartPage()
       },
       //home: Homepage(),
     );
