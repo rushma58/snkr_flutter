@@ -3,9 +3,11 @@ import 'package:flutter/widgets.dart';
 import 'package:iconify_flutter/iconify_flutter.dart';
 import 'package:iconify_flutter/icons/ion.dart';
 import 'package:iconify_flutter/icons/mdi.dart';
+import 'package:snkr_flutter/screen/CustomerDashboard/Homepage.dart';
 import 'package:snkr_flutter/screen/login/login_screen.dart';
 import 'package:snkr_flutter/utils/colors.dart';
 import 'package:snkr_flutter/utils/fonts.dart';
+import 'package:snkr_flutter/utils/layout.dart';
 
 class RegistrationScreen extends StatefulWidget {
   const RegistrationScreen({super.key});
@@ -332,6 +334,11 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                                 ),
                                 onPressed: () async {
                                   //TODO
+                                  Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) =>
+                                              const LayoutScreen()));
                                 },
                                 child: const Text(
                                   'Create an Account',
