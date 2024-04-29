@@ -3,6 +3,7 @@ import 'package:flutter/widgets.dart';
 import 'package:iconify_flutter/iconify_flutter.dart';
 import 'package:iconify_flutter/icons/ion.dart';
 import 'package:iconify_flutter/icons/mdi.dart';
+import 'package:snkr_flutter/Cart/CartPage.dart';
 import 'package:snkr_flutter/screen/registration/registration_screen.dart';
 import 'package:snkr_flutter/utils/colors.dart';
 import 'package:snkr_flutter/utils/fonts.dart';
@@ -205,6 +206,10 @@ class _LoginScreenState extends State<LoginScreen> {
                                 ),
                                 onPressed: () async {
                                   //TODO
+                                  Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) => CartPage()));
                                 },
                                 child: const Text(
                                   'Login',
