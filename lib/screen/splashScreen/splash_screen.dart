@@ -19,7 +19,7 @@ class _SplashScreenState extends State<SplashScreen> {
     super.initState();
     //_getDataFromSharedPref();
     Timer(
-      const Duration(seconds: 3),
+      const Duration(seconds: 1),
       () {
         Navigator.push(
           context,

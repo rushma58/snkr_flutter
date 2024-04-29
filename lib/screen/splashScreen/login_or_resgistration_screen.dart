@@ -60,7 +60,7 @@ class _LoginOrRegistrationScreenState extends State<LoginOrRegistrationScreen> {
                     );
                   },
                   style: ElevatedButton.styleFrom(
-                    backgroundColor: cGrayOld.withOpacity(0.5),
+                    backgroundColor: cBlack.withOpacity(0.1),
                     shape: const RoundedRectangleBorder(
                       borderRadius: BorderRadius.all(Radius.circular(8)),
                     ),
@@ -86,7 +86,7 @@ class _LoginOrRegistrationScreenState extends State<LoginOrRegistrationScreen> {
                     );
                   },
                   style: ElevatedButton.styleFrom(
-                    backgroundColor: cGrayOld,
+                    backgroundColor: cBlack.withOpacity(0.5),
                     shape: const RoundedRectangleBorder(
                       borderRadius: BorderRadius.all(Radius.circular(8)),
                     ),
