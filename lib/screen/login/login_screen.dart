@@ -3,10 +3,12 @@ import 'package:flutter/widgets.dart';
 import 'package:iconify_flutter/iconify_flutter.dart';
 import 'package:iconify_flutter/icons/ion.dart';
 import 'package:iconify_flutter/icons/mdi.dart';
-import 'package:snkr_flutter/Cart/CartPage.dart';
+import 'package:snkr_flutter/screen/Cart/CartPage.dart';
+import 'package:snkr_flutter/screen/CustomerDashboard/Homepage.dart';
 import 'package:snkr_flutter/screen/registration/registration_screen.dart';
 import 'package:snkr_flutter/utils/colors.dart';
 import 'package:snkr_flutter/utils/fonts.dart';
+import 'package:snkr_flutter/utils/layout.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -209,7 +211,8 @@ class _LoginScreenState extends State<LoginScreen> {
                                   Navigator.push(
                                       context,
                                       MaterialPageRoute(
-                                          builder: (context) => CartPage()));
+                                          builder: (context) =>
+                                              const LayoutScreen()));
                                 },
                                 child: const Text(
                                   'Login',
