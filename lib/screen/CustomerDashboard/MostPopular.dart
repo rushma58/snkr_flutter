@@ -1,8 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:snkr_flutter/screen/Item/ItemPage.dart';
 
-class MostPopular extends StatelessWidget {
+class MostPopular extends StatefulWidget {
   const MostPopular({super.key});
 
+  @override
+  State<MostPopular> createState() => _MostPopularState();
+}
+
+class _MostPopularState extends State<MostPopular> {
   @override
   Widget build(BuildContext context) {
     return GridView.count(
@@ -54,8 +60,10 @@ class MostPopular extends StatelessWidget {
                 // const Padding(
                 //   padding: EdgeInsets.only(bottom: 20),
                 // ),
-                InkWell(
-                  onTap: () {},
+              InkWell(
+  onTap: () {
+    Navigator.push(context, MaterialPageRoute(builder: (context) => ItemPage()));
+  },
                   child: Container(
                     margin: const EdgeInsets.all(10),
                     child: Image.asset(

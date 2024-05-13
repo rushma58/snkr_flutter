@@ -17,6 +17,8 @@ class Homepage extends StatelessWidget {
       body: ListView(
         children: [
           const HomeAppBar(),
+
+        
           Container(
             padding: const EdgeInsets.only(top: 15),
             decoration: const BoxDecoration(
@@ -132,7 +134,7 @@ class Homepage extends StatelessWidget {
                   ],
                 ),
 
-                const MostPopular(),
+                MostPopular(),
 
                 /////RECOMMENDED
 
