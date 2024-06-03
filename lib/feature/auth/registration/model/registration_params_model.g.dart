@@ -15,7 +15,7 @@ RegistrationParamsModel _$RegistrationParamsModelFromJson(
       email: json['email'] as String?,
       contact_number: json['contact_number'] as String?,
       password: json['password'] as String?,
-      payment_method: json['payment_method'] as String?,
+      payment_number: json['payment_number'] as String?,
       current_address: json['current_address'] as String?,
     );
 
@@ -28,6 +28,6 @@ Map<String, dynamic> _$RegistrationParamsModelToJson(
       'email': instance.email,
       'contact_number': instance.contact_number,
       'password': instance.password,
-      'payment_method': instance.payment_method,
+      'payment_number': instance.payment_number,
       'current_address': instance.current_address,
     };

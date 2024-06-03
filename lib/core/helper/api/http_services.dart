@@ -13,7 +13,8 @@ class HttpServices {
       return _dio = Dio(
         BaseOptions(
           baseUrl: baseUrl,
-          connectTimeout: const Duration(milliseconds: 10000),
+          connectTimeout: const Duration(milliseconds: 120000),
+          receiveTimeout: const Duration(milliseconds: 120000),
         ),
       );
     } else {

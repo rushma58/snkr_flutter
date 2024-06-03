@@ -10,7 +10,7 @@ class RegistrationParamsModel {
   String? email;
   String? contact_number;
   String? password;
-  String? payment_method;
+  String? payment_number;
   String? current_address;
 
   RegistrationParamsModel({
@@ -20,7 +20,7 @@ class RegistrationParamsModel {
     this.email,
     this.contact_number,
     this.password,
-    this.payment_method,
+    this.payment_number,
     this.current_address,
   });
 

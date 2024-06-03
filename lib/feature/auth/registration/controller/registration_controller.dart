@@ -1,3 +1,4 @@
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:snkr_flutter/core/helper/snackBar/snack_bar_helper.dart';
@@ -31,7 +32,7 @@ class RegistrationController extends GetxController {
         email: email_controller.text,
         password: password_controller.text,
         contact_number: contact_number_controller.text,
-        payment_method: payment_number_controller.text,
+        payment_number: payment_number_controller.text,
         role: role_controller.text,
         current_address: current_address_controller.text,
       );
@@ -40,16 +41,33 @@ class RegistrationController extends GetxController {
           await _registrationRepository.userRegister(registrationParamsModel);
 
       if (registrationResponse?.success == true) {
-        Get.to(
-          () => const LoginScreen(),
+        Get.to(() => const LoginScreen());
+        showSnackBar(
+          registrationResponse?.message ?? 'Registration Successful',
+          isError: false,
         );
-        showSnackBar("${registrationResponse?.message}", isError: false);
       } else {
-        showSnackBar("Error occured while registering. Please Try Again",
-            isError: true);
+        showSnackBar(
+          "Error occurred while registering. Please try again",
+          isError: true,
+        );
       }
 
       return registrationResponse;
+    } on DioException catch (e) {
+      // Handle DioError separately for better debugging
+      showSnackBar(
+        "Registration Error: ${e.message}",
+        isError: true,
+      );
+      return null;
+    } catch (e) {
+      // Handle any other exceptions
+      showSnackBar(
+        "An unexpected error occurred: ${e.toString()}",
+        isError: true,
+      );
+      return null;
     } finally {
       isLoading.value = false;
     }

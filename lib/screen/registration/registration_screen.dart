@@ -1,12 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
-import 'package:iconify_flutter/iconify_flutter.dart';
-import 'package:iconify_flutter/icons/mdi.dart';
-import 'package:snkr_flutter/feature/auth/registration/controller/registration_controller.dart';
-import 'package:snkr_flutter/screen/login/login_screen.dart';
 import 'package:snkr_flutter/core/utils/colors.dart';
 import 'package:snkr_flutter/core/utils/fonts.dart';
+import 'package:snkr_flutter/core/widgets/custom_text_field.dart';
+import 'package:snkr_flutter/feature/auth/registration/controller/registration_controller.dart';
+import 'package:snkr_flutter/screen/login/login_screen.dart';
 
 class RegistrationScreen extends StatefulWidget {
   const RegistrationScreen({super.key});
@@ -16,14 +14,11 @@ class RegistrationScreen extends StatefulWidget {
 }
 
 class _RegistrationScreenState extends State<RegistrationScreen> {
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   final registrationController = Get.put(RegistrationController());
-  TextEditingController? _fullNameController;
-  TextEditingController? _usernameController;
-  TextEditingController? _emailController;
-  TextEditingController? _cPasswordController;
-  TextEditingController? _passwordController;
-  bool _obscureText = true;
-  bool _obscureTextConfirmPassword = true;
+  TextEditingController confirmPasswordController = TextEditingController();
+  // final bool _obscureText = true;
+  // final bool _obscureTextConfirmPassword = true;
   bool isChecked = false;
 
   @override
@@ -48,274 +43,122 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                 Padding(
                   padding: const EdgeInsets.all(20.0),
                   child: Form(
-                    //key: _formKey,
+                    key: _formKey,
                     child: Column(
                       children: [
-                        //---------------NAME----------------
-                        Padding(
-                          padding: const EdgeInsets.fromLTRB(0, 14, 0, 7),
-                          child: SizedBox(
-                            child: TextFormField(
-                              key: const ValueKey("fullName"),
-                              controller: _fullNameController,
-                              keyboardType: TextInputType.text,
-                              cursorColor: cBlack,
-                              style: const TextStyle(
-                                color: cBlack,
-                                fontFamily: 'Poppins-Regular',
-                              ),
-                              // decoration: const InputDecoration(
-                              //   contentPadding: EdgeInsets.all(10),
-                              //   hintText: 'Enter Your Name',
-                              //   focusedBorder: UnderlineInputBorder(
-                              //     borderSide: BorderSide(
-                              //       color: cBlack, // Focused border color
-                              //       width: 1.5,
-                              //     ),
-                              //   ),
-                              // ),
-                              decoration: InputDecoration(
-                                filled: true,
-                                fillColor: cGrayOld.withOpacity(0.2),
-                                contentPadding: const EdgeInsets.symmetric(
-                                    horizontal: 15, vertical: 10),
-                                hintText: 'Full Name',
-                                hintStyle: fGrayRegular16,
-                                enabledBorder: OutlineInputBorder(
-                                  borderSide: BorderSide(
-                                    color: Colors.grey.shade300,
-                                    width: 1.0,
-                                  ),
-                                  borderRadius: BorderRadius.circular(8),
-                                ),
-                                focusedBorder: OutlineInputBorder(
-                                  borderSide: const BorderSide(
-                                    color: Colors.black,
-                                    width: 1.5,
-                                  ),
-                                  borderRadius: BorderRadius.circular(8),
-                                ),
-                              ),
-                              validator: (value) {
-                                if (value!.isEmpty) {
-                                  return 'Name Cannot Be Empty';
-                                }
-                                return null;
-                              },
-                            ),
-                          ),
-                        ),
-                        //---------------Email----------------
-                        Padding(
-                          padding: const EdgeInsets.fromLTRB(0, 7, 0, 7),
-                          child: SizedBox(
-                            child: TextFormField(
-                              key: const ValueKey("email"),
-                              controller: _emailController,
-                              keyboardType: TextInputType.text,
-                              cursorColor: cBlack,
-                              style: const TextStyle(
-                                color: cBlack,
-                                fontFamily: 'Poppins-Regular',
-                              ),
-                              decoration: InputDecoration(
-                                filled: true,
-                                fillColor: cGrayOld.withOpacity(0.2),
-                                contentPadding: const EdgeInsets.symmetric(
-                                    horizontal: 15, vertical: 10),
-                                hintText: 'Email',
-                                hintStyle: fGrayRegular16,
-                                enabledBorder: OutlineInputBorder(
-                                  borderSide: BorderSide(
-                                    color: Colors.grey.shade300,
-                                    width: 1.0,
-                                  ),
-                                  borderRadius: BorderRadius.circular(8),
-                                ),
-                                focusedBorder: OutlineInputBorder(
-                                  borderSide: const BorderSide(
-                                    color: Colors.black,
-                                    width: 1.5,
-                                  ),
-                                  borderRadius: BorderRadius.circular(8),
-                                ),
-                              ),
-                              validator: (value) {
-                                if (value!.isEmpty) {
-                                  return 'Email Cannot Be Empty';
-                                }
-                                return null;
-                              },
-                            ),
-                          ),
-                        ),
-                        //---------------NAME----------------
-                        Padding(
-                          padding: const EdgeInsets.fromLTRB(0, 7, 0, 7),
-                          child: SizedBox(
-                            child: TextFormField(
-                              key: const ValueKey("username"),
-                              controller: _usernameController,
-                              keyboardType: TextInputType.text,
-                              cursorColor: cBlack,
-                              style: const TextStyle(
-                                color: cBlack,
-                                fontFamily: 'Poppins-Regular',
-                              ),
-                              decoration: InputDecoration(
-                                filled: true,
-                                fillColor: cGrayOld.withOpacity(0.2),
-                                contentPadding: const EdgeInsets.symmetric(
-                                    horizontal: 15, vertical: 10),
-                                hintText: 'Username',
-                                hintStyle: fGrayRegular16,
-                                enabledBorder: OutlineInputBorder(
-                                  borderSide: BorderSide(
-                                    color: Colors.grey.shade300,
-                                    width: 1.0,
-                                  ),
-                                  borderRadius: BorderRadius.circular(8),
-                                ),
-                                focusedBorder: OutlineInputBorder(
-                                  borderSide: const BorderSide(
-                                    color: Colors.black,
-                                    width: 1.5,
-                                  ),
-                                  borderRadius: BorderRadius.circular(8),
-                                ),
-                              ),
-                              validator: (value) {
-                                if (value!.isEmpty) {
-                                  return 'Username Cannot Be Empty';
-                                }
-                                return null;
-                              },
-                            ),
-                          ),
+                        CustomTextField(
+                          controller:
+                              registrationController.first_name_controller,
+                          labelText: "First Name",
+                          keyboardType: TextInputType.name,
+                          validator: (value) {
+                            if (value == "") {
+                              return ("This field is required");
+                            }
+                            return null;
+                          },
                         ),
 
-                        Padding(
-                          padding: const EdgeInsets.fromLTRB(0, 7, 0, 7),
-                          child: SizedBox(
-                            //height: 32,
-                            child: TextFormField(
-                              key: const ValueKey("password"),
-                              controller: _passwordController,
-                              obscureText: _obscureText,
-                              keyboardType: TextInputType.text,
-                              cursorColor: cBlack,
-                              style: const TextStyle(
-                                color: cBlack,
-                                fontFamily: 'Poppins-Regular',
-                              ),
-                              decoration: InputDecoration(
-                                  filled: true,
-                                  fillColor: cGrayOld.withOpacity(0.2),
-                                  contentPadding: const EdgeInsets.symmetric(
-                                      horizontal: 15, vertical: 10),
-                                  hintText: 'Password',
-                                  hintStyle: fGrayRegular16,
-                                  enabledBorder: OutlineInputBorder(
-                                    borderSide: BorderSide(
-                                      color: Colors.grey.shade300,
-                                      width: 1.0,
-                                    ),
-                                    borderRadius: BorderRadius.circular(8),
-                                  ),
-                                  focusedBorder: OutlineInputBorder(
-                                    borderSide: const BorderSide(
-                                      color: Colors.black,
-                                      width: 1.5,
-                                    ),
-                                    borderRadius: BorderRadius.circular(8),
-                                  ),
-                                  suffixIcon: GestureDetector(
-                                    onTap: () {
-                                      setState(() {
-                                        _obscureText = !_obscureText;
-                                      });
-                                    },
-                                    child: Container(
-                                      padding:
-                                          const EdgeInsets.fromLTRB(0, 0, 0, 8),
-                                      child: Iconify(
-                                        _obscureText ? Mdi.eye_off : Mdi.eye,
-                                        size: 20,
-                                        color: cBlack,
-                                      ),
-                                    ),
-                                  )),
-                              validator: (value) {
-                                if (value!.isEmpty) {
-                                  return 'Password Cannot Be Empty';
-                                }
-                                return null;
-                              },
-                            ),
-                          ),
+                        CustomTextField(
+                          controller:
+                              registrationController.last_name_controller,
+                          labelText: "Last Name",
+                          keyboardType: TextInputType.name,
+                          validator: (value) {
+                            if (value == "") {
+                              return ("This field is required");
+                            }
+                            return null;
+                          },
                         ),
-                        Padding(
-                          padding: const EdgeInsets.fromLTRB(0, 7, 0, 14),
-                          child: SizedBox(
-                            //height: 32,
-                            child: TextFormField(
-                              key: const ValueKey("cpassword"),
-                              controller: _cPasswordController,
-                              obscureText: _obscureTextConfirmPassword,
-                              keyboardType: TextInputType.text,
-                              cursorColor: cBlack,
-                              style: const TextStyle(
-                                color: cBlack,
-                                fontFamily: 'Poppins-Regular',
-                              ),
-                              decoration: InputDecoration(
-                                  filled: true,
-                                  fillColor: cGrayOld.withOpacity(0.2),
-                                  contentPadding: const EdgeInsets.symmetric(
-                                      horizontal: 15, vertical: 10),
-                                  hintText: 'Re-Enter the Password',
-                                  hintStyle: fGrayRegular16,
-                                  enabledBorder: OutlineInputBorder(
-                                    borderSide: BorderSide(
-                                      color: Colors.grey.shade300,
-                                      width: 1.0,
-                                    ),
-                                    borderRadius: BorderRadius.circular(8),
-                                  ),
-                                  focusedBorder: OutlineInputBorder(
-                                    borderSide: const BorderSide(
-                                      color: Colors.black,
-                                      width: 1.5,
-                                    ),
-                                    borderRadius: BorderRadius.circular(8),
-                                  ),
-                                  suffixIcon: GestureDetector(
-                                    onTap: () {
-                                      setState(() {
-                                        _obscureTextConfirmPassword =
-                                            !_obscureTextConfirmPassword;
-                                      });
-                                    },
-                                    child: Container(
-                                      padding:
-                                          const EdgeInsets.fromLTRB(0, 0, 0, 8),
-                                      child: Iconify(
-                                        _obscureTextConfirmPassword
-                                            ? Mdi.eye_off
-                                            : Mdi.eye,
-                                        size: 22,
-                                        color: cBlack,
-                                      ),
-                                    ),
-                                  )),
-                              validator: (value) {
-                                if (value!.isEmpty) {
-                                  return 'Password Cannot Be Empty';
-                                }
-                                return null;
-                              },
-                            ),
-                          ),
+                        CustomTextField(
+                          controller: registrationController.email_controller,
+                          labelText: "Email",
+                          keyboardType: TextInputType.name,
+                          validator: (value) {
+                            if (value == "") {
+                              return ("This field is required");
+                            }
+                            return null;
+                          },
+                        ),
+
+                        CustomTextField(
+                          controller:
+                              registrationController.contact_number_controller,
+                          labelText: "Contact Number",
+                          keyboardType: TextInputType.name,
+                          validator: (value) {
+                            if (value == "") {
+                              return ("This field is required");
+                            }
+                            return null;
+                          },
+                        ),
+
+                        CustomTextField(
+                          controller: registrationController.role_controller,
+                          labelText: "Role",
+                          keyboardType: TextInputType.name,
+                          validator: (value) {
+                            if (value == "") {
+                              return ("This field is required");
+                            }
+                            return null;
+                          },
+                        ),
+
+                        CustomTextField(
+                          controller:
+                              registrationController.payment_number_controller,
+                          labelText: "Khalti Number",
+                          keyboardType: TextInputType.name,
+                          validator: (value) {
+                            if (value == "") {
+                              return ("This field is required");
+                            }
+                            return null;
+                          },
+                        ),
+
+                        CustomTextField(
+                          controller:
+                              registrationController.current_address_controller,
+                          labelText: "Current Address",
+                          keyboardType: TextInputType.name,
+                          validator: (value) {
+                            if (value == "") {
+                              return ("This field is required");
+                            }
+                            return null;
+                          },
+                        ),
+
+                        CustomTextField(
+                          controller:
+                              registrationController.password_controller,
+                          labelText: "Password",
+                          keyboardType: TextInputType.visiblePassword,
+                          validator: (value) {
+                            if (value == "") {
+                              return ("This field is required");
+                            }
+                            return null;
+                          },
+                        ),
+
+                        CustomTextField(
+                          controller: confirmPasswordController,
+                          labelText: "Confirm Password",
+                          keyboardType: TextInputType.visiblePassword,
+                          validator: (value) {
+                            if (value !=
+                                registrationController
+                                    .password_controller.text) {
+                              return ("Password and Confirm password didn't match.");
+                            }
+                            return null;
+                          },
                         ),
 
                         const SizedBox(height: 50), // 10% space
@@ -325,7 +168,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                               flex: 1,
                               child: Obx(() {
                                 return ElevatedButton(
-                                  key: const ValueKey("loginBtn"),
+                                  //key: const ValueKey("loginBtn"),
 
                                   onPressed:
                                       registrationController.isLoading.value
