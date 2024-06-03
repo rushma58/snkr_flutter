@@ -1,11 +1,9 @@
-import 'dart:async';
-
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:snkr_flutter/screen/login/login_screen.dart';
 import 'package:snkr_flutter/screen/registration/registration_screen.dart';
-import 'package:snkr_flutter/utils/colors.dart';
-import 'package:snkr_flutter/utils/fonts.dart';
+import 'package:snkr_flutter/core/utils/colors.dart';
+import 'package:snkr_flutter/core/utils/fonts.dart';
 
 class LoginOrRegistrationScreen extends StatefulWidget {
   const LoginOrRegistrationScreen({super.key});

@@ -1,13 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:get/get.dart';
 import 'package:iconify_flutter/iconify_flutter.dart';
-import 'package:iconify_flutter/icons/ion.dart';
 import 'package:iconify_flutter/icons/mdi.dart';
-import 'package:snkr_flutter/screen/CustomerDashboard/Homepage.dart';
+import 'package:snkr_flutter/feature/auth/registration/controller/registration_controller.dart';
 import 'package:snkr_flutter/screen/login/login_screen.dart';
-import 'package:snkr_flutter/utils/colors.dart';
-import 'package:snkr_flutter/utils/fonts.dart';
-import 'package:snkr_flutter/utils/layout.dart';
+import 'package:snkr_flutter/core/utils/colors.dart';
+import 'package:snkr_flutter/core/utils/fonts.dart';
 
 class RegistrationScreen extends StatefulWidget {
   const RegistrationScreen({super.key});
@@ -17,6 +16,7 @@ class RegistrationScreen extends StatefulWidget {
 }
 
 class _RegistrationScreenState extends State<RegistrationScreen> {
+  final registrationController = Get.put(RegistrationController());
   TextEditingController? _fullNameController;
   TextEditingController? _usernameController;
   TextEditingController? _emailController;
@@ -323,32 +323,42 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                           children: [
                             Expanded(
                               flex: 1,
-                              child: ElevatedButton(
-                                key: const ValueKey("loginBtn"),
-                                style: ElevatedButton.styleFrom(
-                                  backgroundColor: cBlack,
-                                  shape: const RoundedRectangleBorder(
-                                    borderRadius:
-                                        BorderRadius.all(Radius.circular(8)),
+                              child: Obx(() {
+                                return ElevatedButton(
+                                  key: const ValueKey("loginBtn"),
+
+                                  onPressed:
+                                      registrationController.isLoading.value
+                                          ? null
+                                          : () async {
+                                              await registrationController
+                                                  .userRegister();
+                                            },
+                                  style: ElevatedButton.styleFrom(
+                                    backgroundColor: cBlack,
+                                    shape: const RoundedRectangleBorder(
+                                      borderRadius:
+                                          BorderRadius.all(Radius.circular(8)),
+                                    ),
                                   ),
-                                ),
-                                onPressed: () async {
-                                  //TODO
-                                  Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                          builder: (context) =>
-                                              const LayoutScreen()));
-                                },
-                                child: const Text(
-                                  'Create an Account',
-                                  style: TextStyle(
-                                    fontSize: 16,
-                                    fontFamily: 'Poppins-SemiBold',
-                                    color: cWhite,
+                                  // onPressed: () async {
+                                  //   //TODO
+                                  //   Navigator.push(
+                                  //       context,
+                                  //       MaterialPageRoute(
+                                  //           builder: (context) =>
+                                  //               const LayoutScreen()));
+                                  // },
+                                  child: const Text(
+                                    'Create an Account',
+                                    style: TextStyle(
+                                      fontSize: 16,
+                                      fontFamily: 'Poppins-SemiBold',
+                                      color: cWhite,
+                                    ),
                                   ),
-                                ),
-                              ),
+                                );
+                              }),
                             ),
                           ],
                         ),

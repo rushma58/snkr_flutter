@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:snkr_flutter/utils/colors.dart';
+import 'package:snkr_flutter/core/utils/colors.dart';
 
 const TextStyle fTitle_white =
     TextStyle(fontFamily: 'Poppins-SemiBold', fontSize: 34.0, color: cWhite);

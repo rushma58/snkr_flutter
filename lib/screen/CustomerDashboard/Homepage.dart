@@ -1,5 +1,3 @@
-import 'package:curved_navigation_bar/curved_navigation_bar.dart';
-
 import 'package:flutter/material.dart';
 import 'package:snkr_flutter/screen/CustomerDashboard/CategoriesWidget.dart';
 import 'package:snkr_flutter/screen/CustomerDashboard/HomeAppBar.dart';
@@ -132,7 +130,7 @@ class Homepage extends StatelessWidget {
                   ],
                 ),
 
-                MostPopular(),
+                const MostPopular(),
 
                 /////RECOMMENDED
 
