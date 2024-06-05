@@ -3,6 +3,7 @@ import 'package:flutter/widgets.dart';
 import 'package:iconify_flutter/iconify_flutter.dart';
 import 'package:iconify_flutter/icons/ion.dart';
 import 'package:iconify_flutter/icons/mdi.dart';
+import 'package:snkr_flutter/core/widgets/custom_text_field.dart';
 import 'package:snkr_flutter/screen/registration/registration_screen.dart';
 import 'package:snkr_flutter/core/utils/colors.dart';
 import 'package:snkr_flutter/core/utils/fonts.dart';
@@ -16,9 +17,9 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
-  TextEditingController? _usernameController;
-  TextEditingController? _passwordController;
-  bool _obscureText = true;
+  final TextEditingController usernameController = TextEditingController();
+  final TextEditingController passwordController = TextEditingController();
+  final bool _obscureText = true;
   bool isChecked = false;
 
   @override
@@ -37,7 +38,8 @@ class _LoginScreenState extends State<LoginScreen> {
                   padding: const EdgeInsets.fromLTRB(0, 60, 0, 0),
                   child: Image.asset(
                     'assets/icons/main_logo.png',
-                    height: 350,
+                    height: 100,
+                    //width: 500,
                   ),
                 ),
                 // const Text(
@@ -55,122 +57,26 @@ class _LoginScreenState extends State<LoginScreen> {
                     //key: _formKey,
                     child: Column(
                       children: [
-                        Padding(
-                          padding: const EdgeInsets.fromLTRB(0, 14, 0, 7),
-                          child: SizedBox(
-                            //height: 32,
-                            child: TextFormField(
-                              key: const ValueKey("username"),
-                              controller: _usernameController,
-                              keyboardType: TextInputType.text,
-                              cursorColor: cBlack,
-                              style: const TextStyle(
-                                color: cBlack,
-                                fontFamily: 'Poppins-Regular',
-                              ),
-                              decoration: InputDecoration(
-                                filled: true,
-                                fillColor: cGrayOld.withOpacity(0.2),
-                                contentPadding: const EdgeInsets.symmetric(
-                                    horizontal: 15, vertical: 10),
-                                hintText: 'Enter username/ email',
-                                hintStyle: fGrayRegular16,
-                                enabledBorder: OutlineInputBorder(
-                                  borderSide: BorderSide(
-                                    color: Colors.grey.shade300,
-                                    width: 1.0,
-                                  ),
-                                  borderRadius: BorderRadius.circular(8),
-                                ),
-                                focusedBorder: OutlineInputBorder(
-                                  borderSide: const BorderSide(
-                                    color: Colors.black,
-                                    width: 1.5,
-                                  ),
-                                  borderRadius: BorderRadius.circular(8),
-                                ),
-                              ),
-                              validator: (value) {
-                                if (value!.isEmpty) {
-                                  return 'Username Cannot Be Empty';
-                                }
-                                return null;
-                              },
-                            ),
-                          ),
+                        CustomTextField(
+                          controller: usernameController,
+                          labelText: "Enter Email",
+                          validator: (value) {
+                            if (value == null) {
+                              return "Email is required";
+                            }
+                            return null;
+                          },
                         ),
-                        Padding(
-                          padding: const EdgeInsets.fromLTRB(0, 7, 0, 10),
-                          child: SizedBox(
-                            //height: 32,
-                            child: TextFormField(
-                              key: const ValueKey("password"),
-                              controller: _passwordController,
-                              obscureText: _obscureText,
-                              keyboardType: TextInputType.text,
-                              cursorColor: cBlack,
-                              style: const TextStyle(
-                                color: cBlack,
-                                fontFamily: 'Poppins-Regular',
-                              ),
-                              decoration: InputDecoration(
-                                  // icon: Container(
-                                  //   padding: const EdgeInsets.all(4),
-                                  //   // decoration: BoxDecoration(
-                                  //   //     color: cBlack,
-                                  //   //     border: Border.all(color: cBlack),
-                                  //   //     borderRadius: const BorderRadius.all(
-                                  //   //         Radius.circular(4))),
-                                  //   child: const Iconify(
-                                  //     Mdi.shield_key,
-                                  //     size: 26,
-                                  //     color: cBlack,
-                                  //   ),
-                                  // ),
-                                  filled: true,
-                                  fillColor: cGrayOld.withOpacity(0.2),
-                                  contentPadding: const EdgeInsets.symmetric(
-                                      horizontal: 15, vertical: 10),
-                                  hintText: 'Enter password',
-                                  hintStyle: fGrayRegular16,
-                                  enabledBorder: OutlineInputBorder(
-                                    borderSide: BorderSide(
-                                      color: Colors.grey.shade300,
-                                      width: 1.0,
-                                    ),
-                                    borderRadius: BorderRadius.circular(8),
-                                  ),
-                                  focusedBorder: OutlineInputBorder(
-                                    borderSide: const BorderSide(
-                                      color: Colors.black,
-                                      width: 1.5,
-                                    ),
-                                    borderRadius: BorderRadius.circular(8),
-                                  ),
-                                  suffixIcon: GestureDetector(
-                                    onTap: () {
-                                      setState(() {
-                                        _obscureText = !_obscureText;
-                                      });
-                                    },
-                                    child: Container(
-                                      padding:
-                                          const EdgeInsets.fromLTRB(0, 0, 0, 8),
-                                      child: Iconify(
-                                        _obscureText ? Mdi.eye_off : Mdi.eye,
-                                        size: 22,
-                                        color: cBlack,
-                                      ),
-                                    ),
-                                  )),
-                              validator: (value) {
-                                if (value!.isEmpty) {
-                                  return 'Password Cannot Be Empty';
-                                }
-                                return null;
-                              },
-                            ),
-                          ),
+                        CustomTextField(
+                          controller: passwordController,
+                          labelText: "Enter Password",
+                          isObscured: true,
+                          validator: (value) {
+                            if (value == null) {
+                              return "Password is required";
+                            }
+                            return null;
+                          },
                         ),
                         const SizedBox(
                           height: 20,

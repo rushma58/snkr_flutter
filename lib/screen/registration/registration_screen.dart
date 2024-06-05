@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:snkr_flutter/core/constants/list.dart';
 import 'package:snkr_flutter/core/utils/colors.dart';
 import 'package:snkr_flutter/core/utils/fonts.dart';
+import 'package:snkr_flutter/core/widgets/custom_drop_down.dart';
 import 'package:snkr_flutter/core/widgets/custom_text_field.dart';
 import 'package:snkr_flutter/feature/auth/registration/controller/registration_controller.dart';
 import 'package:snkr_flutter/screen/login/login_screen.dart';
@@ -37,7 +39,8 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                   padding: const EdgeInsets.fromLTRB(0, 60, 0, 0),
                   child: Image.asset(
                     'assets/icons/main_logo.png',
-                    height: 200,
+                    height: 100,
+                    //width: 500,
                   ),
                 ),
                 Padding(
@@ -96,16 +99,10 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                           },
                         ),
 
-                        CustomTextField(
+                        CustomDropdownField(
                           controller: registrationController.role_controller,
                           labelText: "Role",
-                          keyboardType: TextInputType.name,
-                          validator: (value) {
-                            if (value == "") {
-                              return ("This field is required");
-                            }
-                            return null;
-                          },
+                          dropdownList: roleList,
                         ),
 
                         CustomTextField(
@@ -139,6 +136,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                               registrationController.password_controller,
                           labelText: "Password",
                           keyboardType: TextInputType.visiblePassword,
+                          isObscured: true,
                           validator: (value) {
                             if (value == "") {
                               return ("This field is required");
@@ -151,6 +149,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                           controller: confirmPasswordController,
                           labelText: "Confirm Password",
                           keyboardType: TextInputType.visiblePassword,
+                          isObscured: true,
                           validator: (value) {
                             if (value !=
                                 registrationController
@@ -161,7 +160,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                           },
                         ),
 
-                        const SizedBox(height: 50), // 10% space
+                        const SizedBox(height: 30), // 10% space
                         Row(
                           children: [
                             Expanded(
@@ -205,7 +204,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                             ),
                           ],
                         ),
-                        const SizedBox(height: 50),
+                        const SizedBox(height: 30),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                           children: [

@@ -1,14 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:iconify_flutter/iconify_flutter.dart';
+import 'package:iconify_flutter/icons/mdi.dart';
 import 'package:intl/intl.dart';
 import 'package:snkr_flutter/core/utils/colors.dart';
 import 'package:snkr_flutter/core/utils/fonts.dart';
 
-class CustomTextField extends StatelessWidget {
+class CustomTextField extends StatefulWidget {
   final TextEditingController controller;
   final String labelText;
   final bool? readOnly;
   final String? Function(String?)? validator;
-  final bool? isCalender;
+  final bool? isObscured;
   final TextInputType? keyboardType;
 
   const CustomTextField({
@@ -17,9 +19,16 @@ class CustomTextField extends StatelessWidget {
     required this.labelText,
     this.validator,
     this.readOnly,
-    this.isCalender,
+    this.isObscured,
     this.keyboardType,
   }) : super(key: key);
+
+  @override
+  State<CustomTextField> createState() => _CustomTextFieldState();
+}
+
+class _CustomTextFieldState extends State<CustomTextField> {
+  bool _obscureText = true;
 
   Future<String> getDatePicker(
     BuildContext context,
@@ -41,33 +50,39 @@ class CustomTextField extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       padding: const EdgeInsets.only(bottom: 12),
+      height: 60,
       child: TextFormField(
-        keyboardType: keyboardType ?? TextInputType.text,
-        controller: controller,
-        validator: validator,
-        readOnly: readOnly ?? false,
-        style: fGBrownRegular14,
+        keyboardType: widget.keyboardType ?? TextInputType.text,
+        controller: widget.controller,
+        validator: widget.validator,
+        readOnly: widget.readOnly ?? false,
+        style: fBlackRegular14,
+        obscureText: widget.isObscured ?? false ? _obscureText : false,
         decoration: InputDecoration(
           border: const OutlineInputBorder(),
           //floatingLabelStyle: fGBrownRegular14,
-          labelText: labelText,
+          labelText: widget.labelText,
           labelStyle: fGrayRegular14,
           enabledBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(8),
-              borderSide: const BorderSide(color: cGBrown)),
+              borderSide: BorderSide(color: cGrayOld.withOpacity(0.5))),
           focusedBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(8),
-              borderSide: const BorderSide(color: cGBrown)),
+              borderSide: const BorderSide(color: cBlack)),
           focusColor: cSilver,
           // Conditionally set the suffix icon
-          suffixIcon: isCalender ?? false
+          suffixIcon: widget.isObscured != null && widget.isObscured == true
               ? IconButton(
                   onPressed: () {
-                    getDatePicker(context).then((value) {
-                      controller.text = value;
+                    setState(() {
+                      _obscureText = !_obscureText;
                     });
                   },
-                  icon: const Icon(Icons.calendar_month_outlined),
+                  icon: Iconify(
+                    _obscureText ? Mdi.eye_off : Mdi.eye,
+                    size: 24,
+                    color: cGrayOld,
+                  ),
                 )
               : null, // Set null if onPressed or icon is not provided
         ),

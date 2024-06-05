@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
+import 'package:snkr_flutter/core/utils/colors.dart';
+import 'package:snkr_flutter/core/utils/fonts.dart';
 
 class HomeAppBar extends StatelessWidget {
   const HomeAppBar({super.key});
@@ -13,7 +16,7 @@ class HomeAppBar extends StatelessWidget {
         children: [
           const Icon(
             Icons.menu,
-            size: 40,
+            size: 30,
             color: Colors.black,
           ),
           Image.asset(
@@ -21,14 +24,19 @@ class HomeAppBar extends StatelessWidget {
             height: 50,
             fit: BoxFit.fitHeight,
           ),
-          const InkWell(
+          InkWell(
             //           onTap: (){
             //             Navigator.pushNamed(context, "cartPage");
             //           },
-            child: Icon(
-              Icons.toggle_off,
-              size: 50,
-              color: Colors.black,
+            child: Container(
+              padding: const EdgeInsets.fromLTRB(8, 4, 8, 4),
+              decoration: const BoxDecoration(
+                  color: cBlack,
+                  borderRadius: BorderRadius.all(Radius.circular(8))),
+              child: const Text(
+                "Sell",
+                style: fWhiteSemiBold16,
+              ),
             ),
           ),
         ],
