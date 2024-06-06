@@ -42,31 +42,28 @@ class RegistrationController extends GetxController {
 
       if (registrationResponse?.success == true) {
         Get.to(() => const LoginScreen());
-        showSnackBar(
-          registrationResponse?.message ?? 'Registration Successful',
-          isError: false,
-        );
+        // showSnackBar(
+        //   registrationResponse?.message ?? 'Registration Successful',
+        //   isError: false,
+        // );
+        customSuccessSnackBar("Registration Sucess");
       } else {
-        showSnackBar(
-          "Error occurred while registering. Please try again",
-          isError: true,
-        );
+        // showSnackBar(
+        //   "Error occurred while registering. Please try again",
+        //   isError: true,
+        // );
+        customErrorSnackBar(
+            "Error occurred while registering. Please try again");
       }
 
       return registrationResponse;
     } on DioException catch (e) {
       // Handle DioError separately for better debugging
-      showSnackBar(
-        "Registration Error: ${e.message}",
-        isError: true,
-      );
-      return null;
-    } catch (e) {
-      // Handle any other exceptions
-      showSnackBar(
-        "An unexpected error occurred: ${e.toString()}",
-        isError: true,
-      );
+      // showSnackBar(
+      //   "Registration Error: ${e.message}",
+      //   isError: true,
+      // );
+      debugPrint("${e.message}");
       return null;
     } finally {
       isLoading.value = false;

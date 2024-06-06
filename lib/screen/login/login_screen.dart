@@ -1,13 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
+import 'package:get/get.dart';
 import 'package:iconify_flutter/iconify_flutter.dart';
 import 'package:iconify_flutter/icons/ion.dart';
-import 'package:iconify_flutter/icons/mdi.dart';
-import 'package:snkr_flutter/core/widgets/custom_text_field.dart';
-import 'package:snkr_flutter/screen/registration/registration_screen.dart';
 import 'package:snkr_flutter/core/utils/colors.dart';
 import 'package:snkr_flutter/core/utils/fonts.dart';
-import 'package:snkr_flutter/core/utils/layout.dart';
+import 'package:snkr_flutter/core/widgets/custom_text_field.dart';
+import 'package:snkr_flutter/feature/auth/login/controller/login_controller.dart';
+import 'package:snkr_flutter/screen/registration/registration_screen.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -17,8 +16,7 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
-  final TextEditingController usernameController = TextEditingController();
-  final TextEditingController passwordController = TextEditingController();
+  final loginController = Get.put(LoginController());
   final bool _obscureText = true;
   bool isChecked = false;
 
@@ -26,61 +24,54 @@ class _LoginScreenState extends State<LoginScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       // resizeToAvoidBottomInset: false,
-      body: Stack(children: [
-        Container(
-          decoration: const BoxDecoration(
-            color: cWhite,
-          ),
-          child: SingleChildScrollView(
-            child: Column(
-              children: [
-                Padding(
-                  padding: const EdgeInsets.fromLTRB(0, 60, 0, 0),
-                  child: Image.asset(
-                    'assets/icons/main_logo.png',
-                    height: 100,
-                    //width: 500,
-                  ),
-                ),
-                // const Text(
-                //   "Login",
-                //   style: TextStyle(
-                //     fontFamily: "Poppins-SemiBold",
-                //     decoration: TextDecoration.none,
-                //     fontSize: 30,
-                //     color: cBlack,
-                //   ),
-                // ),
-                Padding(
-                  padding: const EdgeInsets.all(20.0),
-                  child: Form(
-                    //key: _formKey,
-                    child: Column(
+      body: SingleChildScrollView(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Padding(
+              padding: const EdgeInsets.fromLTRB(0, 100, 0, 100),
+              child: Image.asset(
+                'assets/icons/main_logo.png',
+                height: 100,
+                //width: 500,
+              ),
+            ),
+            const Text("Login", style: fBlackSemiBold34),
+            Padding(
+              padding: const EdgeInsets.all(20.0),
+              child: Form(
+                //key: _formKey,
+                child: Column(
+                  children: [
+                    CustomTextField(
+                      controller: loginController.email_controller,
+                      labelText: "Enter Email",
+                      validator: (value) {
+                        if (value == null) {
+                          return "Email is required";
+                        }
+                        return null;
+                      },
+                    ),
+                    const SizedBox(
+                      height: 10,
+                    ),
+                    CustomTextField(
+                      controller: loginController.password_controller,
+                      labelText: "Enter Password",
+                      isObscured: true,
+                      validator: (value) {
+                        if (value == null) {
+                          return "Password is required";
+                        }
+                        return null;
+                      },
+                    ),
+                    const SizedBox(
+                      height: 20,
+                    ),
+                    Column(
                       children: [
-                        CustomTextField(
-                          controller: usernameController,
-                          labelText: "Enter Email",
-                          validator: (value) {
-                            if (value == null) {
-                              return "Email is required";
-                            }
-                            return null;
-                          },
-                        ),
-                        CustomTextField(
-                          controller: passwordController,
-                          labelText: "Enter Password",
-                          isObscured: true,
-                          validator: (value) {
-                            if (value == null) {
-                              return "Password is required";
-                            }
-                            return null;
-                          },
-                        ),
-                        const SizedBox(
-                          height: 20,
-                        ),
                         Row(
                           children: [
                             checkbox(),
@@ -89,44 +80,46 @@ class _LoginScreenState extends State<LoginScreen> {
                             ),
                             const Text(
                               'Remember me',
-                              style: TextStyle(
-                                  fontSize: 14,
-                                  fontFamily: "Poppins-SemiBold",
-                                  color: cBlack),
+                              style: fBlackSemiBold14,
                             ),
                           ],
                         ),
-                        const SizedBox(height: 50), // 10% space
+                        const SizedBox(height: 30), // 10% space
                         Row(
                           children: [
                             Expanded(
                               flex: 7,
-                              child: ElevatedButton(
-                                key: const ValueKey("loginBtn"),
-                                style: ElevatedButton.styleFrom(
-                                  backgroundColor: cBlack,
-                                  shape: const RoundedRectangleBorder(
-                                    borderRadius:
-                                        BorderRadius.all(Radius.circular(8)),
+                              child: Obx(() {
+                                return ElevatedButton(
+                                  key: const ValueKey("loginBtn"),
+                                  onPressed: loginController.isLoading.value
+                                      ? null
+                                      : () async {
+                                          await loginController.userLogin();
+                                        },
+                                  style: ElevatedButton.styleFrom(
+                                    backgroundColor: cBlack,
+                                    shape: const RoundedRectangleBorder(
+                                      borderRadius:
+                                          BorderRadius.all(Radius.circular(8)),
+                                    ),
                                   ),
-                                ),
-                                onPressed: () async {
-                                  //TODO
-                                  Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                          builder: (context) =>
-                                              const LayoutScreen()));
-                                },
-                                child: const Text(
-                                  'Login',
-                                  style: TextStyle(
-                                    fontSize: 16,
-                                    fontFamily: 'Poppins-SemiBold',
-                                    color: cWhite,
+                                  // onPressed: () async {
+                                  //   //TODO
+                                  //   Navigator.push(
+                                  //     context,
+                                  //     MaterialPageRoute(
+                                  //       builder: (context) =>
+                                  //           const LayoutScreen(),
+                                  //     ),
+                                  //   );
+                                  // },
+                                  child: const Text(
+                                    'Login',
+                                    style: fWhiteSemiBold16,
                                   ),
-                                ),
-                              ),
+                                );
+                              }),
                             ),
                             const SizedBox(width: 10), // 10% space
                             Expanded(
@@ -157,13 +150,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                 style: fBlackRegular14),
                             GestureDetector(
                               onTap: () {
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) =>
-                                        const RegistrationScreen(),
-                                  ),
-                                );
+                                Get.to(const RegistrationScreen());
                               },
                               child: const Text(
                                 "REGISTER NOW",
@@ -174,13 +161,13 @@ class _LoginScreenState extends State<LoginScreen> {
                         ),
                       ],
                     ),
-                  ),
+                  ],
                 ),
-              ],
+              ),
             ),
-          ),
+          ],
         ),
-      ]),
+      ),
     );
   }
 

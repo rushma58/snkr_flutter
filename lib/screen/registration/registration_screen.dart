@@ -27,214 +27,202 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       // resizeToAvoidBottomInset: false,
-      body: Stack(children: [
-        Container(
-          decoration: const BoxDecoration(
-            color: cWhite,
-          ),
-          child: SingleChildScrollView(
-            child: Column(
-              children: [
-                Padding(
-                  padding: const EdgeInsets.fromLTRB(0, 60, 0, 0),
-                  child: Image.asset(
-                    'assets/icons/main_logo.png',
-                    height: 100,
-                    //width: 500,
-                  ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.all(20.0),
-                  child: Form(
-                    key: _formKey,
-                    child: Column(
+      body: SingleChildScrollView(
+        child: Column(
+          children: [
+            Padding(
+              padding: const EdgeInsets.fromLTRB(0, 60, 0, 0),
+              child: Image.asset(
+                'assets/icons/main_logo.png',
+                height: 100,
+                //width: 500,
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.all(20.0),
+              child: Form(
+                key: _formKey,
+                child: Column(
+                  children: [
+                    CustomTextField(
+                      controller: registrationController.first_name_controller,
+                      labelText: "First Name",
+                      keyboardType: TextInputType.name,
+                      validator: (value) {
+                        if (value == "") {
+                          return ("This field is required");
+                        }
+                        return null;
+                      },
+                    ),
+
+                    CustomTextField(
+                      controller: registrationController.last_name_controller,
+                      labelText: "Last Name",
+                      keyboardType: TextInputType.name,
+                      validator: (value) {
+                        if (value == "") {
+                          return ("This field is required");
+                        }
+                        return null;
+                      },
+                    ),
+                    CustomTextField(
+                      controller: registrationController.email_controller,
+                      labelText: "Email",
+                      keyboardType: TextInputType.name,
+                      validator: (value) {
+                        if (value == "") {
+                          return ("This field is required");
+                        }
+                        return null;
+                      },
+                    ),
+
+                    CustomTextField(
+                      controller:
+                          registrationController.contact_number_controller,
+                      labelText: "Contact Number",
+                      keyboardType: TextInputType.name,
+                      validator: (value) {
+                        if (value == "") {
+                          return ("This field is required");
+                        }
+                        return null;
+                      },
+                    ),
+
+                    CustomDropdownField(
+                      controller: registrationController.role_controller,
+                      labelText: "Role",
+                      dropdownList: roleList,
+                    ),
+
+                    CustomTextField(
+                      controller:
+                          registrationController.payment_number_controller,
+                      labelText: "Khalti Number",
+                      keyboardType: TextInputType.name,
+                      validator: (value) {
+                        if (value == "") {
+                          return ("This field is required");
+                        }
+                        return null;
+                      },
+                    ),
+
+                    CustomTextField(
+                      controller:
+                          registrationController.current_address_controller,
+                      labelText: "Current Address",
+                      keyboardType: TextInputType.name,
+                      validator: (value) {
+                        if (value == "") {
+                          return ("This field is required");
+                        }
+                        return null;
+                      },
+                    ),
+
+                    CustomTextField(
+                      controller: registrationController.password_controller,
+                      labelText: "Password",
+                      keyboardType: TextInputType.visiblePassword,
+                      isObscured: true,
+                      validator: (value) {
+                        if (value == "") {
+                          return ("This field is required");
+                        }
+                        return null;
+                      },
+                    ),
+
+                    CustomTextField(
+                      controller: confirmPasswordController,
+                      labelText: "Confirm Password",
+                      keyboardType: TextInputType.visiblePassword,
+                      isObscured: true,
+                      validator: (value) {
+                        if (value !=
+                            registrationController.password_controller.text) {
+                          return ("Password and Confirm password didn't match.");
+                        }
+                        return null;
+                      },
+                    ),
+
+                    const SizedBox(height: 30), // 10% space
+                    Row(
                       children: [
-                        CustomTextField(
-                          controller:
-                              registrationController.first_name_controller,
-                          labelText: "First Name",
-                          keyboardType: TextInputType.name,
-                          validator: (value) {
-                            if (value == "") {
-                              return ("This field is required");
-                            }
-                            return null;
-                          },
-                        ),
+                        Expanded(
+                          flex: 1,
+                          child: Obx(() {
+                            return ElevatedButton(
+                              //key: const ValueKey("loginBtn"),
 
-                        CustomTextField(
-                          controller:
-                              registrationController.last_name_controller,
-                          labelText: "Last Name",
-                          keyboardType: TextInputType.name,
-                          validator: (value) {
-                            if (value == "") {
-                              return ("This field is required");
-                            }
-                            return null;
-                          },
-                        ),
-                        CustomTextField(
-                          controller: registrationController.email_controller,
-                          labelText: "Email",
-                          keyboardType: TextInputType.name,
-                          validator: (value) {
-                            if (value == "") {
-                              return ("This field is required");
-                            }
-                            return null;
-                          },
-                        ),
-
-                        CustomTextField(
-                          controller:
-                              registrationController.contact_number_controller,
-                          labelText: "Contact Number",
-                          keyboardType: TextInputType.name,
-                          validator: (value) {
-                            if (value == "") {
-                              return ("This field is required");
-                            }
-                            return null;
-                          },
-                        ),
-
-                        CustomDropdownField(
-                          controller: registrationController.role_controller,
-                          labelText: "Role",
-                          dropdownList: roleList,
-                        ),
-
-                        CustomTextField(
-                          controller:
-                              registrationController.payment_number_controller,
-                          labelText: "Khalti Number",
-                          keyboardType: TextInputType.name,
-                          validator: (value) {
-                            if (value == "") {
-                              return ("This field is required");
-                            }
-                            return null;
-                          },
-                        ),
-
-                        CustomTextField(
-                          controller:
-                              registrationController.current_address_controller,
-                          labelText: "Current Address",
-                          keyboardType: TextInputType.name,
-                          validator: (value) {
-                            if (value == "") {
-                              return ("This field is required");
-                            }
-                            return null;
-                          },
-                        ),
-
-                        CustomTextField(
-                          controller:
-                              registrationController.password_controller,
-                          labelText: "Password",
-                          keyboardType: TextInputType.visiblePassword,
-                          isObscured: true,
-                          validator: (value) {
-                            if (value == "") {
-                              return ("This field is required");
-                            }
-                            return null;
-                          },
-                        ),
-
-                        CustomTextField(
-                          controller: confirmPasswordController,
-                          labelText: "Confirm Password",
-                          keyboardType: TextInputType.visiblePassword,
-                          isObscured: true,
-                          validator: (value) {
-                            if (value !=
-                                registrationController
-                                    .password_controller.text) {
-                              return ("Password and Confirm password didn't match.");
-                            }
-                            return null;
-                          },
-                        ),
-
-                        const SizedBox(height: 30), // 10% space
-                        Row(
-                          children: [
-                            Expanded(
-                              flex: 1,
-                              child: Obx(() {
-                                return ElevatedButton(
-                                  //key: const ValueKey("loginBtn"),
-
-                                  onPressed:
-                                      registrationController.isLoading.value
-                                          ? null
-                                          : () async {
-                                              await registrationController
-                                                  .userRegister();
-                                            },
-                                  style: ElevatedButton.styleFrom(
-                                    backgroundColor: cBlack,
-                                    shape: const RoundedRectangleBorder(
-                                      borderRadius:
-                                          BorderRadius.all(Radius.circular(8)),
-                                    ),
-                                  ),
-                                  // onPressed: () async {
-                                  //   //TODO
-                                  //   Navigator.push(
-                                  //       context,
-                                  //       MaterialPageRoute(
-                                  //           builder: (context) =>
-                                  //               const LayoutScreen()));
-                                  // },
-                                  child: const Text(
-                                    'Create an Account',
-                                    style: TextStyle(
-                                      fontSize: 16,
-                                      fontFamily: 'Poppins-SemiBold',
-                                      color: cWhite,
-                                    ),
-                                  ),
-                                );
-                              }),
-                            ),
-                          ],
-                        ),
-                        const SizedBox(height: 30),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                          children: [
-                            const Text("Already have an account?",
-                                style: fBlackRegular14),
-                            GestureDetector(
-                              onTap: () {
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) => const LoginScreen(),
-                                  ),
-                                );
-                              },
-                              child: const Text(
-                                "LOGIN",
-                                style: fBlackSemiBold16,
+                              onPressed: registrationController.isLoading.value
+                                  ? null
+                                  : () async {
+                                      await registrationController
+                                          .userRegister();
+                                    },
+                              style: ElevatedButton.styleFrom(
+                                backgroundColor: cBlack,
+                                shape: const RoundedRectangleBorder(
+                                  borderRadius:
+                                      BorderRadius.all(Radius.circular(8)),
+                                ),
                               ),
-                            ),
-                          ],
+                              // onPressed: () async {
+                              //   //TODO
+                              //   Navigator.push(
+                              //       context,
+                              //       MaterialPageRoute(
+                              //           builder: (context) =>
+                              //               const LayoutScreen()));
+                              // },
+                              child: const Text(
+                                'Create an Account',
+                                style: TextStyle(
+                                  fontSize: 16,
+                                  fontFamily: 'Poppins-SemiBold',
+                                  color: cWhite,
+                                ),
+                              ),
+                            );
+                          }),
                         ),
                       ],
                     ),
-                  ),
+                    const SizedBox(height: 30),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: [
+                        const Text("Already have an account?",
+                            style: fBlackRegular14),
+                        GestureDetector(
+                          onTap: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => const LoginScreen(),
+                              ),
+                            );
+                          },
+                          child: const Text(
+                            "LOGIN",
+                            style: fBlackSemiBold16,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ],
                 ),
-              ],
+              ),
             ),
-          ),
+          ],
         ),
-      ]),
+      ),
     );
   }
 

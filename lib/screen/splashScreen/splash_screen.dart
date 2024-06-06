@@ -1,8 +1,8 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:snkr_flutter/screen/splashScreen/login_or_resgistration_screen.dart';
-import 'package:snkr_flutter/core/utils/colors.dart';
+import 'package:get/get.dart';
+import 'package:snkr_flutter/core/utils/layout.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
@@ -20,12 +20,13 @@ class _SplashScreenState extends State<SplashScreen> {
     Timer(
       const Duration(seconds: 1),
       () {
-        Navigator.push(
-          context,
-          MaterialPageRoute(
-            builder: (context) => const LoginOrRegistrationScreen(),
-          ),
-        );
+        // Navigator.push(
+        //   context,
+        //   MaterialPageRoute(
+        //     builder: (context) => const LoginOrRegistrationScreen(),
+        //   ),
+        // );
+        Get.off(const LayoutScreen());
       },
     );
   }
@@ -37,10 +38,6 @@ class _SplashScreenState extends State<SplashScreen> {
         child: Padding(
           padding: const EdgeInsets.fromLTRB(0, 50, 0, 0),
           child: Container(
-            decoration: BoxDecoration(
-              color: cWhite,
-              borderRadius: BorderRadius.circular(8),
-            ),
             child: Image.asset(
               'assets/icons/main_logo.png',
               height: 400,
