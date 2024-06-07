@@ -28,16 +28,8 @@ class LoginController extends GetxController {
 
       if (loginResponse!.success == true) {
         Get.off(() => const LayoutScreen());
-        // showSnackBar(
-        //   LoginResponse?.message ?? 'Login Successful',
-        //   isError: false,
-        // );
         customSuccessSnackBar("Login Sucess");
       } else {
-        // showSnackBar(
-        //   "Error occurred while registering. Please try again",
-        //   isError: true,
-        // );
         customErrorSnackBar(
             "Error occurred while Logging In. Please try again");
       }
