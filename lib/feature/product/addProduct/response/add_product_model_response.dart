@@ -1,9 +1,9 @@
 import 'package:json_annotation/json_annotation.dart';
 
-part 'add_product_model.g.dart';
+part 'add_product_model_response.g.dart';
 
 @JsonSerializable()
-class AddProductModel {
+class AddProductModelResponse {
   int? id;
   String? name;
   String? brand;
@@ -11,22 +11,22 @@ class AddProductModel {
   String? category;
   String? size;
   String? color;
-  double? price;
-  double? discount_price;
-  double? commission;
-  double? final_price;
+  String? price;
+  String? discount_price;
+  String? commission;
+  String? final_price;
   String? description;
   String? material;
   String? sku;
   String? release_date;
   String? images;
-  double? weight;
+  String? weight;
   String? dimensions;
   String? gender;
   String? status;
-  int? user_id;
+  String? user_id;
 
-  AddProductModel({
+  AddProductModelResponse({
     this.id,
     this.name,
     this.brand,
@@ -50,8 +50,8 @@ class AddProductModel {
     this.user_id,
   });
 
-  factory AddProductModel.fromJson(Map<String, dynamic> json) =>
-      _$AddProductModelFromJson(json);
+  factory AddProductModelResponse.fromJson(Map<String, dynamic> json) =>
+      _$AddProductModelResponseFromJson(json);
 
-  Map<String, dynamic> toJson() => _$AddProductModelToJson(this);
+  Map<String, dynamic> toJson() => _$AddProductModelResponseToJson(this);
 }

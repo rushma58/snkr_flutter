@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:snkr_flutter/core/utils/fonts.dart';
 
 class CategoriesWidget extends StatefulWidget {
+  const CategoriesWidget({super.key});
+
   @override
   _CategoriesWidgetState createState() => _CategoriesWidgetState();
 }
@@ -36,8 +39,8 @@ class _CategoriesWidgetState extends State<CategoriesWidget> {
         });
       },
       child: Container(
-        margin: EdgeInsets.symmetric(horizontal: 5),
-        padding: EdgeInsets.symmetric(vertical: 5, horizontal: 15),
+        margin: const EdgeInsets.symmetric(horizontal: 5),
+        padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 15),
         decoration: BoxDecoration(
           color: selectedIndex == index ? Colors.grey : Colors.white,
           borderRadius: BorderRadius.circular(10),
@@ -47,11 +50,7 @@ class _CategoriesWidgetState extends State<CategoriesWidget> {
           children: [
             Text(
               text,
-              style: TextStyle(
-                color: Colors.black,
-                fontSize: 15,
-                fontWeight: FontWeight.bold,
-              ),
+              style: fBlackSemiBold14,
             )
           ],
         ),
@@ -64,9 +63,9 @@ void main() {
   runApp(MaterialApp(
     home: Scaffold(
       appBar: AppBar(
-        title: Text('Selectable Categories'),
+        title: const Text('Selectable Categories'),
       ),
-      body: CategoriesWidget(),
+      body: const CategoriesWidget(),
     ),
   ));
 }

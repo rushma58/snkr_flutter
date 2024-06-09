@@ -1,5 +1,7 @@
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:flutter/material.dart';
+import 'package:iconify_flutter/iconify_flutter.dart';
+import 'package:iconify_flutter/icons/material_symbols.dart';
 import 'package:snkr_flutter/core/helper/sharedPreferences/shared_preferences.dart';
 import 'package:snkr_flutter/core/helper/snackBar/snack_bar_helper.dart';
 import 'package:snkr_flutter/core/utils/colors.dart';
@@ -67,15 +69,17 @@ class _LayoutScreenState extends State<LayoutScreen> {
             size: 30,
             color: Colors.white,
           ),
-          const Icon(
-            Icons.abc,
+          const Iconify(
+            MaterialSymbols.compare_arrows,
+            color: cWhite,
             size: 30,
-            color: Colors.white,
           ),
-          Icon(
-            isBuyer ? Icons.shopping_cart_checkout : Icons.add,
+          Iconify(
+            isBuyer
+                ? MaterialSymbols.shopping_cart
+                : MaterialSymbols.add_circle,
+            color: cWhite,
             size: 30,
-            color: Colors.white,
           ),
           const Icon(
             Icons.person,

@@ -50,7 +50,7 @@ class _HomeAppBarState extends State<HomeAppBar> {
   Widget build(BuildContext context) {
     return Container(
       color: Colors.white,
-      padding: const EdgeInsets.all(15),
+      padding: const EdgeInsets.all(12),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
@@ -61,7 +61,7 @@ class _HomeAppBarState extends State<HomeAppBar> {
               removeData('role');
             },
             icon: const Icon(
-              Icons.menu,
+              Icons.logout,
               size: 30,
               color: Colors.black,
             ),

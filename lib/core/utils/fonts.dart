@@ -140,6 +140,13 @@ const TextStyle fRedRegular16 =
     TextStyle(fontFamily: 'Poppins-Regular', fontSize: 16.0, color: cRed);
 
 //------------------------ Blue fonts
+
+const TextStyle fBlueSemiBold20 =
+    TextStyle(fontFamily: 'Poppins-SemiBold', fontSize: 20.0, color: cBlue);
+
+const TextStyle fBlueSemiBold18 =
+    TextStyle(fontFamily: 'Poppins-SemiBold', fontSize: 18.0, color: cBlue);
+
 const TextStyle fBlueSemiBold16 =
     TextStyle(fontFamily: 'Poppins-SemiBold', fontSize: 16.0, color: cBlue);
 
@@ -207,6 +214,12 @@ const TextStyle fBlackSemiBold30 =
 
 const TextStyle fBlackSemiBold24 =
     TextStyle(fontFamily: 'Poppins-SemiBold', fontSize: 24.0, color: cBlack);
+
+const TextStyle fBlackSemiBold20 =
+    TextStyle(fontFamily: 'Poppins-SemiBold', fontSize: 20.0, color: cBlack);
+
+const TextStyle fBlackSemiBold18 =
+    TextStyle(fontFamily: 'Poppins-SemiBold', fontSize: 18.0, color: cBlack);
 
 const TextStyle fBlackSemiBold16 =
     TextStyle(fontFamily: 'Poppins-SemiBold', fontSize: 16.0, color: cBlack);

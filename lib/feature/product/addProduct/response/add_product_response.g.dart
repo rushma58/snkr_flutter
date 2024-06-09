@@ -12,7 +12,8 @@ AddProductResponse _$AddProductResponseFromJson(Map<String, dynamic> json) =>
       message: json['message'] as String?,
       data: json['data'] == null
           ? null
-          : AddProductModel.fromJson(json['data'] as Map<String, dynamic>),
+          : AddProductModelResponse.fromJson(
+              json['data'] as Map<String, dynamic>),
     );
 
 Map<String, dynamic> _$AddProductResponseToJson(AddProductResponse instance) =>

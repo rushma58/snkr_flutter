@@ -1,5 +1,5 @@
 import 'package:json_annotation/json_annotation.dart';
-import 'package:snkr_flutter/feature/product/addProduct/model/add_product_model.dart';
+import 'package:snkr_flutter/feature/product/addProduct/response/add_product_model_response.dart';
 
 part 'add_product_response.g.dart';
 
@@ -7,7 +7,7 @@ part 'add_product_response.g.dart';
 class AddProductResponse {
   bool? success;
   String? message;
-  AddProductModel? data;
+  AddProductModelResponse? data;
 
   AddProductResponse({
     this.success,

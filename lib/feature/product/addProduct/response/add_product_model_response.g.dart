@@ -1,13 +1,14 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'add_product_model.dart';
+part of 'add_product_model_response.dart';
 
 // **************************************************************************
 // JsonSerializableGenerator
 // **************************************************************************
 
-AddProductModel _$AddProductModelFromJson(Map<String, dynamic> json) =>
-    AddProductModel(
+AddProductModelResponse _$AddProductModelResponseFromJson(
+        Map<String, dynamic> json) =>
+    AddProductModelResponse(
       id: (json['id'] as num?)?.toInt(),
       name: json['name'] as String?,
       brand: json['brand'] as String?,
@@ -15,23 +16,24 @@ AddProductModel _$AddProductModelFromJson(Map<String, dynamic> json) =>
       category: json['category'] as String?,
       size: json['size'] as String?,
       color: json['color'] as String?,
-      price: (json['price'] as num?)?.toDouble(),
-      discount_price: (json['discount_price'] as num?)?.toDouble(),
-      commission: (json['commission'] as num?)?.toDouble(),
-      final_price: (json['final_price'] as num?)?.toDouble(),
+      price: json['price'] as String?,
+      discount_price: json['discount_price'] as String?,
+      commission: json['commission'] as String?,
+      final_price: json['final_price'] as String?,
       description: json['description'] as String?,
       material: json['material'] as String?,
       sku: json['sku'] as String?,
       release_date: json['release_date'] as String?,
       images: json['images'] as String?,
-      weight: (json['weight'] as num?)?.toDouble(),
+      weight: json['weight'] as String?,
       dimensions: json['dimensions'] as String?,
       gender: json['gender'] as String?,
       status: json['status'] as String?,
-      user_id: (json['user_id'] as num?)?.toInt(),
+      user_id: json['user_id'] as String?,
     );
 
-Map<String, dynamic> _$AddProductModelToJson(AddProductModel instance) =>
+Map<String, dynamic> _$AddProductModelResponseToJson(
+        AddProductModelResponse instance) =>
     <String, dynamic>{
       'id': instance.id,
       'name': instance.name,

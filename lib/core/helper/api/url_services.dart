@@ -6,3 +6,4 @@ const registrationUrl = "/api/auth/register";
 const loginUrl = "/api/auth/login";
 
 const addProductUrl = "/api/add/product";
+const fetchProductUrl = "/api/fetch/shoe";
