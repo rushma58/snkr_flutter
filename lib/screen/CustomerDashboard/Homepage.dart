@@ -80,7 +80,7 @@ class Homepage extends StatelessWidget {
                         margin: const EdgeInsets.symmetric(
                             vertical: 20, horizontal: 20),
                         child: const Text(
-                          "Categories",
+                          "Brands",
                           style: fBlackSemiBold20,
                         ),
                       ),

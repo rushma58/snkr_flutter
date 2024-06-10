@@ -69,8 +69,10 @@ class _LayoutScreenState extends State<LayoutScreen> {
             size: 30,
             color: Colors.white,
           ),
-          const Iconify(
-            MaterialSymbols.compare_arrows,
+          Iconify(
+            isBuyer
+                ? MaterialSymbols.compare_arrows
+                : MaterialSymbols.check_circle,
             color: cWhite,
             size: 30,
           ),

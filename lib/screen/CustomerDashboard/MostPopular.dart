@@ -110,6 +110,7 @@ import 'package:get/get.dart';
 import 'package:snkr_flutter/core/utils/colors.dart';
 import 'package:snkr_flutter/core/utils/fonts.dart';
 import 'package:snkr_flutter/feature/product/fetchProduct/model/fetch_product_model.dart';
+import 'package:snkr_flutter/screen/Item/individual_shoe_screen.dart';
 
 class MostPopular extends StatelessWidget {
   final FetchProductModel product;
@@ -150,6 +151,9 @@ class MostPopular extends StatelessWidget {
           ),
           GestureDetector(
             onTap: () {
+              Get.to(() => IndividualShoeScreen(
+                    individualProduct: product,
+                  ));
               // Navigate to product details page
             },
             child: Container(
