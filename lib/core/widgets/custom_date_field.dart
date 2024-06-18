@@ -1,36 +1,32 @@
 import 'package:flutter/material.dart';
-import 'package:iconify_flutter/iconify_flutter.dart';
-import 'package:iconify_flutter/icons/mdi.dart';
 import 'package:intl/intl.dart';
 import 'package:snkr_flutter/core/utils/colors.dart';
 import 'package:snkr_flutter/core/utils/fonts.dart';
 
-class CustomTextField extends StatefulWidget {
+class CustomDateField extends StatefulWidget {
   final TextEditingController controller;
   final String labelText;
   final bool? readOnly;
   final String? Function(String?)? validator;
-  final bool? isObscured;
   final TextInputType? keyboardType;
 
-  const CustomTextField({
+  const CustomDateField({
     Key? key, // Use Key type for the key parameter
     required this.controller,
     required this.labelText,
     this.validator,
     this.readOnly,
-    this.isObscured,
     this.keyboardType,
   }) : super(key: key);
 
   @override
-  State<CustomTextField> createState() => _CustomTextFieldState();
+  State<CustomDateField> createState() => _CustomDateFieldState();
 }
 
-class _CustomTextFieldState extends State<CustomTextField> {
-  bool _obscureText = true;
+class _CustomDateFieldState extends State<CustomDateField> {
+  final bool _obscureText = true;
 
-  Future<String> getDatePicker(
+  Future<void> getDatePicker(
     BuildContext context,
   ) async {
     DateTime? datePicked = await showDatePicker(
@@ -40,10 +36,9 @@ class _CustomTextFieldState extends State<CustomTextField> {
       context: context,
       initialDatePickerMode: DatePickerMode.day,
     );
-    // if (datePicked != null) {
-    //   selectedDate.text = DateFormat('yyyy-MM-dd').format(datePicked);
-    // }
-    return DateFormat('yyyy/MM/dd').format(datePicked!).toString();
+    if (datePicked != null) {
+      widget.controller.text = DateFormat('yyyy-MM-dd').format(datePicked);
+    }
   }
 
   @override
@@ -57,7 +52,6 @@ class _CustomTextFieldState extends State<CustomTextField> {
         validator: widget.validator,
         readOnly: widget.readOnly ?? false,
         style: fBlackRegular14,
-        obscureText: widget.isObscured ?? false ? _obscureText : false,
         decoration: InputDecoration(
           border: const OutlineInputBorder(),
           //floatingLabelStyle: fGBrownRegular14,
@@ -71,20 +65,15 @@ class _CustomTextFieldState extends State<CustomTextField> {
               borderSide: const BorderSide(color: cBlack)),
           focusColor: cSilver,
           // Conditionally set the suffix icon
-          suffixIcon: widget.isObscured != null && widget.isObscured == true
-              ? IconButton(
-                  onPressed: () {
-                    setState(() {
-                      _obscureText = !_obscureText;
-                    });
-                  },
-                  icon: Iconify(
-                    _obscureText ? Mdi.eye_off : Mdi.eye,
-                    size: 24,
-                    color: cGrayOld,
-                  ),
-                )
-              : null, // Set null if onPressed or icon is not provided
+          suffixIcon: IconButton(
+            onPressed: () {
+              getDatePicker(context);
+            },
+            icon: const Icon(
+              Icons.calendar_month,
+              color: cBlack,
+            ),
+          ), // Set null if onPressed or icon is not provided
         ),
       ),
     );

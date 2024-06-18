@@ -18,8 +18,8 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(Object context) {
-    return GetMaterialApp(
-        navigatorKey: navigatorKey,
+    return SafeArea(
+      child: GetMaterialApp(
         title: 'snkr',
         theme: ThemeData(
           colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
@@ -27,8 +27,7 @@ class MyApp extends StatelessWidget {
         ),
         home: const SplashScreen(),
         debugShowCheckedModeBanner: false,
-        routes: {
-          SplashScreen.route: (context) => const SplashScreen(),
-        });
+      ),
+    );
   }
 }

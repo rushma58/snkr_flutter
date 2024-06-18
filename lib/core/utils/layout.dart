@@ -1,8 +1,13 @@
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:flutter/material.dart';
+import 'package:iconify_flutter/iconify_flutter.dart';
+import 'package:iconify_flutter/icons/material_symbols.dart';
+import 'package:snkr_flutter/core/helper/sharedPreferences/shared_preferences.dart';
+import 'package:snkr_flutter/core/helper/snackBar/snack_bar_helper.dart';
+import 'package:snkr_flutter/core/utils/colors.dart';
 import 'package:snkr_flutter/screen/Cart/CartPage.dart';
 import 'package:snkr_flutter/screen/CustomerDashboard/Homepage.dart';
-import 'package:snkr_flutter/core/utils/colors.dart';
+import 'package:snkr_flutter/screen/SellerDashboard/SellerHomepage.dart';
 
 class LayoutScreen extends StatefulWidget {
   const LayoutScreen({Key? key}) : super(key: key);
@@ -13,22 +18,36 @@ class LayoutScreen extends StatefulWidget {
 
 class _LayoutScreenState extends State<LayoutScreen> {
   int _selectedIndex = 0;
-  List<String>? permissions;
+  String? token;
+  String? role;
+  bool isLoggedIn = false;
+  bool isBuyer = true;
 
   @override
   void initState() {
     super.initState();
+    _getDataFromSharedPref();
   }
 
-  // Future<void> _getDataFromSharedPref() async {
-  //   try {
-  //     final SharedPreferences prefs = await SharedPreferences.getInstance();
-  //     permissions = prefs.getStringList('permissions');
-  //     setState(() {});
-  //   } catch (e) {
-  //     print("Error getting data from SharedPreferences: $e");
-  //   }
-  // }
+  Future<void> _getDataFromSharedPref() async {
+    try {
+      token = await getStringData('token');
+      isLoggedIn = token != null && token!.isNotEmpty;
+
+      if (isLoggedIn) {
+        role = await getStringData('role');
+        isBuyer = role != "Seller";
+      }
+
+      debugPrint("Token: $token");
+      debugPrint("Role: $role");
+      debugPrint("isBuyer: $isBuyer");
+
+      setState(() {});
+    } catch (e) {
+      print("Error getting data from SharedPreferences: $e");
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -37,35 +56,34 @@ class _LayoutScreenState extends State<LayoutScreen> {
         child: _getSelectedWidget(),
       ),
       bottomNavigationBar: CurvedNavigationBar(
-        //index: 2,
         key: const ValueKey('bottomNav'),
         height: 60,
         backgroundColor: Colors.transparent,
         color: cBlack,
-        //animationDuration: const Duration(milliseconds: 300),
-        //buttonBackgroundColor: cGBrown,
         onTap: (index) {
-          setState(() {
-            _selectedIndex = index;
-          });
+          _handleNavigation(index);
         },
-        items: const [
+        items: [
           Icon(
-            Icons.home,
+            isBuyer ? Icons.home : Icons.sell,
             size: 30,
             color: Colors.white,
           ),
-          Icon(
-            Icons.menu_book,
+          Iconify(
+            isBuyer
+                ? MaterialSymbols.compare_arrows
+                : MaterialSymbols.check_circle,
+            color: cWhite,
             size: 30,
-            color: Colors.white,
           ),
-          Icon(
-            Icons.shopping_cart_checkout,
+          Iconify(
+            isBuyer
+                ? MaterialSymbols.shopping_cart
+                : MaterialSymbols.add_circle,
+            color: cWhite,
             size: 30,
-            color: Colors.white,
           ),
-          Icon(
+          const Icon(
             Icons.person,
             size: 30,
             color: Colors.white,
@@ -75,23 +93,37 @@ class _LayoutScreenState extends State<LayoutScreen> {
     );
   }
 
-  Widget _getSelectedWidget() {
-    switch (_selectedIndex) {
-      case 0:
-        return const Homepage();
-      case 1:
-        return const Homepage();
-      case 2:
-        return const CartPage();
-      case 3:
-        return const Homepage();
+  void _handleNavigation(int index) {
+    if (isLoggedIn) {
+      setState(() {
+        _selectedIndex = index;
+      });
+    } else {
+      // Navigator.pushReplacement(
+      //   context,
+      //   MaterialPageRoute(builder: (context) => LoginPage()),
+      // );
 
-      default:
-        return const SizedBox();
+      customInfoSnackBar("Need to be logged in to perform this action");
     }
   }
 
-  bool _hasPermission(String permission) {
-    return permissions?.contains(permission) ?? false;
+  Widget _getSelectedWidget() {
+    // if (!isLoggedIn) {
+    //   return const LoginScreen();
+    // }
+
+    switch (_selectedIndex) {
+      case 0:
+        return isBuyer ? const Homepage() : const SellerHomepage();
+      case 1:
+        return isBuyer ? const Homepage() : const SellerHomepage();
+      case 2:
+        return const CartPage();
+      case 3:
+        return isBuyer ? const Homepage() : const SellerHomepage();
+      default:
+        return const SizedBox();
+    }
   }
 }

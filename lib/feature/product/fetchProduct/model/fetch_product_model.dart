@@ -1,9 +1,10 @@
 import 'package:json_annotation/json_annotation.dart';
+import 'package:snkr_flutter/feature/auth/registration/response/registration_response_model.dart';
 
-part 'add_product_model.g.dart';
+part 'fetch_product_model.g.dart';
 
 @JsonSerializable()
-class AddProductModel {
+class FetchProductModel {
   int? id;
   String? name;
   String? brand;
@@ -11,22 +12,23 @@ class AddProductModel {
   String? category;
   String? size;
   String? color;
-  double? price;
-  double? discount_price;
-  double? commission;
-  double? final_price;
+  String? price;
+  String? discount_price;
+  String? commission;
+  String? final_price;
   String? description;
   String? material;
   String? sku;
   String? release_date;
   String? images;
-  double? weight;
+  String? weight;
   String? dimensions;
   String? gender;
   String? status;
   int? user_id;
+  RegistrationResponseModel? user;
 
-  AddProductModel({
+  FetchProductModel({
     this.id,
     this.name,
     this.brand,
@@ -48,10 +50,11 @@ class AddProductModel {
     this.gender,
     this.status,
     this.user_id,
+    this.user,
   });
 
-  factory AddProductModel.fromJson(Map<String, dynamic> json) =>
-      _$AddProductModelFromJson(json);
+  factory FetchProductModel.fromJson(Map<String, dynamic> json) =>
+      _$FetchProductModelFromJson(json);
 
-  Map<String, dynamic> toJson() => _$AddProductModelToJson(this);
+  Map<String, dynamic> toJson() => _$FetchProductModelToJson(this);
 }
