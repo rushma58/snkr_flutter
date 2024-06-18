@@ -7,6 +7,8 @@ import 'package:snkr_flutter/core/utils/layout.dart';
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
 
+  static const route = 'splashscreen';
+
   @override
   State<SplashScreen> createState() => _SplashScreenState();
 }
