@@ -4,20 +4,22 @@ part 'registration_response_model.g.dart';
 
 @JsonSerializable()
 class RegistrationResponseModel {
-  int? id;
+  int? user_id;
   String? first_name;
   String? last_name;
   String? role;
   String? email;
+  String? email_verified_at;
   String? contact_number;
   String? password;
   String? payment_method;
   String? current_address;
+  String? remember_token;
   String? updated_at;
   String? created_at;
 
   RegistrationResponseModel({
-    this.id,
+    this.user_id,
     this.first_name,
     this.last_name,
     this.role,
@@ -28,6 +30,8 @@ class RegistrationResponseModel {
     this.current_address,
     this.updated_at,
     this.created_at,
+    this.email_verified_at,
+    this.remember_token,
   });
 
   factory RegistrationResponseModel.fromJson(Map<String, dynamic> json) =>

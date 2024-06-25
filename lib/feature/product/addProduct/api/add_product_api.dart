@@ -5,6 +5,7 @@ import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:snkr_flutter/core/helper/api/http_services.dart';
 import 'package:snkr_flutter/core/helper/api/url_services.dart';
+import 'package:snkr_flutter/core/helper/sharedPreferences/shared_preferences.dart';
 import 'package:snkr_flutter/feature/product/addProduct/model/add_product_model.dart';
 import 'package:snkr_flutter/feature/product/addProduct/response/add_product_response.dart';
 
@@ -18,6 +19,8 @@ class AddProductAPI {
     String? url = baseUrl + addProductUrl;
 
     try {
+      String? token = await getStringData("token");
+
       // Read the image file
       final imageBytes = await File(addProductModel.images!).readAsBytes();
       final base64Image = base64Encode(imageBytes);
@@ -50,6 +53,10 @@ class AddProductAPI {
       });
 
       response = await dio.post(
+        options: Options(
+          headers: {HttpHeaders.authorizationHeader: "Bearer $token"},
+        ),
+
         url,
         //data: addProductModel.toJson(),
         data: formData,

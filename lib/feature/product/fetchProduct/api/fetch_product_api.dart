@@ -13,8 +13,12 @@ class FetchProductAPI {
     String? url = baseUrl + fetchProductUrl;
 
     try {
-      response = await dio.post(
+      //String? token = await getStringData("token");
+      response = await dio.get(
         url,
+        // options: Options(
+        //   headers: {HttpHeaders.authorizationHeader: "Bearer $token"},
+        // ),
       );
       if (response.statusCode == 200) {
         fetchProductResponse = FetchProductResponse.fromJson(response.data);
