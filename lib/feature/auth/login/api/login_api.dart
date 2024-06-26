@@ -15,14 +15,14 @@ class LoginAPI {
     String? url = baseUrl + loginUrl;
 
     try {
-      response = await dio.post(
+      response = await dio.get(
         url,
         data: loginParamsModel.toJson(),
       );
       if (response.statusCode == 200) {
         loginResponse = LoginResponse.fromJson(response.data);
 
-        await setStringData('token', loginResponse.token.toString());
+        await setStringData('token', loginResponse.access_token.toString());
         await setStringData('role', loginResponse.user!.role.toString());
 
         debugPrint("${await getStringData('token')}");

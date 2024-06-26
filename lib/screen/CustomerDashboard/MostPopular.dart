@@ -107,6 +107,8 @@
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:iconify_flutter/iconify_flutter.dart';
+import 'package:iconify_flutter/icons/emojione_monotone.dart';
 import 'package:snkr_flutter/core/utils/colors.dart';
 import 'package:snkr_flutter/core/utils/fonts.dart';
 import 'package:snkr_flutter/feature/product/fetchProduct/model/fetch_product_model.dart';
@@ -163,6 +165,10 @@ class MostPopular extends StatelessWidget {
                 height: 100,
                 width: 100,
                 fit: BoxFit.contain,
+                errorBuilder: (BuildContext context, Object exception,
+                    StackTrace? stackTrace) {
+                  return const Iconify(EmojioneMonotone.running_shoe);
+                },
               ),
             ),
           ),

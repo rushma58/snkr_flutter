@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:iconify_flutter/iconify_flutter.dart';
+import 'package:iconify_flutter/icons/emojione_monotone.dart';
 import 'package:iconify_flutter/icons/material_symbols.dart';
 import 'package:iconify_flutter/icons/mdi.dart';
 import 'package:snkr_flutter/core/utils/colors.dart';
@@ -322,6 +323,10 @@ class _IndividualShoeScreenState extends State<IndividualShoeScreen> {
                       // height: 100,
                       // width: 100,
                       fit: BoxFit.fitWidth,
+                      errorBuilder: (BuildContext context, Object exception,
+                          StackTrace? stackTrace) {
+                        return const Iconify(EmojioneMonotone.running_shoe);
+                      },
                     ),
                   ),
                   Text(

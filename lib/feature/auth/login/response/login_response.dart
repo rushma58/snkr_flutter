@@ -8,12 +8,16 @@ class LoginResponse {
   bool? success;
   String? message;
   RegistrationResponseModel? user;
-  String? token;
+  String? access_token;
+  String? token_type;
+  int? expires_in;
 
   LoginResponse({
     this.success,
     this.message,
-    this.token,
+    this.access_token,
+    this.token_type,
+    this.expires_in,
     this.user,
   });
 
