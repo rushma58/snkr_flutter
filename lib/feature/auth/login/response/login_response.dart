@@ -7,7 +7,7 @@ part 'login_response.g.dart';
 class LoginResponse {
   bool? success;
   String? message;
-  RegistrationResponseModel? user;
+  RegistrationResponseModel? data;
   String? access_token;
   String? token_type;
   int? expires_in;
@@ -18,7 +18,7 @@ class LoginResponse {
     this.access_token,
     this.token_type,
     this.expires_in,
-    this.user,
+    this.data,
   });
 
   factory LoginResponse.fromJson(Map<String, dynamic> json) =>

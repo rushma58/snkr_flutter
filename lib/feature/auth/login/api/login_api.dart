@@ -23,7 +23,7 @@ class LoginAPI {
         loginResponse = LoginResponse.fromJson(response.data);
 
         await setStringData('token', loginResponse.access_token.toString());
-        await setStringData('role', loginResponse.user!.role.toString());
+        await setStringData('role', loginResponse.data!.role.toString());
 
         debugPrint("${await getStringData('token')}");
       }

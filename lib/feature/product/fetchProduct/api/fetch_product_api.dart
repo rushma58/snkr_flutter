@@ -4,8 +4,11 @@ import 'package:snkr_flutter/core/helper/api/http_services.dart';
 import 'package:snkr_flutter/core/helper/api/url_services.dart';
 import 'package:snkr_flutter/feature/product/fetchProduct/response/fetch_product_response.dart';
 
+import '../model/fetch_product_params_model.dart';
+
 class FetchProductAPI {
-  Future<FetchProductResponse?> fetchProduct() async {
+  Future<FetchProductResponse?> fetchProduct(
+      FetchProductParamsModel fetchProductParamsModel) async {
     Response? response;
     FetchProductResponse? fetchProductResponse;
     Dio dio = HttpServices().getDioInstance();
@@ -14,8 +17,9 @@ class FetchProductAPI {
 
     try {
       //String? token = await getStringData("token");
-      response = await dio.get(
+      response = await dio.post(
         url,
+        data: fetchProductParamsModel.toJson(),
         // options: Options(
         //   headers: {HttpHeaders.authorizationHeader: "Bearer $token"},
         // ),

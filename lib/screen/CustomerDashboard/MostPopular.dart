@@ -114,6 +114,8 @@ import 'package:snkr_flutter/core/utils/fonts.dart';
 import 'package:snkr_flutter/feature/product/fetchProduct/model/fetch_product_model.dart';
 import 'package:snkr_flutter/screen/Item/individual_shoe_screen.dart';
 
+import '../../core/helper/api/url_services.dart';
+
 class MostPopular extends StatelessWidget {
   final FetchProductModel product;
 
@@ -121,7 +123,7 @@ class MostPopular extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    const baseUrl = "http://10.0.2.2:8000/";
+    //const baseUrl = "http://10.0.2.2:8000/";
     return Container(
       //height: Get.width * 0.3,
       width: Get.width * 0.5,
@@ -129,11 +131,11 @@ class MostPopular extends StatelessWidget {
       padding: const EdgeInsets.only(top: 10, left: 10, right: 10),
       decoration: BoxDecoration(
         // color: const Color.fromARGB(255, 248, 244, 242),
-        color: cSilver,
+        color: const Color.fromARGB(221, 205, 203, 203),
         borderRadius: BorderRadius.circular(20),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withOpacity(0.2),
+            color: const Color.fromARGB(255, 251, 249, 249).withOpacity(0.1),
             spreadRadius: 2,
             blurRadius: 2,
             offset: const Offset(0, 2),
@@ -167,7 +169,7 @@ class MostPopular extends StatelessWidget {
                 fit: BoxFit.contain,
                 errorBuilder: (BuildContext context, Object exception,
                     StackTrace? stackTrace) {
-                  return const Iconify(EmojioneMonotone.running_shoe);
+                  return const Iconify(EmojioneMonotone.running_shoe, size: 80);
                 },
               ),
             ),

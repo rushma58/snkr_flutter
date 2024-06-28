@@ -32,11 +32,13 @@ class _LayoutScreenState extends State<LayoutScreen> {
   Future<void> _getDataFromSharedPref() async {
     try {
       token = await getStringData('token');
+      debugPrint("Token in Layout: $token ");
       isLoggedIn = token != null && token!.isNotEmpty;
 
       if (isLoggedIn) {
         role = await getStringData('role');
-        isBuyer = role != "Seller";
+
+        isBuyer = role != "1";
       }
 
       debugPrint("Token: $token");

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:iconify_flutter/iconify_flutter.dart';
 import 'package:iconify_flutter/icons/emojione_monotone.dart';
 import 'package:iconify_flutter/icons/material_symbols.dart';
@@ -6,9 +7,12 @@ import 'package:iconify_flutter/icons/mdi.dart';
 import 'package:snkr_flutter/core/utils/colors.dart';
 import 'package:snkr_flutter/core/utils/fonts.dart';
 import 'package:snkr_flutter/feature/product/fetchProduct/model/fetch_product_model.dart';
+import 'package:snkr_flutter/screen/Order/Address/address.dart';
+import 'package:snkr_flutter/screen/Order/OrderConfirmation/order_confirmation.dart';
 
 import '../../core/helper/api/url_services.dart';
 import '../../core/widgets/top_nav_bar.dart';
+import '../Order/Shipping Location/shipping_location.dart';
 
 class IndividualShoeScreen extends StatefulWidget {
   final FetchProductModel individualProduct;
@@ -325,7 +329,12 @@ class _IndividualShoeScreenState extends State<IndividualShoeScreen> {
                       fit: BoxFit.fitWidth,
                       errorBuilder: (BuildContext context, Object exception,
                           StackTrace? stackTrace) {
-                        return const Iconify(EmojioneMonotone.running_shoe);
+                        return Center(
+                          child: Iconify(
+                            EmojioneMonotone.running_shoe,
+                            size: Get.width * 0.7,
+                          ),
+                        );
                       },
                     ),
                   ),
@@ -405,7 +414,19 @@ class _IndividualShoeScreenState extends State<IndividualShoeScreen> {
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
             FloatingActionButton.extended(
-              onPressed: () {},
+              heroTag: "buy_now_tag",
+              onPressed: () {
+                Get.to(OrderConfirmScreen(
+                  address: Address(
+                      fullName: "fullName",
+                      mobileNumber: "mobileNumber",
+                      streetName: "streetName",
+                      address: "address",
+                      city: "city",
+                      state: "state",
+                      zipCode: "zipCode"),
+                ));
+              },
               label: const Text(
                 "Buy Now",
                 style: fBlackRegular14,
@@ -414,6 +435,7 @@ class _IndividualShoeScreenState extends State<IndividualShoeScreen> {
               backgroundColor: cSilver,
             ),
             FloatingActionButton.extended(
+              heroTag: "add_to_cart_tag",
               onPressed: () {},
               label: const Text(
                 "Add to Cart",
