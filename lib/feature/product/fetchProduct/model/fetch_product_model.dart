@@ -5,7 +5,7 @@ part 'fetch_product_model.g.dart';
 
 @JsonSerializable()
 class FetchProductModel {
-  int? id;
+  int? shoe_id;
   String? name;
   String? brand;
   String? model;
@@ -29,7 +29,7 @@ class FetchProductModel {
   RegistrationResponseModel? user;
 
   FetchProductModel({
-    this.id,
+    this.shoe_id,
     this.name,
     this.brand,
     this.model,

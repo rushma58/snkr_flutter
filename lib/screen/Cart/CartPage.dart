@@ -1,27 +1,66 @@
-import 'package:curved_navigation_bar/curved_navigation_bar.dart';
-
 import 'package:flutter/material.dart';
-import 'package:snkr_flutter/screen/Cart/CartAppBar.dart';
-import 'package:snkr_flutter/screen/Cart/CartItemSamples.dart';
+import 'package:get/get.dart';
+import 'package:snkr_flutter/screen/Cart/each_cart_card.dart';
 
-class CartPage extends StatelessWidget {
+import '../../core/utils/colors.dart';
+import '../../core/widgets/top_nav_bar.dart';
+import '../../feature/cart/controller/add_to_cart_controller.dart';
+
+class CartPage extends StatefulWidget {
   const CartPage({super.key});
+
+  @override
+  State<CartPage> createState() => _CartPageState();
+}
+
+class _CartPageState extends State<CartPage> {
+  final cartController = Get.put(CartController());
+
+  @override
+  void initState() {
+    super.initState();
+    cartController.getCart();
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: ListView(
+      appBar: const PreferredSize(
+        preferredSize: Size.fromHeight(kToolbarHeight),
+        child: TopNavBar(
+          appBarName: "My Cart",
+          filterRequired: false,
+          backFunction: '',
+        ),
+      ),
+      body: Stack(
         children: [
-          const CartAppBar(),
           Container(
-            height: 700,
-            padding: const EdgeInsets.only(top: 15),
-            decoration: const BoxDecoration(
-              color: Colors.white,
-            ),
-            child: const Column(
+            decoration: const BoxDecoration(color: cWhite),
+          ),
+          SingleChildScrollView(
+            child: Column(
               children: [
-                CartItemSamples(),
+                Obx(
+                  () {
+                    if (cartController.isLoading.value) {
+                      return const Center(child: CircularProgressIndicator());
+                    } else {
+                      return Container(
+                        padding: const EdgeInsets.all(10),
+                        child: ListView.builder(
+                          physics: const NeverScrollableScrollPhysics(),
+                          shrinkWrap: true,
+                          itemCount: cartController.getCartList!.length,
+                          itemBuilder: (context, index) {
+                            final cart = cartController.getCartList![index];
+                            return EachCartCard(cart: cart);
+                          },
+                        ),
+                      );
+                    }
+                  },
+                ),
               ],
             ),
           ),

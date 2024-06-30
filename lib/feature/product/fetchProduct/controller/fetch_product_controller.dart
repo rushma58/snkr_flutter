@@ -19,10 +19,12 @@ class FetchProductController extends GetxController {
   final _isLoading = false.obs;
   bool get isLoading => _isLoading.value;
 
+  // Add this for search results
+  final _searchResults = Rx<List<FetchProductModel>>([]);
+  List<FetchProductModel> get searchResults => _searchResults.value;
+
   @override
   void onClose() {
-    // TODO: implement onClose
-
     name_controller.clear();
     brand_controller.clear();
     category_controller.clear();
@@ -59,7 +61,34 @@ class FetchProductController extends GetxController {
           await _fetchProductRepository.fetchProduct(fetchProductParamsModel);
       _fetchProductResponse.value = response;
     } catch (e) {
-      debugPrint('Error fetching appointment list: $e');
+      debugPrint('Error fetching product list: $e');
+    } finally {
+      _isLoading.value = false;
+    }
+  }
+
+  // Add this method for searching products
+  Future<void> searchProducts(String query) async {
+    _isLoading.value = true;
+    try {
+      final fetchProductParamsModel = FetchProductParamsModel(
+        name: name_controller.text,
+        brand: brand_controller.text,
+        category: category_controller.text,
+        min_price: min_price_controller.text,
+        max_price: max_price_controller.text,
+      );
+
+      final response =
+          await _fetchProductRepository.fetchProduct(fetchProductParamsModel);
+      if (response != null && response.data != null) {
+        _searchResults.value = response.data!;
+      } else {
+        _searchResults.value = [];
+      }
+    } catch (e) {
+      debugPrint('Error searching products: $e');
+      _searchResults.value = [];
     } finally {
       _isLoading.value = false;
     }

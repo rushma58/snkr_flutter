@@ -33,7 +33,7 @@ class _HomeAppBarState extends State<HomeAppBar> {
 
       if (isLoggedIn) {
         role = await getStringData('role');
-        isBuyer = role != "Seller";
+        isBuyer = role != "1";
       }
 
       debugPrint("Token: $token");

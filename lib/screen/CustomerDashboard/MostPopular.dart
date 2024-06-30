@@ -109,7 +109,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:iconify_flutter/iconify_flutter.dart';
 import 'package:iconify_flutter/icons/emojione_monotone.dart';
-import 'package:snkr_flutter/core/utils/colors.dart';
 import 'package:snkr_flutter/core/utils/fonts.dart';
 import 'package:snkr_flutter/feature/product/fetchProduct/model/fetch_product_model.dart';
 import 'package:snkr_flutter/screen/Item/individual_shoe_screen.dart';
@@ -131,11 +130,11 @@ class MostPopular extends StatelessWidget {
       padding: const EdgeInsets.only(top: 10, left: 10, right: 10),
       decoration: BoxDecoration(
         // color: const Color.fromARGB(255, 248, 244, 242),
-        color: const Color.fromARGB(221, 205, 203, 203),
+        color: const Color.fromARGB(221, 247, 242, 242),
         borderRadius: BorderRadius.circular(20),
         boxShadow: [
           BoxShadow(
-            color: const Color.fromARGB(255, 251, 249, 249).withOpacity(0.1),
+            color: const Color.fromARGB(255, 121, 119, 119).withOpacity(0.2),
             spreadRadius: 2,
             blurRadius: 2,
             offset: const Offset(0, 2),

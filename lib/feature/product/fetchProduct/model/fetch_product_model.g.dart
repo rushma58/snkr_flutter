@@ -8,7 +8,7 @@ part of 'fetch_product_model.dart';
 
 FetchProductModel _$FetchProductModelFromJson(Map<String, dynamic> json) =>
     FetchProductModel(
-      id: (json['id'] as num?)?.toInt(),
+      shoe_id: (json['shoe_id'] as num?)?.toInt(),
       name: json['name'] as String?,
       brand: json['brand'] as String?,
       model: json['model'] as String?,
@@ -37,7 +37,7 @@ FetchProductModel _$FetchProductModelFromJson(Map<String, dynamic> json) =>
 
 Map<String, dynamic> _$FetchProductModelToJson(FetchProductModel instance) =>
     <String, dynamic>{
-      'id': instance.id,
+      'shoe_id': instance.shoe_id,
       'name': instance.name,
       'brand': instance.brand,
       'model': instance.model,

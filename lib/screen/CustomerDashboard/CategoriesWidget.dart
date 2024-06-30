@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:snkr_flutter/core/utils/fonts.dart';
+
+import '../../feature/product/fetchProduct/controller/fetch_product_controller.dart';
+import '../Item/searched_item.dart';
 
 class CategoriesWidget extends StatefulWidget {
   const CategoriesWidget({super.key});
@@ -11,6 +15,7 @@ class CategoriesWidget extends StatefulWidget {
 class _CategoriesWidgetState extends State<CategoriesWidget> {
   // Variable to track the selected container index
   int selectedIndex = -1;
+  final productController = Get.put(FetchProductController());
 
   @override
   Widget build(BuildContext context) {
@@ -36,6 +41,12 @@ class _CategoriesWidgetState extends State<CategoriesWidget> {
         setState(() {
           // Update the selected index
           selectedIndex = index;
+          productController.name_controller.text = "";
+          productController.brand_controller.text = text;
+          productController.searchProducts(text);
+          Get.to(() => SearchResultsPage(
+                searchQuery: text.toString(),
+              ));
         });
       },
       child: Container(

@@ -101,7 +101,7 @@ class AddProductController extends GetxController {
         dimensions: dimensions_controller.text,
         gender: gender_controller.text,
         status: "in stock",
-        user_id: 19,
+        // user_id: 19,
       );
       addProductResponse =
           await _addProductRepository.addProduct(addProductModel);

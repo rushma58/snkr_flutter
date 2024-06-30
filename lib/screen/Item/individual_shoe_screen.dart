@@ -6,13 +6,13 @@ import 'package:iconify_flutter/icons/material_symbols.dart';
 import 'package:iconify_flutter/icons/mdi.dart';
 import 'package:snkr_flutter/core/utils/colors.dart';
 import 'package:snkr_flutter/core/utils/fonts.dart';
+import 'package:snkr_flutter/feature/cart/controller/add_to_cart_controller.dart';
 import 'package:snkr_flutter/feature/product/fetchProduct/model/fetch_product_model.dart';
 import 'package:snkr_flutter/screen/Order/Address/address.dart';
 import 'package:snkr_flutter/screen/Order/OrderConfirmation/order_confirmation.dart';
 
 import '../../core/helper/api/url_services.dart';
 import '../../core/widgets/top_nav_bar.dart';
-import '../Order/Shipping Location/shipping_location.dart';
 
 class IndividualShoeScreen extends StatefulWidget {
   final FetchProductModel individualProduct;
@@ -25,6 +25,7 @@ class IndividualShoeScreen extends StatefulWidget {
 
 class _IndividualShoeScreenState extends State<IndividualShoeScreen> {
   late bool isWishlisted = false;
+  final cartController = Get.put(CartController());
 
   // @override
   // Widget build(BuildContext context) {
@@ -434,16 +435,24 @@ class _IndividualShoeScreenState extends State<IndividualShoeScreen> {
               icon: const Iconify(MaterialSymbols.shopping_cart_outline),
               backgroundColor: cSilver,
             ),
-            FloatingActionButton.extended(
-              heroTag: "add_to_cart_tag",
-              onPressed: () {},
-              label: const Text(
-                "Add to Cart",
-                style: fBlackRegular14,
-              ),
-              icon: const Iconify(MaterialSymbols.shopping_cart_outline),
-              backgroundColor: cSilver,
-            ),
+            Obx(() {
+              return FloatingActionButton.extended(
+                heroTag: "add_to_cart_tag",
+                onPressed: cartController.isLoading.value
+                    ? null
+                    : () async {
+                        cartController.shoe_id_controller.text =
+                            widget.individualProduct.shoe_id.toString();
+                        await cartController.addToCart();
+                      },
+                label: const Text(
+                  "Add to Cart",
+                  style: fBlackRegular14,
+                ),
+                icon: const Iconify(MaterialSymbols.shopping_cart_outline),
+                backgroundColor: cSilver,
+              );
+            }),
           ],
         ),
       ),

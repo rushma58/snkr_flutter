@@ -9,7 +9,7 @@ part of 'add_product_model_response.dart';
 AddProductModelResponse _$AddProductModelResponseFromJson(
         Map<String, dynamic> json) =>
     AddProductModelResponse(
-      id: (json['id'] as num?)?.toInt(),
+      shoe_id: (json['shoe_id'] as num?)?.toInt(),
       name: json['name'] as String?,
       brand: json['brand'] as String?,
       model: json['model'] as String?,
@@ -29,13 +29,13 @@ AddProductModelResponse _$AddProductModelResponseFromJson(
       dimensions: json['dimensions'] as String?,
       gender: json['gender'] as String?,
       status: json['status'] as String?,
-      user_id: json['user_id'] as String?,
+      user_id: (json['user_id'] as num?)?.toInt(),
     );
 
 Map<String, dynamic> _$AddProductModelResponseToJson(
         AddProductModelResponse instance) =>
     <String, dynamic>{
-      'id': instance.id,
+      'shoe_id': instance.shoe_id,
       'name': instance.name,
       'brand': instance.brand,
       'model': instance.model,

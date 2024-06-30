@@ -28,7 +28,6 @@ AddProductModel _$AddProductModelFromJson(Map<String, dynamic> json) =>
       dimensions: json['dimensions'] as String?,
       gender: json['gender'] as String?,
       status: json['status'] as String?,
-      user_id: (json['user_id'] as num?)?.toInt(),
     );
 
 Map<String, dynamic> _$AddProductModelToJson(AddProductModel instance) =>
@@ -53,5 +52,4 @@ Map<String, dynamic> _$AddProductModelToJson(AddProductModel instance) =>
       'dimensions': instance.dimensions,
       'gender': instance.gender,
       'status': instance.status,
-      'user_id': instance.user_id,
     };
