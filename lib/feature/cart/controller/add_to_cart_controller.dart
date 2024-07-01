@@ -5,7 +5,6 @@ import 'package:snkr_flutter/feature/cart/response/addToCart/add_to_cart_respons
 import 'package:snkr_flutter/feature/cart/response/getCart/get_cart_response.dart';
 
 import '../../../core/helper/snackBar/snack_bar_helper.dart';
-import '../../../screen/Cart/CartPage.dart';
 import '../model/getCart/get_cart_model.dart';
 import '../repository/add_to_cart_repository.dart';
 import '../response/deleteCart/delete_cart_response.dart';
@@ -16,7 +15,9 @@ class CartController extends GetxController {
   final cart_id_controller = TextEditingController();
 
   final CartRepository _cartRepository = CartRepository();
-  final isLoading = false.obs;
+  // final isLoading = false.obs;
+
+  bool isLoading = false;
 
   final _getCartResponse = Rx<GetCartResponse?>(null);
   List<GetCartModel>? get getCartList => _getCartResponse.value?.data;
@@ -33,8 +34,8 @@ class CartController extends GetxController {
   }
 
   Future<AddToCartResponse?> addToCart() async {
-    isLoading.value = true;
-
+    isLoading = true;
+    update();
     try {
       AddToCartResponse? addToCartResponse;
       String shoeId = shoe_id_controller.text;
@@ -50,13 +51,15 @@ class CartController extends GetxController {
       debugPrint("${e.message}");
       return null;
     } finally {
-      isLoading.value = false;
+      isLoading = false;
+      update();
     }
     return null;
   }
 
   Future<void> getCart() async {
-    isLoading.value = true;
+    isLoading = true;
+    update();
     try {
       GetCartResponse? getCartResponse = await _cartRepository.getCart();
       _getCartResponse.value = getCartResponse;
@@ -64,12 +67,14 @@ class CartController extends GetxController {
       debugPrint('Error fetching product list: $e');
       _getCartResponse.value = null; // Ensure it's set to null on error
     } finally {
-      isLoading.value = false;
+      isLoading = false;
+      update(); // Notify listeners that the state has changed
     }
   }
 
   Future<DeleteCartResponse?> deleteCart() async {
-    isLoading.value = true;
+    isLoading = true;
+    update();
     try {
       DeleteCartResponse? deleteCartResponse;
 
@@ -77,7 +82,7 @@ class CartController extends GetxController {
       deleteCartResponse = await _cartRepository.deleteCart(id);
 
       if (deleteCartResponse?.success == true) {
-        Get.to(const CartPage());
+        //Get.to(const CartPage());
         customSuccessSnackBar("Product is deleted successfully");
       } else {
         customErrorSnackBar(
@@ -86,7 +91,8 @@ class CartController extends GetxController {
     } catch (e) {
       debugPrint('Error deleting cart list: $e');
     } finally {
-      isLoading.value = false;
+      isLoading = false;
+      update();
     }
     return null;
   }

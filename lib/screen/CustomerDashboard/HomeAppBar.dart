@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:jwt_decoder/jwt_decoder.dart';
 import 'package:snkr_flutter/core/helper/sharedPreferences/shared_preferences.dart';
 import 'package:snkr_flutter/core/helper/snackBar/snack_bar_helper.dart';
 import 'package:snkr_flutter/core/utils/colors.dart';
@@ -36,14 +37,22 @@ class _HomeAppBarState extends State<HomeAppBar> {
         isBuyer = role != "1";
       }
 
-      debugPrint("Token: $token");
-      debugPrint("Role: $role");
-      debugPrint("isBuyer: $isBuyer");
+      // debugPrint("Token: $token");
+      // debugPrint("Role: $role");
+      // debugPrint("isBuyer: $isBuyer");
 
       setState(() {});
     } catch (e) {
       print("Error getting data from SharedPreferences: $e");
     }
+  }
+
+  Future<bool> isTokenValid() async {
+    String? token = await getStringData('expiry');
+    if (token != null) {
+      return !JwtDecoder.isExpired(token);
+    }
+    return false;
   }
 
   @override
@@ -59,6 +68,7 @@ class _HomeAppBarState extends State<HomeAppBar> {
               Get.to(() => const LoginScreen());
               removeData('token');
               removeData('role');
+              removeData('expiry');
             },
             icon: const Icon(
               Icons.logout,
@@ -72,8 +82,9 @@ class _HomeAppBarState extends State<HomeAppBar> {
             fit: BoxFit.fitHeight,
           ),
           GestureDetector(
-            onTap: () {
-              if (isLoggedIn) {
+            onTap: () async {
+              bool isValid = await isTokenValid();
+              if (isValid) {
                 isBuyer
                     ? customInfoSnackBar("Need to be logged in as a seller")
                     : Get.to(() => const AddProductForm());

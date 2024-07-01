@@ -10,7 +10,8 @@ import 'package:snkr_flutter/core/utils/colors.dart';
 import 'package:snkr_flutter/screen/Cart/CartPage.dart';
 import 'package:snkr_flutter/screen/CustomerDashboard/Homepage.dart';
 import 'package:snkr_flutter/screen/SellerDashboard/SellerHomepage.dart';
-import 'package:snkr_flutter/screen/login/login_screen.dart';
+
+import '../../screen/addProduct/add_product_form.dart';
 
 class LayoutScreen extends StatefulWidget {
   const LayoutScreen({Key? key}) : super(key: key);
@@ -25,11 +26,18 @@ class _LayoutScreenState extends State<LayoutScreen> {
   String? role;
   bool isLoggedIn = false;
   bool isBuyer = true;
+  String? fcmToken;
 
   @override
   void initState() {
     super.initState();
     _getDataFromSharedPref();
+    _getFcmToken();
+  }
+
+  void _getFcmToken() async {
+    fcmToken = await getStringData('fcmToken');
+    debugPrint("FCM: $fcmToken");
   }
 
   Future<void> _getDataFromSharedPref() async {
@@ -44,6 +52,7 @@ class _LayoutScreenState extends State<LayoutScreen> {
         hasExpired.value = JwtDecoder.isExpired(userToken);
         if (!hasExpired.value) {
           token = userToken;
+          await setStringData("expiry", token.toString());
         } else {
           token = null;
         }
@@ -114,7 +123,7 @@ class _LayoutScreenState extends State<LayoutScreen> {
   }
 
   void _handleNavigation(int index) {
-    if (isLoggedIn) {
+    if (token != null) {
       setState(() {
         _selectedIndex = index;
       });
@@ -139,7 +148,7 @@ class _LayoutScreenState extends State<LayoutScreen> {
       case 1:
         return isBuyer ? const Homepage() : const SellerHomepage();
       case 2:
-        return const CartPage();
+        return isBuyer ? const CartPage() : const AddProductForm();
       case 3:
         return isBuyer ? const Homepage() : const SellerHomepage();
       default:

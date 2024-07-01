@@ -11,7 +11,6 @@ import 'package:snkr_flutter/feature/product/addProduct/controllers/add_product_
 
 import '../../core/widgets/custom_date_field.dart';
 import '../../core/widgets/custom_drop_down.dart';
-import '../../core/widgets/top_nav_bar.dart';
 
 class AddProductForm extends StatefulWidget {
   const AddProductForm({super.key});
@@ -51,12 +50,27 @@ class _AddProductFormState extends State<AddProductForm> {
   Widget build(BuildContext context) {
     return Scaffold(
       // resizeToAvoidBottomInset: false,
-      appBar: const PreferredSize(
-        preferredSize: Size.fromHeight(kToolbarHeight),
-        child: TopNavBar(
-          appBarName: "Add Product",
-          filterRequired: false,
-          backFunction: '',
+      appBar: AppBar(
+        backgroundColor: cBlack,
+        title: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            const Text(
+              "Sell",
+              style: fWhiteSemiBold24,
+            ),
+            Container(
+              padding: const EdgeInsets.all(2),
+              decoration: const BoxDecoration(
+                  color: cWhite,
+                  borderRadius: BorderRadius.all(Radius.circular(8))),
+              child: Image.asset(
+                "assets/icons/main_logo.png",
+                height: 30,
+                fit: BoxFit.fitHeight,
+              ),
+            ),
+          ],
         ),
       ),
       body: Stack(

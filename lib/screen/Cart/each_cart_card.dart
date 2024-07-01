@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:iconify_flutter/iconify_flutter.dart';
 import 'package:iconify_flutter/icons/emojione_monotone.dart';
+import 'package:snkr_flutter/core/utils/colors.dart';
 import 'package:snkr_flutter/feature/cart/model/getCart/get_cart_model.dart';
 
 import '../../core/helper/api/url_services.dart';
@@ -194,25 +195,47 @@ class _EachCartCardState extends State<EachCartCard> {
             ],
           ),
           const Spacer(),
-          Obx(() {
-            return GestureDetector(
-              onTap: cartController.isLoading.value
-                  ? null
-                  : () async {
-                      cartController.cart_id_controller.text =
-                          widget.cart.id.toString();
-                      await cartController.deleteCart();
-                    },
-              child: Container(
-                margin: const EdgeInsets.all(10),
-                child: const Icon(
-                  Icons.delete,
-                  color: Colors.red,
-                  size: 30,
+          // Obx(() {
+          //   return GestureDetector(
+          //     onTap: cartController.isLoading
+          //         ? null
+          //         : () async {
+          //             cartController.cart_id_controller.text =
+          //                 widget.cart.id.toString();
+          //             await cartController.deleteCart();
+          //           },
+          //     child: Container(
+          //       margin: const EdgeInsets.all(10),
+          //       child: const Icon(
+          //         Icons.delete,
+          //         color: Colors.red,
+          //         size: 30,
+          //       ),
+          //     ),
+          //   );
+          // }),
+
+          GetBuilder<CartController>(
+            builder: (controller) {
+              return GestureDetector(
+                onTap: cartController.isLoading
+                    ? null
+                    : () async {
+                        cartController.cart_id_controller.text =
+                            widget.cart.id.toString();
+                        await cartController.deleteCart();
+                      },
+                child: Container(
+                  margin: const EdgeInsets.all(10),
+                  child: const Icon(
+                    Icons.delete,
+                    color: cRed,
+                    size: 30,
+                  ),
                 ),
-              ),
-            );
-          }),
+              );
+            },
+          ),
         ],
       ),
     );

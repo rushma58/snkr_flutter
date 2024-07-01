@@ -5,7 +5,6 @@ import 'package:snkr_flutter/screen/Cart/each_cart_card.dart';
 
 import '../../core/constants/noData/no_item_cart.dart';
 import '../../core/utils/colors.dart';
-import '../../core/widgets/top_nav_bar.dart';
 import '../../feature/cart/controller/add_to_cart_controller.dart';
 
 class CartPage extends StatefulWidget {
@@ -16,12 +15,14 @@ class CartPage extends StatefulWidget {
 }
 
 class _CartPageState extends State<CartPage> {
-  final cartController = Get.put(CartController());
+  final CartController cartController = Get.find<CartController>();
 
   @override
   void initState() {
     super.initState();
-    cartController.getCart();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      cartController.getCart();
+    });
   }
 
   @override
@@ -50,21 +51,44 @@ class _CartPageState extends State<CartPage> {
           ],
         ),
       ),
+      // body: Container(
+      //   decoration: const BoxDecoration(color: cWhite),
+      //   child: Obx(
+      //     () {
+      //       if (cartController.isLoading.value) {
+      //         return const Center(child: CircularProgressIndicator());
+      //       } else if (cartController.getCartList == null ||
+      //           cartController.getCartList!.isEmpty) {
+      //         return const Center(child: NoItemCart());
+      //       } else {
+      //         return ListView.builder(
+      //           padding: const EdgeInsets.all(10),
+      //           itemCount: cartController.getCartList!.length,
+      //           itemBuilder: (context, index) {
+      //             final cart = cartController.getCartList![index];
+      //             return EachCartCard(cart: cart);
+      //           },
+      //         );
+      //       }
+      //     },
+      //   ),
+      // ),
+
       body: Container(
         decoration: const BoxDecoration(color: cWhite),
-        child: Obx(
-          () {
-            if (cartController.isLoading.value) {
+        child: GetBuilder<CartController>(
+          builder: (controller) {
+            if (controller.isLoading) {
               return const Center(child: CircularProgressIndicator());
-            } else if (cartController.getCartList == null ||
-                cartController.getCartList!.isEmpty) {
+            } else if (controller.getCartList == null ||
+                controller.getCartList!.isEmpty) {
               return const Center(child: NoItemCart());
             } else {
               return ListView.builder(
                 padding: const EdgeInsets.all(10),
-                itemCount: cartController.getCartList!.length,
+                itemCount: controller.getCartList!.length,
                 itemBuilder: (context, index) {
-                  final cart = cartController.getCartList![index];
+                  final cart = controller.getCartList![index];
                   return EachCartCard(cart: cart);
                 },
               );
@@ -72,34 +96,6 @@ class _CartPageState extends State<CartPage> {
           },
         ),
       ),
-      //  bottomNavigationBar: CurvedNavigationBar(
-      //   backgroundColor: Colors.transparent,
-      //   color: Colors.black,
-      //   height: 75,
-      //   items: const [
-      //     Icon(
-      //       Icons.home,
-      //       size: 30,
-      //       color: Colors.white,
-      //       ),
-      //        Icon(
-      //       Icons.menu_book,
-      //       size: 30,
-      //       color: Colors.white,
-      //       ),
-      //        Icon(
-      //       Icons.list,
-      //       size: 30,
-      //       color: Colors.white,
-      //       ),
-      //        Icon(
-      //       Icons.person,
-      //       size: 30,
-      //       color: Colors.white,
-      //       ),
-
-      //   ],
-      // ),
     );
   }
 }

@@ -109,21 +109,43 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:iconify_flutter/iconify_flutter.dart';
 import 'package:iconify_flutter/icons/emojione_monotone.dart';
+import 'package:jwt_decoder/jwt_decoder.dart';
 import 'package:snkr_flutter/core/utils/fonts.dart';
 import 'package:snkr_flutter/feature/product/fetchProduct/model/fetch_product_model.dart';
 import 'package:snkr_flutter/screen/Item/individual_shoe_screen.dart';
 
 import '../../core/helper/api/url_services.dart';
+import '../../core/helper/sharedPreferences/shared_preferences.dart';
+import '../../core/helper/snackBar/snack_bar_helper.dart';
 import '../../feature/cart/controller/add_to_cart_controller.dart';
 
-class MostPopular extends StatelessWidget {
+class MostPopular extends StatefulWidget {
   final FetchProductModel product;
 
   const MostPopular({Key? key, required this.product}) : super(key: key);
 
   @override
+  State<MostPopular> createState() => _MostPopularState();
+}
+
+class _MostPopularState extends State<MostPopular> {
+  late CartController cartController;
+  @override
+  void initState() {
+    super.initState();
+    cartController = Get.put(CartController());
+  }
+
+  @override
   Widget build(BuildContext context) {
-    final cartController = Get.put(CartController());
+    Future<bool> isTokenValid() async {
+      String? token = await getStringData('expiry');
+      if (token != null) {
+        return !JwtDecoder.isExpired(token);
+      }
+      return false;
+    }
+
     //const baseUrl = "http://10.0.2.2:8000/";
     return Container(
       //height: Get.width * 0.3,
@@ -150,21 +172,21 @@ class MostPopular extends StatelessWidget {
             padding: const EdgeInsets.only(bottom: 3),
             alignment: Alignment.centerLeft,
             child: Text(
-              product.name.toString(),
+              widget.product.name.toString(),
               style: fBlackSemiBold16,
             ),
           ),
           GestureDetector(
             onTap: () {
               Get.to(() => IndividualShoeScreen(
-                    individualProduct: product,
+                    individualProduct: widget.product,
                   ));
               // Navigate to product details page
             },
             child: Container(
               margin: const EdgeInsets.all(10),
               child: Image.network(
-                (baseUrl + product.images.toString()),
+                (baseUrl + widget.product.images.toString()),
                 height: 70,
                 width: 70,
                 fit: BoxFit.contain,
@@ -182,25 +204,32 @@ class MostPopular extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text(
-                'Rs. ${product.final_price}',
+                'Rs. ${widget.product.final_price}',
                 style: fBlackSemiBold14,
               ),
-              Obx(() {
-                return IconButton(
-                  icon: const Icon(
-                    Icons.shopping_cart_checkout,
-                    //size: 20,
-                    color: Colors.black,
-                  ),
-                  onPressed: cartController.isLoading.value
-                      ? null
-                      : () async {
-                          cartController.shoe_id_controller.text =
-                              product.shoe_id.toString();
-                          await cartController.addToCart();
-                        },
-                );
-              }),
+              GetBuilder<CartController>(
+                builder: (controller) {
+                  return IconButton(
+                    icon: const Icon(
+                      Icons.shopping_cart_checkout,
+                      color: Colors.black,
+                    ),
+                    onPressed: controller.isLoading
+                        ? null
+                        : () async {
+                            bool isValid = await isTokenValid();
+                            if (isValid) {
+                              controller.shoe_id_controller.text =
+                                  widget.product.shoe_id.toString();
+                              await controller.addToCart();
+                            } else {
+                              customInfoSnackBar(
+                                  "Your session has expired. Please log in again.");
+                            }
+                          },
+                  );
+                },
+              ),
             ],
           ),
         ],

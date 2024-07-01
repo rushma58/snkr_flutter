@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "1054362437016",
+    "project_id": "snkr-2dd17",
+    "storage_bucket": "snkr-2dd17.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1054362437016:android:e59f02150e794f45ac17ed",
+        "android_client_info": {
+          "package_name": "com.example.snkr_flutter"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBgMRaB52fY9qYtTUo3-SpA44LO-z0dBEw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

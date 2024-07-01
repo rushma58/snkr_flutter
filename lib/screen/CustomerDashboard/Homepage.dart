@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:snkr_flutter/core/utils/colors.dart';
 import 'package:snkr_flutter/core/utils/fonts.dart';
 import 'package:snkr_flutter/screen/CustomerDashboard/CategoriesWidget.dart';
 import 'package:snkr_flutter/screen/CustomerDashboard/HomeAppBar.dart';
@@ -52,6 +53,11 @@ class Homepage extends StatelessWidget {
                     ),
                     child: Row(
                       children: [
+                        const Icon(
+                          Icons.search,
+                          // size: 30,
+                          color: cGrayOld,
+                        ),
                         Container(
                           margin: const EdgeInsets.only(left: 5),
                           height: 50,
@@ -75,12 +81,6 @@ class Homepage extends StatelessWidget {
                               }
                             },
                           ),
-                        ),
-                        const Spacer(),
-                        const Icon(
-                          Icons.search,
-                          size: 30,
-                          color: Colors.black,
                         ),
                       ],
                     ),

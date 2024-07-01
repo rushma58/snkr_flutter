@@ -68,12 +68,12 @@ class TopNavBar extends StatelessWidget {
         },
         icon: const Icon(
           Icons.arrow_back,
-          color: cBlack,
+          color: cWhite,
         ),
       ),
-      //elevation: 10,
+      elevation: 10,
       title: Center(
-        child: Text(appBarName, style: fBlackSemiBold16),
+        child: Text(appBarName, style: fWhiteSemiBold16),
       ),
       actions: [
         Padding(
@@ -85,13 +85,13 @@ class TopNavBar extends StatelessWidget {
                   onPressed: onPressedFilter,
                   icon: const Icon(
                     Icons.filter_list,
-                    color: cBlack,
+                    color: cWhite,
                   ),
                 )
               : const SizedBox(width: 15),
         )
       ],
-      backgroundColor: cWhite,
+      backgroundColor: cGrayOld,
     );
   }
 }

@@ -4,6 +4,7 @@ import 'package:iconify_flutter/iconify_flutter.dart';
 import 'package:iconify_flutter/icons/emojione_monotone.dart';
 import 'package:iconify_flutter/icons/material_symbols.dart';
 import 'package:iconify_flutter/icons/mdi.dart';
+import 'package:jwt_decoder/jwt_decoder.dart';
 import 'package:snkr_flutter/core/utils/colors.dart';
 import 'package:snkr_flutter/core/utils/fonts.dart';
 import 'package:snkr_flutter/feature/cart/controller/add_to_cart_controller.dart';
@@ -12,6 +13,8 @@ import 'package:snkr_flutter/screen/Order/Address/address.dart';
 import 'package:snkr_flutter/screen/Order/OrderConfirmation/order_confirmation.dart';
 
 import '../../core/helper/api/url_services.dart';
+import '../../core/helper/sharedPreferences/shared_preferences.dart';
+import '../../core/helper/snackBar/snack_bar_helper.dart';
 import '../../core/widgets/top_nav_bar.dart';
 
 class IndividualShoeScreen extends StatefulWidget {
@@ -25,282 +28,22 @@ class IndividualShoeScreen extends StatefulWidget {
 
 class _IndividualShoeScreenState extends State<IndividualShoeScreen> {
   late bool isWishlisted = false;
-  final cartController = Get.put(CartController());
 
-  // @override
-  // Widget build(BuildContext context) {
-  //   return Scaffold(
-  //     backgroundColor: Colors.white,
-  //     body: ListView(
-  //       children: [
-  //         const ItemAppBar(),
-  //         Padding(
-  //           padding: const EdgeInsets.all(10),
-  //           child: Image.asset(
-  //             "assets/images/1.png",
-  //             height: 300,
-  //           ),
-  //         ),
-  //         Arc(
-  //           edge: Edge.TOP,
-  //           arcType: ArcType.CONVEY,
-  //           height: 30,
-  //           child: Container(
-  //             width: double.infinity,
-  //             color: Colors.white,
-  //             child: Padding(
-  //               padding: const EdgeInsets.symmetric(horizontal: 20),
-  //               child: SingleChildScrollView(
-  //                 scrollDirection: Axis.vertical,
-  //                 child: Column(
-  //                   children: [
-  //                     const Padding(
-  //                       padding: EdgeInsets.only(top: 50, bottom: 20),
-  //                       child: Row(
-  //                         children: [
-  //                           Text(
-  //                             "Product Name",
-  //                             style: TextStyle(
-  //                               color: Colors.black,
-  //                               fontSize: 30,
-  //                               fontWeight: FontWeight.bold,
-  //                             ),
-  //                           )
-  //                         ],
-  //                       ),
-  //                     ),
-  //                     Padding(
-  //                       padding: const EdgeInsets.only(top: 5, bottom: 10),
-  //                       child: Row(
-  //                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
-  //                         children: [
-  //                           RatingBar.builder(
-  //                             initialRating: 4,
-  //                             minRating: 1,
-  //                             direction: Axis.horizontal,
-  //                             itemCount: 5,
-  //                             itemSize: 20,
-  //                             itemPadding:
-  //                                 const EdgeInsets.symmetric(horizontal: 4),
-  //                             itemBuilder: (context, _) => const Icon(
-  //                               Icons.star,
-  //                               color: Colors.yellowAccent,
-  //                             ),
-  //                             onRatingUpdate: (index) {},
-  //                           ),
-  //                           Row(
-  //                             children: [
-  //                               Container(
-  //                                 padding: const EdgeInsets.all(5),
-  //                                 decoration: BoxDecoration(
-  //                                   color: Colors.white,
-  //                                   borderRadius: BorderRadius.circular(20),
-  //                                   boxShadow: [
-  //                                     BoxShadow(
-  //                                       color: Colors.grey.withOpacity(0.5),
-  //                                       spreadRadius: 3,
-  //                                       blurRadius: 10,
-  //                                       offset: const Offset(0, 3),
-  //                                     )
-  //                                   ],
-  //                                 ),
-  //                                 child: const Iconify(
-  //                                   Carbon.subtract,
-  //                                   size: 18,
-  //                                 ),
-  //                               ),
-  //                               Container(
-  //                                 margin: const EdgeInsets.symmetric(
-  //                                     horizontal: 10),
-  //                                 child: const Text(
-  //                                   "01",
-  //                                   style: TextStyle(
-  //                                     fontSize: 18,
-  //                                     fontWeight: FontWeight.bold,
-  //                                   ),
-  //                                 ),
-  //                               ),
-  //                               Container(
-  //                                 padding: const EdgeInsets.all(5),
-  //                                 decoration: BoxDecoration(
-  //                                   color: Colors.white,
-  //                                   borderRadius: BorderRadius.circular(20),
-  //                                   boxShadow: [
-  //                                     BoxShadow(
-  //                                       color: Colors.grey.withOpacity(0.5),
-  //                                       spreadRadius: 3,
-  //                                       blurRadius: 10,
-  //                                       offset: const Offset(0, 3),
-  //                                     )
-  //                                   ],
-  //                                 ),
-  //                                 child: const Icon(Icons.add, size: 18),
-  //                               ),
-  //                             ],
-  //                           )
-  //                         ],
-  //                       ),
-  //                     ),
-  //                     const Padding(
-  //                       padding: EdgeInsets.symmetric(vertical: 10),
-  //                       child: Text(
-  //                         "These are the details...",
-  //                         textAlign: TextAlign.justify,
-  //                         style: TextStyle(
-  //                           fontSize: 18,
-  //                           color: Colors.black,
-  //                           fontWeight: FontWeight.bold,
-  //                         ),
-  //                       ),
-  //                     ),
-  //                     Padding(
-  //                       padding: const EdgeInsets.symmetric(vertical: 10),
-  //                       child: Row(
-  //                         children: [
-  //                           const Text(
-  //                             "Size :",
-  //                             style: TextStyle(
-  //                               fontSize: 18,
-  //                               fontWeight: FontWeight.bold,
-  //                             ),
-  //                           ),
-  //                           const SizedBox(
-  //                             width: 10,
-  //                           ),
-  //                           Row(
-  //                             children: [
-  //                               for (int i = 5; i < 10; i++)
-  //                                 Container(
-  //                                   height: 30,
-  //                                   width: 30,
-  //                                   alignment: Alignment.center,
-  //                                   margin: const EdgeInsets.symmetric(
-  //                                       horizontal: 5),
-  //                                   decoration: BoxDecoration(
-  //                                     color: Colors.white,
-  //                                     borderRadius: BorderRadius.circular(20),
-  //                                     boxShadow: [
-  //                                       BoxShadow(
-  //                                         color: Colors.grey.withOpacity(0.5),
-  //                                         spreadRadius: 2,
-  //                                         blurRadius: 8,
-  //                                       ),
-  //                                     ],
-  //                                   ),
-  //                                   child: Text(
-  //                                     i.toString(),
-  //                                     style: const TextStyle(
-  //                                       color: Colors.black,
-  //                                       fontSize: 20,
-  //                                     ),
-  //                                   ),
-  //                                 ),
-  //                             ],
-  //                           )
-  //                         ],
-  //                       ),
-  //                     ),
-  //                     Padding(
-  //                       padding: const EdgeInsets.symmetric(vertical: 10),
-  //                       child: Row(
-  //                         children: [
-  //                           const Text(
-  //                             "Colors:",
-  //                             style: TextStyle(
-  //                               fontSize: 18,
-  //                               fontWeight: FontWeight.bold,
-  //                             ),
-  //                           ),
-  //                           const SizedBox(
-  //                             width: 10,
-  //                           ),
-  //                           Row(
-  //                             children: [
-  //                               for (int i = 0; i < 5; i++)
-  //                                 Container(
-  //                                   height: 30,
-  //                                   width: 30,
-  //                                   alignment: Alignment.center,
-  //                                   margin: const EdgeInsets.symmetric(
-  //                                       horizontal: 5),
-  //                                   decoration: BoxDecoration(
-  //                                     color: Clrs[i],
-  //                                     borderRadius: BorderRadius.circular(20),
-  //                                     boxShadow: [
-  //                                       BoxShadow(
-  //                                         color: Colors.grey.withOpacity(0.5),
-  //                                         spreadRadius: 2,
-  //                                         blurRadius: 8,
-  //                                       ),
-  //                                     ],
-  //                                   ),
-  //                                 ),
-  //                             ],
-  //                           )
-  //                         ],
-  //                       ),
-  //                     ),
-  //                     Container(
-  //                       child: const Row(
-  //                         // mainAxisAlignment: MainAxisAlignment.spaceBetween,
-  //                         children: [
-  //                           Text(
-  //                             "Price :",
-  //                             style: TextStyle(
-  //                               color: Colors.black,
-  //                               fontSize: 18,
-  //                               fontWeight: FontWeight.bold,
-  //                             ),
-  //                           ),
-  //                           Padding(
-  //                             padding: EdgeInsets.only(left: 10),
-  //                           ),
-  //                           Text(
-  //                             "\$100",
-  //                             style: TextStyle(
-  //                               color: Colors.blue,
-  //                               fontSize: 18,
-  //                               fontWeight: FontWeight.bold,
-  //                             ),
-  //                           ),
-  //                         ],
-  //                       ),
-  //                     ),
-  //                     const SizedBox(height: 20),
-  //                     // Add Review Section
-  //                     Container(
-  //                       padding: const EdgeInsets.symmetric(vertical: 10),
-  //                       decoration: BoxDecoration(
-  //                         border: Border.all(color: Colors.grey),
-  //                         borderRadius: BorderRadius.circular(10),
-  //                       ),
-  //                       child: const Row(
-  //                         mainAxisAlignment: MainAxisAlignment.center,
-  //                         children: [
-  //                           Icon(Icons.rate_review),
-  //                           SizedBox(width: 10),
-  //                           Text(
-  //                             "Add a review",
-  //                             style: TextStyle(
-  //                               fontSize: 18,
-  //                               fontWeight: FontWeight.bold,
-  //                             ),
-  //                           ),
-  //                         ],
-  //                       ),
-  //                     ),
+  late CartController cartController;
 
-  //                     ItemBottomNavBar(),
-  //                   ],
-  //                 ),
-  //               ),
-  //             ),
-  //           ),
-  //         )
-  //       ],
-  //     ),
-  //   );
-  // }
+  @override
+  void initState() {
+    super.initState();
+    cartController = Get.put(CartController());
+  }
+
+  Future<bool> isTokenValid() async {
+    String? token = await getStringData('expiry');
+    if (token != null) {
+      return !JwtDecoder.isExpired(token);
+    }
+    return false;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -321,22 +64,24 @@ class _IndividualShoeScreenState extends State<IndividualShoeScreen> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Container(
-                    //margin: const EdgeInsets.all(10),
-                    child: Image.network(
-                      (baseUrl + widget.individualProduct.images.toString()),
-                      // height: 100,
-                      // width: 100,
-                      fit: BoxFit.fitWidth,
-                      errorBuilder: (BuildContext context, Object exception,
-                          StackTrace? stackTrace) {
-                        return Center(
-                          child: Iconify(
-                            EmojioneMonotone.running_shoe,
-                            size: Get.width * 0.7,
-                          ),
-                        );
-                      },
+                  Center(
+                    child: Container(
+                      //margin: const EdgeInsets.all(10),
+                      child: Image.network(
+                        (baseUrl + widget.individualProduct.images.toString()),
+                        // height: 100,
+                        // width: 100,
+                        fit: BoxFit.fitWidth,
+                        errorBuilder: (BuildContext context, Object exception,
+                            StackTrace? stackTrace) {
+                          return Center(
+                            child: Iconify(
+                              EmojioneMonotone.running_shoe,
+                              size: Get.width * 0.7,
+                            ),
+                          );
+                        },
+                      ),
                     ),
                   ),
                   Text(
@@ -435,24 +180,58 @@ class _IndividualShoeScreenState extends State<IndividualShoeScreen> {
               icon: const Iconify(MaterialSymbols.shopping_cart_outline),
               backgroundColor: cSilver,
             ),
-            Obx(() {
-              return FloatingActionButton.extended(
-                heroTag: "add_to_cart_tag",
-                onPressed: cartController.isLoading.value
-                    ? null
-                    : () async {
-                        cartController.shoe_id_controller.text =
-                            widget.individualProduct.shoe_id.toString();
-                        await cartController.addToCart();
-                      },
-                label: const Text(
-                  "Add to Cart",
-                  style: fBlackRegular14,
-                ),
-                icon: const Iconify(MaterialSymbols.shopping_cart_outline),
-                backgroundColor: cSilver,
-              );
-            }),
+            // Obx(() {
+            //   return FloatingActionButton.extended(
+            //     heroTag: "add_to_cart_tag",
+            //     onPressed: cartController.isLoading
+            //         ? null
+            //         : () async {
+            //             bool isValid = await isTokenValid();
+            //             if (isValid) {
+            //               cartController.shoe_id_controller.text =
+            //                   widget.individualProduct.shoe_id.toString();
+            //               await cartController.addToCart();
+            //             } else {
+            //               customInfoSnackBar(
+            //                   "Your session has expired. Please log in again.");
+            //               // Here you can also navigate to the login screen if needed
+            //             }
+            //           },
+            //     label: const Text(
+            //       "Add to Cart",
+            //       style: fBlackRegular14,
+            //     ),
+            //     icon: const Iconify(MaterialSymbols.shopping_cart_outline),
+            //     backgroundColor: cSilver,
+            //   );
+            // }),
+
+            GetBuilder<CartController>(
+              builder: (controller) {
+                return FloatingActionButton.extended(
+                  heroTag: "add_to_cart_tag",
+                  onPressed: cartController.isLoading
+                      ? null
+                      : () async {
+                          bool isValid = await isTokenValid();
+                          if (isValid) {
+                            cartController.shoe_id_controller.text =
+                                widget.individualProduct.shoe_id.toString();
+                            await cartController.addToCart();
+                          } else {
+                            customInfoSnackBar(
+                                "Your session has expired. Please log in again.");
+                          }
+                        },
+                  label: const Text(
+                    "Add to Cart",
+                    style: fBlackRegular14,
+                  ),
+                  icon: const Iconify(MaterialSymbols.shopping_cart_outline),
+                  backgroundColor: cSilver,
+                );
+              },
+            ),
           ],
         ),
       ),

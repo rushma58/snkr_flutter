@@ -21,6 +21,11 @@ class _LoginScreenState extends State<LoginScreen> {
   bool isChecked = false;
 
   @override
+  void initState() {
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       // resizeToAvoidBottomInset: false,
