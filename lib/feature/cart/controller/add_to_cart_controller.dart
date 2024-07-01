@@ -5,6 +5,7 @@ import 'package:snkr_flutter/feature/cart/response/addToCart/add_to_cart_respons
 import 'package:snkr_flutter/feature/cart/response/getCart/get_cart_response.dart';
 
 import '../../../core/helper/snackBar/snack_bar_helper.dart';
+import '../../../screen/Cart/CartPage.dart';
 import '../model/getCart/get_cart_model.dart';
 import '../repository/add_to_cart_repository.dart';
 import '../response/deleteCart/delete_cart_response.dart';
@@ -76,6 +77,7 @@ class CartController extends GetxController {
       deleteCartResponse = await _cartRepository.deleteCart(id);
 
       if (deleteCartResponse?.success == true) {
+        Get.to(const CartPage());
         customSuccessSnackBar("Product is deleted successfully");
       } else {
         customErrorSnackBar(

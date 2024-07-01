@@ -1,13 +1,16 @@
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:iconify_flutter/iconify_flutter.dart';
 import 'package:iconify_flutter/icons/material_symbols.dart';
+import 'package:jwt_decoder/jwt_decoder.dart';
 import 'package:snkr_flutter/core/helper/sharedPreferences/shared_preferences.dart';
 import 'package:snkr_flutter/core/helper/snackBar/snack_bar_helper.dart';
 import 'package:snkr_flutter/core/utils/colors.dart';
 import 'package:snkr_flutter/screen/Cart/CartPage.dart';
 import 'package:snkr_flutter/screen/CustomerDashboard/Homepage.dart';
 import 'package:snkr_flutter/screen/SellerDashboard/SellerHomepage.dart';
+import 'package:snkr_flutter/screen/login/login_screen.dart';
 
 class LayoutScreen extends StatefulWidget {
   const LayoutScreen({Key? key}) : super(key: key);
@@ -34,6 +37,21 @@ class _LayoutScreenState extends State<LayoutScreen> {
       token = await getStringData('token');
       debugPrint("Token in Layout: $token ");
       isLoggedIn = token != null && token!.isNotEmpty;
+
+      RxBool hasExpired = false.obs;
+      String? userToken = await getStringData('token');
+      if (userToken != null) {
+        hasExpired.value = JwtDecoder.isExpired(userToken);
+        if (!hasExpired.value) {
+          token = userToken;
+        } else {
+          token = null;
+        }
+      }
+      if (token == null) {
+        customInfoSnackBar("Last Logged in is Expired");
+        //Get.off(() => const LoginScreen());
+      }
 
       if (isLoggedIn) {
         role = await getStringData('role');

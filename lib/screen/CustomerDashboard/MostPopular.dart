@@ -114,6 +114,7 @@ import 'package:snkr_flutter/feature/product/fetchProduct/model/fetch_product_mo
 import 'package:snkr_flutter/screen/Item/individual_shoe_screen.dart';
 
 import '../../core/helper/api/url_services.dart';
+import '../../feature/cart/controller/add_to_cart_controller.dart';
 
 class MostPopular extends StatelessWidget {
   final FetchProductModel product;
@@ -122,6 +123,7 @@ class MostPopular extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final cartController = Get.put(CartController());
     //const baseUrl = "http://10.0.2.2:8000/";
     return Container(
       //height: Get.width * 0.3,
@@ -163,12 +165,15 @@ class MostPopular extends StatelessWidget {
               margin: const EdgeInsets.all(10),
               child: Image.network(
                 (baseUrl + product.images.toString()),
-                height: 100,
-                width: 100,
+                height: 70,
+                width: 70,
                 fit: BoxFit.contain,
                 errorBuilder: (BuildContext context, Object exception,
                     StackTrace? stackTrace) {
-                  return const Iconify(EmojioneMonotone.running_shoe, size: 80);
+                  return const Iconify(
+                    EmojioneMonotone.running_shoe,
+                    size: 70,
+                  );
                 },
               ),
             ),
@@ -180,11 +185,22 @@ class MostPopular extends StatelessWidget {
                 'Rs. ${product.final_price}',
                 style: fBlackSemiBold14,
               ),
-              const Icon(
-                Icons.shopping_cart_checkout,
-                size: 20,
-                color: Colors.black,
-              )
+              Obx(() {
+                return IconButton(
+                  icon: const Icon(
+                    Icons.shopping_cart_checkout,
+                    //size: 20,
+                    color: Colors.black,
+                  ),
+                  onPressed: cartController.isLoading.value
+                      ? null
+                      : () async {
+                          cartController.shoe_id_controller.text =
+                              product.shoe_id.toString();
+                          await cartController.addToCart();
+                        },
+                );
+              }),
             ],
           ),
         ],

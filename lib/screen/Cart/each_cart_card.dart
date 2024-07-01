@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:iconify_flutter/iconify_flutter.dart';
 import 'package:iconify_flutter/icons/emojione_monotone.dart';
 import 'package:snkr_flutter/feature/cart/model/getCart/get_cart_model.dart';
 
 import '../../core/helper/api/url_services.dart';
 import '../../core/utils/fonts.dart';
+import '../../feature/cart/controller/add_to_cart_controller.dart';
 
 class EachCartCard extends StatefulWidget {
   final GetCartModel cart;
@@ -18,6 +20,7 @@ class EachCartCard extends StatefulWidget {
 }
 
 class _EachCartCardState extends State<EachCartCard> {
+  final cartController = Get.put(CartController());
   @override
   Widget build(BuildContext context) {
     // return Column(children: [
@@ -191,17 +194,25 @@ class _EachCartCardState extends State<EachCartCard> {
             ],
           ),
           const Spacer(),
-          GestureDetector(
-            onTap: () {},
-            child: Container(
-              margin: const EdgeInsets.all(10),
-              child: const Icon(
-                Icons.delete,
-                color: Colors.red,
-                size: 30,
+          Obx(() {
+            return GestureDetector(
+              onTap: cartController.isLoading.value
+                  ? null
+                  : () async {
+                      cartController.cart_id_controller.text =
+                          widget.cart.id.toString();
+                      await cartController.deleteCart();
+                    },
+              child: Container(
+                margin: const EdgeInsets.all(10),
+                child: const Icon(
+                  Icons.delete,
+                  color: Colors.red,
+                  size: 30,
+                ),
               ),
-            ),
-          ),
+            );
+          }),
         ],
       ),
     );
