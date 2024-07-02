@@ -11,6 +11,7 @@ import '../../core/constants/noData/no_item_cart.dart';
 import '../../core/utils/colors.dart';
 import '../../feature/cart/controller/add_to_cart_controller.dart';
 import '../../feature/cart/model/getCart/get_cart_model.dart';
+import '../../feature/product/addProduct/response/add_product_model_response.dart';
 
 class CartPage extends StatefulWidget {
   const CartPage({Key? key}) : super(key: key);
@@ -51,6 +52,23 @@ class _CartPageState extends State<CartPage> {
         unit_price: double.parse(cart.shoe!.final_price.toString()),
         total_price: double.parse(cart.shoe!.final_price.toString()),
       );
+    }).toList();
+  }
+
+  List<AddProductModelResponse> get selectedItemDetails {
+    AddProductModelResponse productDetail;
+    // return selectedItemIds.map((id) {
+    //   final cart = cartController.getCartList!.firstWhere((c) => c.id == id);
+    //   return selectedShoeModel = SelectedShoeModel(
+    //     shoe_id: cart.shoe!.shoe_id,
+    //     quantity: 1,
+    //     unit_price: double.parse(cart.shoe!.final_price.toString()),
+    //     total_price: double.parse(cart.shoe!.final_price.toString()),
+    //   );
+    // }).toList();
+    return selectedItemIds.map((id) {
+      final product = cartController.getCartList!.firstWhere((c) => c.id == id);
+      return productDetail = product.shoe!;
     }).toList();
   }
 
@@ -107,12 +125,12 @@ class _CartPageState extends State<CartPage> {
         ),
       ),
       floatingActionButton: FloatingActionButton.extended(
-        heroTag: "buy_now_tag",
+        heroTag: "proceed_to_purchase",
         onPressed: selectedItemIds.isNotEmpty
             ? () {
                 Get.to(() => PurchasePage(
                       selectedItems: selectedItems,
-                      selectedShoeDetails: const [],
+                      selectedShoeDetails: selectedItemDetails,
                     ));
               }
             : null,

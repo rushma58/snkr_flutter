@@ -91,7 +91,7 @@ class TopNavBar extends StatelessWidget {
               : const SizedBox(width: 15),
         )
       ],
-      backgroundColor: cGrayOld,
+      backgroundColor: cBlack,
     );
   }
 }

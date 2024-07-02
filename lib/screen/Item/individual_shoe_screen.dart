@@ -69,7 +69,7 @@ class _IndividualShoeScreenState extends State<IndividualShoeScreen> {
                       //margin: const EdgeInsets.all(10),
                       child: Image.network(
                         (baseUrl + widget.individualProduct.images.toString()),
-                        // height: 100,
+                        height: 300,
                         // width: 100,
                         fit: BoxFit.fitWidth,
                         errorBuilder: (BuildContext context, Object exception,
@@ -128,8 +128,8 @@ class _IndividualShoeScreenState extends State<IndividualShoeScreen> {
               ),
             ),
             Positioned(
-              top: 20,
-              right: 20,
+              top: 10,
+              right: 10,
               child: Column(
                 children: [
                   IconButton(

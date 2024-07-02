@@ -44,18 +44,19 @@ class EachCartCard extends StatelessWidget {
         //mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           Checkbox(
+            activeColor: cBlack,
             value: isSelected,
             onChanged: (bool? value) {
               onSelect(value ?? false);
             },
           ),
           Container(
-            //margin: const EdgeInsets.all(8),
+            margin: const EdgeInsets.only(right: 10),
             child: Image.network(
               (baseUrl + cart.shoe!.images.toString()),
               height: 100,
               width: 100,
-              fit: BoxFit.fitHeight,
+              fit: BoxFit.contain,
               errorBuilder: (BuildContext context, Object exception,
                   StackTrace? stackTrace) {
                 return const Iconify(EmojioneMonotone.running_shoe, size: 80);

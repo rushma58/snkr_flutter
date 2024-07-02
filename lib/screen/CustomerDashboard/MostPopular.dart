@@ -184,12 +184,12 @@ class _MostPopularState extends State<MostPopular> {
               // Navigate to product details page
             },
             child: Container(
-              margin: const EdgeInsets.all(10),
+              //margin: const EdgeInsets.all(10),
               child: Image.network(
                 (baseUrl + widget.product.images.toString()),
-                height: 70,
-                width: 70,
-                fit: BoxFit.contain,
+                height: 100,
+                //width: 100,
+                fit: BoxFit.fitWidth,
                 errorBuilder: (BuildContext context, Object exception,
                     StackTrace? stackTrace) {
                   return const Iconify(
