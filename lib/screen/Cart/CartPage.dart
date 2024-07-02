@@ -1,14 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:iconify_flutter/iconify_flutter.dart';
+import 'package:iconify_flutter/icons/material_symbols.dart';
 import 'package:snkr_flutter/core/utils/fonts.dart';
+import 'package:snkr_flutter/feature/order/model/selectedItem/selected_shoe_model.dart';
 import 'package:snkr_flutter/screen/Cart/each_cart_card.dart';
+import 'package:snkr_flutter/screen/Cart/proceedToPurchase/purchase_page.dart';
 
 import '../../core/constants/noData/no_item_cart.dart';
 import '../../core/utils/colors.dart';
 import '../../feature/cart/controller/add_to_cart_controller.dart';
+import '../../feature/cart/model/getCart/get_cart_model.dart';
 
 class CartPage extends StatefulWidget {
-  const CartPage({super.key});
+  const CartPage({Key? key}) : super(key: key);
 
   @override
   State<CartPage> createState() => _CartPageState();
@@ -16,6 +21,7 @@ class CartPage extends StatefulWidget {
 
 class _CartPageState extends State<CartPage> {
   final CartController cartController = Get.find<CartController>();
+  Set<int> selectedItemIds = {};
 
   @override
   void initState() {
@@ -23,6 +29,29 @@ class _CartPageState extends State<CartPage> {
     WidgetsBinding.instance.addPostFrameCallback((_) {
       cartController.getCart();
     });
+  }
+
+  void toggleItemSelection(GetCartModel cart) {
+    setState(() {
+      if (selectedItemIds.contains(cart.id)) {
+        selectedItemIds.remove(cart.id);
+      } else {
+        selectedItemIds.add(cart.id ?? 0);
+      }
+    });
+  }
+
+  List<SelectedShoeModel> get selectedItems {
+    SelectedShoeModel selectedShoeModel;
+    return selectedItemIds.map((id) {
+      final cart = cartController.getCartList!.firstWhere((c) => c.id == id);
+      return selectedShoeModel = SelectedShoeModel(
+        shoe_id: cart.shoe!.shoe_id,
+        quantity: 1,
+        unit_price: double.parse(cart.shoe!.final_price.toString()),
+        total_price: double.parse(cart.shoe!.final_price.toString()),
+      );
+    }).toList();
   }
 
   @override
@@ -51,29 +80,6 @@ class _CartPageState extends State<CartPage> {
           ],
         ),
       ),
-      // body: Container(
-      //   decoration: const BoxDecoration(color: cWhite),
-      //   child: Obx(
-      //     () {
-      //       if (cartController.isLoading.value) {
-      //         return const Center(child: CircularProgressIndicator());
-      //       } else if (cartController.getCartList == null ||
-      //           cartController.getCartList!.isEmpty) {
-      //         return const Center(child: NoItemCart());
-      //       } else {
-      //         return ListView.builder(
-      //           padding: const EdgeInsets.all(10),
-      //           itemCount: cartController.getCartList!.length,
-      //           itemBuilder: (context, index) {
-      //             final cart = cartController.getCartList![index];
-      //             return EachCartCard(cart: cart);
-      //           },
-      //         );
-      //       }
-      //     },
-      //   ),
-      // ),
-
       body: Container(
         decoration: const BoxDecoration(color: cWhite),
         child: GetBuilder<CartController>(
@@ -89,12 +95,36 @@ class _CartPageState extends State<CartPage> {
                 itemCount: controller.getCartList!.length,
                 itemBuilder: (context, index) {
                   final cart = controller.getCartList![index];
-                  return EachCartCard(cart: cart);
+                  return EachCartCard(
+                    cart: cart,
+                    isSelected: selectedItemIds.contains(cart.id),
+                    onSelect: (bool isSelected) => toggleItemSelection(cart),
+                  );
                 },
               );
             }
           },
         ),
+      ),
+      floatingActionButton: FloatingActionButton.extended(
+        heroTag: "buy_now_tag",
+        onPressed: selectedItemIds.isNotEmpty
+            ? () {
+                Get.to(() => PurchasePage(
+                      selectedItems: selectedItems,
+                      selectedShoeDetails: const [],
+                    ));
+              }
+            : null,
+        label: Text(
+          "Proceed to Purchase (${selectedItemIds.length})",
+          style: fWhiteSemiBold14,
+        ),
+        icon: const Iconify(
+          MaterialSymbols.shopping_cart_outline,
+          color: cWhite,
+        ),
+        backgroundColor: selectedItemIds.isNotEmpty ? cBlack : Colors.grey,
       ),
     );
   }
