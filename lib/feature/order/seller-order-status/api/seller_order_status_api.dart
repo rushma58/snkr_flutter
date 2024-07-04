@@ -18,7 +18,7 @@ class SellerOrderStatusAPI {
 
     try {
       String? token = await getStringData("token");
-      response = await dio.get(
+      response = await dio.post(
         url,
         options: Options(
           headers: {HttpHeaders.authorizationHeader: "Bearer $token"},

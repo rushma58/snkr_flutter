@@ -10,6 +10,8 @@ class SellerOrderStatusController extends GetxController {
   bool isLoading = false;
 
   final _sellerOrderStatusResponse = Rx<SellerOrderStatusResponse?>(null);
+  SellerOrderStatusResponse? get sellerOrderStatusResponse =>
+      _sellerOrderStatusResponse.value;
 
   Future<void> sellerOrderStatus() async {
     isLoading = true;

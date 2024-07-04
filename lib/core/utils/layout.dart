@@ -2,6 +2,7 @@ import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:iconify_flutter/iconify_flutter.dart';
+import 'package:iconify_flutter/icons/cil.dart';
 import 'package:iconify_flutter/icons/material_symbols.dart';
 import 'package:jwt_decoder/jwt_decoder.dart';
 import 'package:snkr_flutter/core/helper/sharedPreferences/shared_preferences.dart';
@@ -11,6 +12,7 @@ import 'package:snkr_flutter/screen/Cart/CartPage.dart';
 import 'package:snkr_flutter/screen/CustomerDashboard/Homepage.dart';
 import 'package:snkr_flutter/screen/SellerDashboard/SellerHomepage.dart';
 
+import '../../screen/SellerDashboard/tools_screen.dart';
 import '../../screen/addProduct/add_product_form.dart';
 
 class LayoutScreen extends StatefulWidget {
@@ -94,14 +96,12 @@ class _LayoutScreenState extends State<LayoutScreen> {
         },
         items: [
           Icon(
-            isBuyer ? Icons.home : Icons.sell,
+            isBuyer ? Icons.home : Icons.home,
             size: 30,
             color: Colors.white,
           ),
           Iconify(
-            isBuyer
-                ? MaterialSymbols.compare_arrows
-                : MaterialSymbols.check_circle,
+            isBuyer ? MaterialSymbols.compare_arrows : Cil.equalizer,
             color: cWhite,
             size: 30,
           ),
@@ -146,7 +146,7 @@ class _LayoutScreenState extends State<LayoutScreen> {
       case 0:
         return isBuyer ? const Homepage() : const SellerHomepage();
       case 1:
-        return isBuyer ? const Homepage() : const SellerHomepage();
+        return isBuyer ? const Homepage() : const ToolsScreenPage();
       case 2:
         return isBuyer ? const CartPage() : const AddProductForm();
       case 3:
