@@ -1,5 +1,5 @@
 import 'package:json_annotation/json_annotation.dart';
-import 'package:snkr_flutter/feature/order/model/orderDetail/order_detail_model.dart';
+import 'package:snkr_flutter/feature/order/order-buyer/model/orderDetail/order_detail_model.dart';
 
 part 'order_place_response.g.dart';
 

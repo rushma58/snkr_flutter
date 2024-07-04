@@ -5,8 +5,8 @@ import 'package:flutter/material.dart';
 import 'package:snkr_flutter/core/helper/api/http_services.dart';
 import 'package:snkr_flutter/core/helper/api/url_services.dart';
 import 'package:snkr_flutter/core/helper/sharedPreferences/shared_preferences.dart';
-import 'package:snkr_flutter/feature/order/model/orderPlace/order_place_model.dart';
-import 'package:snkr_flutter/feature/order/response/order_place_response.dart';
+import 'package:snkr_flutter/feature/order/order-buyer/model/orderPlace/order_place_model.dart';
+import 'package:snkr_flutter/feature/order/order-buyer/response/order_place_response.dart';
 
 class OrderPlaceAPI {
   Future<OrderPlaceResponse?> placeOrder(

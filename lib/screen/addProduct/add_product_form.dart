@@ -29,15 +29,24 @@ class _AddProductFormState extends State<AddProductForm> {
   late String? images = "";
 
   Future<void> _pickImage() async {
-    var file = await _imagePicker.pickImage(source: ImageSource.gallery);
+    try {
+      final file = await _imagePicker.pickImage(source: ImageSource.gallery);
 
-    if (file != null) {
-      // Do something with the selected files
-      debugPrint('Selected files: $file');
-      setState(() {
-        _image = File(file.path);
-        addProductController.images_controller = _image?.path;
-      });
+      if (file != null) {
+        debugPrint('Selected file: ${file.path}');
+        setState(() {
+          _image = File(file.path);
+          addProductController.images_controller = _image?.path;
+        });
+      } else {
+        debugPrint('No image selected');
+      }
+    } catch (e) {
+      debugPrint('Error picking image: $e');
+      // Show an error message to the user
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Error picking image: $e')),
+      );
     }
   }
 
@@ -655,3 +664,6 @@ class _AddProductFormState extends State<AddProductForm> {
 //     );
 //   }
 // }
+
+
+

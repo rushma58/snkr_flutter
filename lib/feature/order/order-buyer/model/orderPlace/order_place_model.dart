@@ -1,6 +1,6 @@
 import 'package:json_annotation/json_annotation.dart';
-import 'package:snkr_flutter/feature/order/model/payment/payment_model.dart';
-import 'package:snkr_flutter/feature/order/model/selectedItem/selected_shoe_model.dart';
+import 'package:snkr_flutter/feature/order/order-buyer/model/payment/payment_model.dart';
+import 'package:snkr_flutter/feature/order/order-buyer/model/selectedItem/selected_shoe_model.dart';
 
 part 'order_place_model.g.dart';
 

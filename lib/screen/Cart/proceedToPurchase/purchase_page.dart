@@ -4,9 +4,10 @@ import 'package:iconify_flutter/iconify_flutter.dart';
 import 'package:iconify_flutter/icons/emojione_monotone.dart';
 import 'package:snkr_flutter/core/utils/colors.dart';
 import 'package:snkr_flutter/core/utils/fonts.dart';
-import 'package:snkr_flutter/feature/order/model/selectedItem/selected_shoe_model.dart';
+import 'package:snkr_flutter/feature/order/order-buyer/model/selectedItem/selected_shoe_model.dart';
 
 import '../../../core/helper/api/url_services.dart';
+import '../../../feature/order/order-buyer/controller/order_place_controller.dart';
 import '../../../feature/product/addProduct/response/add_product_model_response.dart';
 
 class PurchasePage extends StatefulWidget {
@@ -29,10 +30,29 @@ class _PurchasePageState extends State<PurchasePage> {
   double deliveryPrice = 100;
   double finalPrice = 0;
 
+  final orderPlaceController = Get.put(OrderPlaceController());
+
   @override
   void initState() {
     super.initState();
     calculateTotalPrice();
+
+    // Add selected items to the controller
+    for (var item in widget.selectedItems) {
+      orderPlaceController.addOrderItem(SelectedShoeModel(
+        shoe_id:
+            item.shoe_id, // Assuming your SelectedShoeModel has an id field
+        quantity: item.quantity,
+        unit_price: item.unit_price,
+        total_price: item.total_price,
+      ));
+    }
+
+    // Set other controller values
+    orderPlaceController.total_price_controller.text = totalPrice.toString();
+    orderPlaceController.delivery_price_controller.text =
+        deliveryPrice.toString();
+    orderPlaceController.final_price_controller.text = finalPrice.toString();
   }
 
   void calculateTotalPrice() {
@@ -139,7 +159,7 @@ class _PurchasePageState extends State<PurchasePage> {
                 ),
                 const SizedBox(height: 20),
                 TextField(
-                  controller: _locationController,
+                  controller: orderPlaceController.delivery_location_controller,
                   decoration: const InputDecoration(
                     labelText: "Delivery Location",
                     border: OutlineInputBorder(),
@@ -171,23 +191,24 @@ class _PurchasePageState extends State<PurchasePage> {
                   ],
                 ),
                 const SizedBox(height: 20),
-                SizedBox(
-                  width: double.infinity,
-                  child: ElevatedButton(
-                    onPressed: () {
-                      // Implement the final purchase logic here
-                      print("Purchased items: ${widget.selectedItems}");
-                      print("Delivery location: ${_locationController.text}");
-                      // You can add API calls or further logic here
-                    },
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: cBlack,
-                      padding: const EdgeInsets.symmetric(vertical: 15),
+                Obx(() {
+                  return SizedBox(
+                    width: double.infinity,
+                    child: ElevatedButton(
+                      onPressed: orderPlaceController.isLoading.value
+                          ? null
+                          : () async {
+                              orderPlaceController.placeOrder();
+                            },
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: cBlack,
+                        padding: const EdgeInsets.symmetric(vertical: 10),
+                      ),
+                      child:
+                          const Text("Pay via Khalti", style: fWhiteSemiBold16),
                     ),
-                    child:
-                        const Text("Confirm Purchase", style: fWhiteSemiBold16),
-                  ),
-                ),
+                  );
+                }),
               ],
             ),
           ),

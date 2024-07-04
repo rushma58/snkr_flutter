@@ -149,8 +149,8 @@ class _MostPopularState extends State<MostPopular> {
     //const baseUrl = "http://10.0.2.2:8000/";
     return Container(
       //height: Get.width * 0.3,
-      width: Get.width * 0.5,
-      margin: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+      // width: Get.width * 0.5,
+      margin: const EdgeInsets.symmetric(horizontal: 5, vertical: 5),
       padding: const EdgeInsets.only(top: 10, left: 10, right: 10),
       decoration: BoxDecoration(
         // color: const Color.fromARGB(255, 248, 244, 242),

@@ -3,7 +3,7 @@ import 'package:get/get.dart';
 import 'package:iconify_flutter/iconify_flutter.dart';
 import 'package:iconify_flutter/icons/material_symbols.dart';
 import 'package:snkr_flutter/core/utils/fonts.dart';
-import 'package:snkr_flutter/feature/order/model/selectedItem/selected_shoe_model.dart';
+import 'package:snkr_flutter/feature/order/order-buyer/model/selectedItem/selected_shoe_model.dart';
 import 'package:snkr_flutter/screen/Cart/each_cart_card.dart';
 import 'package:snkr_flutter/screen/Cart/proceedToPurchase/purchase_page.dart';
 

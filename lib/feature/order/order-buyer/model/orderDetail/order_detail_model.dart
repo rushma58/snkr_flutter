@@ -1,5 +1,5 @@
 import 'package:json_annotation/json_annotation.dart';
-import 'package:snkr_flutter/feature/order/model/payment/payment_model.dart';
+import 'package:snkr_flutter/feature/order/order-buyer/model/payment/payment_model.dart';
 
 part 'order_detail_model.g.dart';
 
