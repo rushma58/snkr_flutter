@@ -27,7 +27,7 @@ class _CustomIconButtonState extends State<CustomIconButton> {
           Radius.circular(12),
         ),
       ),
-      margin: const EdgeInsets.all(1),
+      //margin: const EdgeInsets.all(1),
       padding: const EdgeInsets.all(8),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.start,
@@ -42,8 +42,9 @@ class _CustomIconButtonState extends State<CustomIconButton> {
           ),
           Text(
             widget.icon_name,
-            style: fBlackRegular14,
+            style: fBlackRegular12,
             textAlign: TextAlign.center,
+            softWrap: true,
           ),
         ],
       ),

@@ -27,7 +27,9 @@ class LoginController extends GetxController {
       loginResponse = await _loginRepository.userLogin(loginParamsModel);
 
       if (loginResponse!.success == true) {
-        Get.off(() => const LayoutScreen());
+        Get.off(() => const LayoutScreen(
+              initial_index: 0,
+            ));
         customSuccessSnackBar("Login Sucess");
       } else {
         customErrorSnackBar(

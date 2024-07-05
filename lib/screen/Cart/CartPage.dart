@@ -32,6 +32,13 @@ class _CartPageState extends State<CartPage> {
     });
   }
 
+  void refreshCart() {
+    setState(() {
+      selectedItemIds.clear();
+    });
+    cartController.getCart();
+  }
+
   void toggleItemSelection(GetCartModel cart) {
     setState(() {
       if (selectedItemIds.contains(cart.id)) {
@@ -51,21 +58,14 @@ class _CartPageState extends State<CartPage> {
         quantity: 1,
         unit_price: double.parse(cart.shoe!.final_price.toString()),
         total_price: double.parse(cart.shoe!.final_price.toString()),
+        cartId: cart.id ?? 0,
       );
     }).toList();
   }
 
   List<AddProductModelResponse> get selectedItemDetails {
     AddProductModelResponse productDetail;
-    // return selectedItemIds.map((id) {
-    //   final cart = cartController.getCartList!.firstWhere((c) => c.id == id);
-    //   return selectedShoeModel = SelectedShoeModel(
-    //     shoe_id: cart.shoe!.shoe_id,
-    //     quantity: 1,
-    //     unit_price: double.parse(cart.shoe!.final_price.toString()),
-    //     total_price: double.parse(cart.shoe!.final_price.toString()),
-    //   );
-    // }).toList();
+
     return selectedItemIds.map((id) {
       final product = cartController.getCartList!.firstWhere((c) => c.id == id);
       return productDetail = product.shoe!;

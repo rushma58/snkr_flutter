@@ -50,7 +50,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
               final product = sellerOrderStatusController
                   .sellerOrderStatusResponse!.products?[index];
               return Card(
-                margin: const EdgeInsets.all(8.0),
+                margin: const EdgeInsets.all(5.0),
                 child: ListTile(
                   leading: Image.network(
                     product!.images.toString(),
@@ -68,7 +68,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        'Price: \$${product.price}',
+                        'Price deducting commission: Rs. ${product.price}',
                         style: fBlackRegular14,
                       ),
                       Text(

@@ -45,9 +45,9 @@ class _ToolsScreenPage extends State<ToolsScreenPage> {
           Expanded(
             child: GridView.count(
               crossAxisCount: 3,
-              padding: const EdgeInsets.all(16),
-              crossAxisSpacing: 16,
-              mainAxisSpacing: 16,
+              padding: const EdgeInsets.all(10),
+              crossAxisSpacing: 10,
+              mainAxisSpacing: 10,
               children: [
                 CustomIconButton(
                   icon: const Icon(Icons.info),

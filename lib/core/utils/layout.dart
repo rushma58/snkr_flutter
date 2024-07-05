@@ -16,7 +16,11 @@ import '../../screen/SellerDashboard/tools_screen.dart';
 import '../../screen/addProduct/add_product_form.dart';
 
 class LayoutScreen extends StatefulWidget {
-  const LayoutScreen({Key? key}) : super(key: key);
+  final int initial_index;
+  const LayoutScreen({
+    Key? key,
+    required this.initial_index,
+  }) : super(key: key);
 
   @override
   State<LayoutScreen> createState() => _LayoutScreenState();
@@ -87,6 +91,7 @@ class _LayoutScreenState extends State<LayoutScreen> {
         child: _getSelectedWidget(),
       ),
       bottomNavigationBar: CurvedNavigationBar(
+        index: widget.initial_index ?? 0,
         key: const ValueKey('bottomNav'),
         height: 60,
         backgroundColor: Colors.transparent,

@@ -62,7 +62,9 @@ class OrderPlaceController extends GetxController {
       orderPlaceResponse =
           await _orderPlaceRepository.placeOrder(orderPlaceModel);
       if (orderPlaceResponse != null && orderPlaceResponse.success == true) {
-        Get.to(const LayoutScreen());
+        Get.to(const LayoutScreen(
+          initial_index: 0,
+        ));
         customSuccessSnackBar("Order is placed.");
       } else {
         customErrorSnackBar(

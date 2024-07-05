@@ -88,7 +88,7 @@ class EachCartCard extends StatelessWidget {
                 padding: const EdgeInsets.only(bottom: 3),
                 alignment: Alignment.centerLeft,
                 child: Text(
-                  "Rs. ${cart.shoe!.price.toString()}",
+                  "Rs. ${cart.shoe!.final_price.toString()}",
                   style: fRedSemiBold16,
                 ),
               ),

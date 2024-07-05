@@ -28,7 +28,9 @@ class _SplashScreenState extends State<SplashScreen> {
         //     builder: (context) => const LoginOrRegistrationScreen(),
         //   ),
         // );
-        Get.off(const LayoutScreen());
+        Get.off(const LayoutScreen(
+          initial_index: 0,
+        ));
       },
     );
   }

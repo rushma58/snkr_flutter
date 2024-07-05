@@ -83,7 +83,7 @@ class CartController extends GetxController {
       deleteCartResponse = await _cartRepository.deleteCart(id);
 
       if (deleteCartResponse?.success == true) {
-        Get.to(const LayoutScreen());
+        await getCart();
         customSuccessSnackBar("Product is deleted successfully");
       } else {
         customErrorSnackBar(

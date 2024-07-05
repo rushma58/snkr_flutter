@@ -7,6 +7,7 @@ import 'package:snkr_flutter/core/utils/fonts.dart';
 import 'package:snkr_flutter/feature/order/order-buyer/model/selectedItem/selected_shoe_model.dart';
 
 import '../../../core/helper/api/url_services.dart';
+import '../../../feature/cart/controller/add_to_cart_controller.dart';
 import '../../../feature/order/order-buyer/controller/order_place_controller.dart';
 import '../../../feature/product/addProduct/response/add_product_model_response.dart';
 
@@ -29,8 +30,10 @@ class _PurchasePageState extends State<PurchasePage> {
   double totalPrice = 0;
   double deliveryPrice = 100;
   double finalPrice = 0;
+  List<int> cartIdsToDelete = [];
 
   final orderPlaceController = Get.put(OrderPlaceController());
+  final cartController = Get.put(CartController());
 
   @override
   void initState() {
@@ -45,8 +48,14 @@ class _PurchasePageState extends State<PurchasePage> {
         quantity: item.quantity,
         unit_price: item.unit_price,
         total_price: item.total_price,
+        cartId: item.cartId,
       ));
     }
+
+    cartIdsToDelete = widget.selectedItems
+        .map((item) => item.cartId)
+        .whereType<int>()
+        .toList();
 
     // Set other controller values
     orderPlaceController.total_price_controller.text = totalPrice.toString();
@@ -198,7 +207,12 @@ class _PurchasePageState extends State<PurchasePage> {
                       onPressed: orderPlaceController.isLoading.value
                           ? null
                           : () async {
-                              orderPlaceController.placeOrder();
+                              await orderPlaceController.placeOrder();
+                              for (int cartId in cartIdsToDelete) {
+                                cartController.cart_id_controller.text =
+                                    cartId.toString();
+                                await cartController.deleteCart();
+                              }
                             },
                       style: ElevatedButton.styleFrom(
                         backgroundColor: cBlack,
