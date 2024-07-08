@@ -19,7 +19,7 @@ publish_to: "none" # Remove this line if you wish to publish to pub.dev
 version: 1.0.0+1
 
 environment:
-  sdk: ">=3.2.3 <4.0.0"
+  sdk: ">=2.17.0 <4.0.0"
 
 # Dependencies specify other packages that your package needs in order to work.
 # To automatically upgrade your package dependencies to the latest versions
@@ -36,7 +36,7 @@ dependencies:
   cupertino_icons: ^1.0.2
   dio: ^5.4.0
   iconify_flutter: ^0.0.5
-  intl: 0.18.1
+  intl: ^0.18.0
   nepali_utils: ^3.0.4
   curved_navigation_bar: ^1.0.3
   rflutter_alert: ^2.0.7
@@ -53,6 +53,11 @@ dependencies:
   image_picker: ^1.1.2
   jwt_decoder: ^2.0.1
   firebase_analytics: ^11.1.0
+  khalti_flutter: ^3.0.0
+  flutter_svg: ^2.0.7
+
+dependency_overrides:
+  flutter_svg: ^2.0.7
 
 dev_dependencies:
   flutter_test:
@@ -63,7 +68,7 @@ dev_dependencies:
   # activated in the `analysis_options.yaml` file located at the root of your
   # package. See that file for information about deactivating specific lint
   # rules and activating additional ones.
-  flutter_lints: ^2.0.0
+  flutter_lints: ^4.0.0
   build_runner: ^2.4.7
 
 # For information on the generic Dart part of this file, see the
