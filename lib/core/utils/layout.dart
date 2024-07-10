@@ -14,13 +14,14 @@ import 'package:snkr_flutter/screen/SellerDashboard/SellerHomepage.dart';
 
 import '../../screen/SellerDashboard/tools_screen.dart';
 import '../../screen/addProduct/add_product_form.dart';
+import '../../screen/compareProduct/product_compare_screen.dart';
 
 class LayoutScreen extends StatefulWidget {
   final int initial_index;
   const LayoutScreen({
-    Key? key,
+    super.key,
     required this.initial_index,
-  }) : super(key: key);
+  });
 
   @override
   State<LayoutScreen> createState() => _LayoutScreenState();
@@ -151,7 +152,7 @@ class _LayoutScreenState extends State<LayoutScreen> {
       case 0:
         return isBuyer ? const Homepage() : const SellerHomepage();
       case 1:
-        return isBuyer ? const Homepage() : const ToolsScreenPage();
+        return isBuyer ? const ProductCompareScreen() : const ToolsScreenPage();
       case 2:
         return isBuyer ? const CartPage() : const AddProductForm();
       case 3:
