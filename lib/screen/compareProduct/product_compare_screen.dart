@@ -91,8 +91,11 @@ class _ProductCompareScreenState extends State<ProductCompareScreen> {
                     String shoe2 = shoe2Controller.text;
                     final model = GenerativeModel(
                         model: 'gemini-1.5-flash', apiKey: apiKey);
+                    // final prompt =
+                    //     'Compare $shoe1 and $shoe2 by material used, price, quality, popularity and then provide the verdicts according to it on which shoe to buy.';
+
                     final prompt =
-                        'Compare $shoe1 and $shoe2 by material used, price, quality, popularity and then provide the verdicts according to it on which shoe to buy.';
+                        "Compare $shoe1 and $shoe2 by Performance (lightness, cushioning, flexibility, responsive, stability, grip) and rate it out of 10 where 10 is excellent and 0 is worst, strike, price and then provide the verdicts according to it on which shoe to buy.";
                     final content = [Content.text(prompt)];
                     try {
                       final response = await model.generateContent(content);
