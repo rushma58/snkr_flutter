@@ -15,6 +15,7 @@ import 'package:snkr_flutter/screen/SellerDashboard/SellerHomepage.dart';
 import '../../screen/SellerDashboard/tools_screen.dart';
 import '../../screen/addProduct/add_product_form.dart';
 import '../../screen/compareProduct/product_compare_screen.dart';
+import '../../screen/try.dart';
 
 class LayoutScreen extends StatefulWidget {
   final int initial_index;
@@ -156,7 +157,7 @@ class _LayoutScreenState extends State<LayoutScreen> {
       case 2:
         return isBuyer ? const CartPage() : const AddProductForm();
       case 3:
-        return isBuyer ? const Homepage() : const SellerHomepage();
+        return isBuyer ? const SupportPage() : const SellerHomepage();
       default:
         return const SizedBox();
     }
