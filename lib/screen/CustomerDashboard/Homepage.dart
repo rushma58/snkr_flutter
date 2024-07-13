@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:snkr_flutter/core/utils/colors.dart';
 import 'package:snkr_flutter/core/utils/fonts.dart';
 import 'package:snkr_flutter/screen/CustomerDashboard/CategoriesWidget.dart';
 import 'package:snkr_flutter/screen/CustomerDashboard/HomeAppBar.dart';
@@ -9,6 +10,7 @@ import 'package:snkr_flutter/screen/CustomerDashboard/Recommended.dart';
 import 'package:snkr_flutter/screen/CustomerDashboard/TopRated.dart';
 
 import '../../feature/product/fetchProduct/controller/fetch_product_controller.dart';
+import '../Item/searched_item.dart';
 
 class Homepage extends StatelessWidget {
   const Homepage({super.key});
@@ -16,6 +18,7 @@ class Homepage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final productController = Get.put(FetchProductController());
+    TextEditingController searchController = TextEditingController();
 
     return Scaffold(
       body: SingleChildScrollView(
@@ -50,22 +53,34 @@ class Homepage extends StatelessWidget {
                     ),
                     child: Row(
                       children: [
+                        const Icon(
+                          Icons.search,
+                          // size: 30,
+                          color: cGrayOld,
+                        ),
                         Container(
                           margin: const EdgeInsets.only(left: 5),
                           height: 50,
                           width: MediaQuery.sizeOf(context).width * 0.5,
                           child: TextFormField(
+                            controller: searchController,
                             decoration: const InputDecoration(
                               border: InputBorder.none,
                               hintText: "Search here...",
                             ),
+                            onFieldSubmitted: (value) {
+                              if (value.isNotEmpty) {
+                                productController.name_controller.text = value;
+                                productController.searchProducts(value);
+                                Get.to(
+                                  () => SearchResultsPage(
+                                    searchQuery: value.toString(),
+                                  ),
+                                );
+                                searchController.clear();
+                              }
+                            },
                           ),
-                        ),
-                        const Spacer(),
-                        const Icon(
-                          Icons.search,
-                          size: 30,
-                          color: Colors.black,
                         ),
                       ],
                     ),

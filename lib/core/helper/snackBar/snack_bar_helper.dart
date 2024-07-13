@@ -32,7 +32,7 @@ void customSuccessSnackBar(String message) {
       title: "Success",
       message: message,
       icon: const Icon(Icons.check_circle),
-      duration: const Duration(seconds: 3),
+      duration: const Duration(seconds: 1),
       backgroundColor: cGreen,
     ),
   );
@@ -44,7 +44,7 @@ void customErrorSnackBar(String message) {
       title: "Error",
       message: message,
       icon: const Icon(Icons.dangerous),
-      duration: const Duration(seconds: 3),
+      duration: const Duration(seconds: 1),
       backgroundColor: cRed,
     ),
   );
@@ -56,7 +56,7 @@ void customInfoSnackBar(String message) {
       title: "Information",
       message: message,
       icon: const Icon(Icons.info),
-      duration: const Duration(seconds: 3),
+      duration: const Duration(seconds: 1),
       backgroundColor: cBlue,
     ),
   );

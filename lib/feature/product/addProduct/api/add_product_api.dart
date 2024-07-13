@@ -5,6 +5,7 @@ import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:snkr_flutter/core/helper/api/http_services.dart';
 import 'package:snkr_flutter/core/helper/api/url_services.dart';
+import 'package:snkr_flutter/core/helper/sharedPreferences/shared_preferences.dart';
 import 'package:snkr_flutter/feature/product/addProduct/model/add_product_model.dart';
 import 'package:snkr_flutter/feature/product/addProduct/response/add_product_response.dart';
 
@@ -18,6 +19,8 @@ class AddProductAPI {
     String? url = baseUrl + addProductUrl;
 
     try {
+      String? token = await getStringData("token");
+
       // Read the image file
       final imageBytes = await File(addProductModel.images!).readAsBytes();
       final base64Image = base64Encode(imageBytes);
@@ -30,19 +33,19 @@ class AddProductAPI {
         'category': addProductModel.category,
         'size': addProductModel.size,
         'color': addProductModel.color,
-        'price': addProductModel.price,
-        'discount_price': addProductModel.discount_price,
-        'commission': addProductModel.commission,
-        'final_price': addProductModel.final_price,
+        'price': addProductModel.price.toString(),
+        'discount_price': addProductModel.discount_price.toString(),
+        'commission': addProductModel.commission.toString(),
+        'final_price': addProductModel.final_price.toString(),
         'description': addProductModel.description,
         'material': addProductModel.material,
         'sku': addProductModel.sku,
         'release_date': addProductModel.release_date,
-        'weight': addProductModel.weight,
+        'weight': addProductModel.weight.toString(),
         'dimensions': addProductModel.dimensions,
         'gender': addProductModel.gender,
         'status': addProductModel.status,
-        'user_id': addProductModel.user_id,
+        //'user_id': addProductModel.user_id,
         'images': base64Image,
         // if (addProductModel.images != null)
         //   'images': await MultipartFile.fromFile(addProductModel.images!,
@@ -50,6 +53,10 @@ class AddProductAPI {
       });
 
       response = await dio.post(
+        options: Options(
+          headers: {HttpHeaders.authorizationHeader: "Bearer $token"},
+        ),
+
         url,
         //data: addProductModel.toJson(),
         data: formData,

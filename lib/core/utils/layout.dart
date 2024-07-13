@@ -1,7 +1,10 @@
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:iconify_flutter/iconify_flutter.dart';
+import 'package:iconify_flutter/icons/cil.dart';
 import 'package:iconify_flutter/icons/material_symbols.dart';
+import 'package:jwt_decoder/jwt_decoder.dart';
 import 'package:snkr_flutter/core/helper/sharedPreferences/shared_preferences.dart';
 import 'package:snkr_flutter/core/helper/snackBar/snack_bar_helper.dart';
 import 'package:snkr_flutter/core/utils/colors.dart';
@@ -9,8 +12,17 @@ import 'package:snkr_flutter/screen/Cart/CartPage.dart';
 import 'package:snkr_flutter/screen/CustomerDashboard/Homepage.dart';
 import 'package:snkr_flutter/screen/SellerDashboard/SellerHomepage.dart';
 
+import '../../screen/SellerDashboard/tools_screen.dart';
+import '../../screen/addProduct/add_product_form.dart';
+import '../../screen/compareProduct/product_compare_screen.dart';
+import '../../screen/try.dart';
+
 class LayoutScreen extends StatefulWidget {
-  const LayoutScreen({Key? key}) : super(key: key);
+  final int initial_index;
+  const LayoutScreen({
+    super.key,
+    required this.initial_index,
+  });
 
   @override
   State<LayoutScreen> createState() => _LayoutScreenState();
@@ -22,21 +34,46 @@ class _LayoutScreenState extends State<LayoutScreen> {
   String? role;
   bool isLoggedIn = false;
   bool isBuyer = true;
+  String? fcmToken;
 
   @override
   void initState() {
     super.initState();
     _getDataFromSharedPref();
+    _getFcmToken();
+  }
+
+  void _getFcmToken() async {
+    fcmToken = await getStringData('fcmToken');
+    debugPrint("FCM: $fcmToken");
   }
 
   Future<void> _getDataFromSharedPref() async {
     try {
       token = await getStringData('token');
+      debugPrint("Token in Layout: $token ");
       isLoggedIn = token != null && token!.isNotEmpty;
+
+      RxBool hasExpired = false.obs;
+      String? userToken = await getStringData('token');
+      if (userToken != null) {
+        hasExpired.value = JwtDecoder.isExpired(userToken);
+        if (!hasExpired.value) {
+          token = userToken;
+          await setStringData("expiry", token.toString());
+        } else {
+          token = null;
+        }
+      }
+      if (token == null) {
+        customInfoSnackBar("Last Logged in is Expired");
+        //Get.off(() => const LoginScreen());
+      }
 
       if (isLoggedIn) {
         role = await getStringData('role');
-        isBuyer = role != "Seller";
+
+        isBuyer = role != "1";
       }
 
       debugPrint("Token: $token");
@@ -56,6 +93,7 @@ class _LayoutScreenState extends State<LayoutScreen> {
         child: _getSelectedWidget(),
       ),
       bottomNavigationBar: CurvedNavigationBar(
+        index: widget.initial_index ?? 0,
         key: const ValueKey('bottomNav'),
         height: 60,
         backgroundColor: Colors.transparent,
@@ -65,14 +103,12 @@ class _LayoutScreenState extends State<LayoutScreen> {
         },
         items: [
           Icon(
-            isBuyer ? Icons.home : Icons.sell,
+            isBuyer ? Icons.home : Icons.home,
             size: 30,
             color: Colors.white,
           ),
           Iconify(
-            isBuyer
-                ? MaterialSymbols.compare_arrows
-                : MaterialSymbols.check_circle,
+            isBuyer ? MaterialSymbols.compare_arrows : Cil.equalizer,
             color: cWhite,
             size: 30,
           ),
@@ -94,7 +130,7 @@ class _LayoutScreenState extends State<LayoutScreen> {
   }
 
   void _handleNavigation(int index) {
-    if (isLoggedIn) {
+    if (token != null) {
       setState(() {
         _selectedIndex = index;
       });
@@ -117,11 +153,11 @@ class _LayoutScreenState extends State<LayoutScreen> {
       case 0:
         return isBuyer ? const Homepage() : const SellerHomepage();
       case 1:
-        return isBuyer ? const Homepage() : const SellerHomepage();
+        return isBuyer ? const ProductCompareScreen() : const ToolsScreenPage();
       case 2:
-        return const CartPage();
+        return isBuyer ? const CartPage() : const AddProductForm();
       case 3:
-        return isBuyer ? const Homepage() : const SellerHomepage();
+        return isBuyer ? const SupportPage() : const SellerHomepage();
       default:
         return const SizedBox();
     }

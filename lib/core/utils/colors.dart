@@ -8,7 +8,7 @@ const Color cGreen = Color.fromARGB(255, 66, 133, 77);
 const Color cRed = Color.fromARGB(255, 222, 45, 45);
 const Color cWhite = Color(0xFFffffff);
 const Color cBlack = Color(0xFF000000);
-const Color cGrayOld = Color.fromARGB(255, 121, 119, 119);
+const Color cGrayOld = Color.fromARGB(255, 85, 83, 83);
 const Color cOrangeOld = Color(0xFFFFA050);
 
 //New
@@ -16,7 +16,7 @@ const Color cBrown = Color(0xFFED9F2A);
 const Color cGolden = Color(0xFFF7C159);
 const Color cOrange = Color(0xFFFA973B);
 const Color cSilver = Color(0xFFF4F0F0);
-const Color cGray = Color(0xFFEBE1E1);
+const Color cGray = Color.fromARGB(255, 240, 236, 236);
 
 // Trial
 const Color cGLight = Color(0xFFF6E2A3);

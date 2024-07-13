@@ -32,8 +32,7 @@ class AddProductController extends GetxController {
   final AddProductRepository _addProductRepository = AddProductRepository();
   final isLoading = false.obs;
 
-  @override
-  void onClose() {
+  void clearControllers() {
     name_controller.clear();
     brand_controller.clear();
     model_controller.clear();
@@ -52,8 +51,12 @@ class AddProductController extends GetxController {
     dimensions_controller.clear();
     gender_controller.clear();
     status_controller.clear();
-    user_id_controller.clear();
 
+    //images_controller = null;
+  }
+
+  @override
+  void onClose() {
     name_controller.dispose();
     brand_controller.dispose();
     model_controller.dispose();
@@ -72,7 +75,6 @@ class AddProductController extends GetxController {
     dimensions_controller.dispose();
     gender_controller.dispose();
     status_controller.dispose();
-    user_id_controller.dispose();
 
     super.onClose();
   }
@@ -101,12 +103,16 @@ class AddProductController extends GetxController {
         dimensions: dimensions_controller.text,
         gender: gender_controller.text,
         status: "in stock",
-        user_id: 19,
+        // user_id: 19,
       );
       addProductResponse =
           await _addProductRepository.addProduct(addProductModel);
       if (addProductResponse?.success == true) {
-        Get.to(() => const LayoutScreen());
+        // Clear and dispose controllers
+        clearControllers();
+
+        Get.off(() => const LayoutScreen(initial_index: 0));
+
         customSuccessSnackBar("Product is added successfully");
       } else {
         customErrorSnackBar(

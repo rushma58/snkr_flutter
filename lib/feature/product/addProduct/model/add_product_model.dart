@@ -24,7 +24,6 @@ class AddProductModel {
   String? dimensions;
   String? gender;
   String? status;
-  int? user_id;
 
   AddProductModel({
     this.id,
@@ -47,7 +46,6 @@ class AddProductModel {
     this.dimensions,
     this.gender,
     this.status,
-    this.user_id,
   });
 
   factory AddProductModel.fromJson(Map<String, dynamic> json) =>

@@ -115,6 +115,12 @@ const TextStyle fGLBrownRegular16 =
     TextStyle(fontFamily: 'Poppins-Regular', fontSize: 16.0, color: cGLBrown);
 
 //------------------------ Red fonts
+const TextStyle fRedSemiBold20 =
+    TextStyle(fontFamily: 'Poppins-SemiBold', fontSize: 20.0, color: cRed);
+
+const TextStyle fRedSemiBold18 =
+    TextStyle(fontFamily: 'Poppins-SemiBold', fontSize: 18.0, color: cRed);
+
 const TextStyle fRedSemiBold16 =
     TextStyle(fontFamily: 'Poppins-SemiBold', fontSize: 16.0, color: cRed);
 

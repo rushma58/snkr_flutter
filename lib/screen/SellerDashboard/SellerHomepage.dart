@@ -1,4 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:snkr_flutter/core/utils/colors.dart';
+import 'package:snkr_flutter/core/utils/fonts.dart';
+import 'package:snkr_flutter/feature/order/seller-order-status/controller/seller_order_status_controller.dart';
 import 'package:snkr_flutter/screen/CustomerDashboard/HomeAppBar.dart';
 
 class SellerHomepage extends StatefulWidget {
@@ -9,16 +13,36 @@ class SellerHomepage extends StatefulWidget {
 }
 
 class _SellerHomepage extends State<SellerHomepage> {
-  String _name = "Neha Shakya";
+  final SellerOrderStatusController sellerOrderStatusController =
+      Get.put(SellerOrderStatusController());
+
+  int listedCount = 0;
+  int orderedCount = 0;
+
+  String _name = "Rushma Singh";
   String _number = "Add Your Number";
-  int _wishlistCount = 1;
-  int _followedStoresCount = 3;
-  int _vouchersCount = 1;
 
   @override
   void initState() {
     super.initState();
     _fetchUserData();
+    sellerOrderStatusController.sellerOrderStatus();
+  }
+
+  void processProductData() {
+    listedCount = 0;
+    orderedCount = 0;
+
+    final response = sellerOrderStatusController.sellerOrderStatusResponse;
+    if (response != null && response.products != null) {
+      for (var product in response.products!) {
+        if (product.status == 'Not ordered yet') {
+          listedCount++;
+        } else if (product.status == 'Order placed') {
+          orderedCount++;
+        }
+      }
+    }
   }
 
   Future<void> _fetchUserData() async {
@@ -28,151 +52,90 @@ class _SellerHomepage extends State<SellerHomepage> {
     // This is where you would fetch data from a database in the future.
     // For now, we simulate this with hardcoded values.
     setState(() {
-      _name = "Neha Shakya";
+      _name = "Rushma Singh";
       _number = "Add Your Number";
-      _wishlistCount = 1;
-      _followedStoresCount = 3;
-      _vouchersCount = 1;
     });
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      // appBar: AppBar(
-      //   leading: const Icon(Icons.arrow_back),
-      //   backgroundColor: Colors.grey.shade200,
-      //   elevation: 0,
-      // ),
-      appBar: const PreferredSize(
-          preferredSize: Size.fromHeight(kToolbarHeight), child: HomeAppBar()),
-      body: Column(
-        children: [
-          Container(
-            color: Colors.grey.shade200,
-            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-            child: Column(
-              children: [
-                Row(
-                  children: [
-                    CircleAvatar(
-                      radius: 24,
-                      child: InkWell(
-                        onTap: () {
-                          // Navigator.pushNamed(context, "itemPage");
-                        },
-                        child: Container(
-                          margin: const EdgeInsets.all(10),
-                          child: Image.asset(
-                            "assets/images/1.png",
-                            height: 120,
-                            width: 120,
-                          ),
-                        ),
+        appBar: const PreferredSize(
+            preferredSize: Size.fromHeight(kToolbarHeight),
+            child: HomeAppBar()),
+        body: Column(
+          children: [
+            Container(
+              color: Colors.grey.shade200,
+              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 20),
+              child: Column(
+                children: [
+                  Row(
+                    children: [
+                      const CircleAvatar(
+                        backgroundColor: cWhite,
+                        radius: 24,
+                        child: Icon(Icons.person),
                       ),
-                    ),
-                    const SizedBox(width: 16),
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          _name,
-                          style: const TextStyle(
-                            fontSize: 18,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                        Text(
-                          _number,
-                          style: const TextStyle(
-                            color: Colors.grey,
-                          ),
-                        ),
-                      ],
-                    ),
-                  ],
-                ),
-                const SizedBox(height: 16),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceAround,
-                  children: [
-                    Column(
-                      children: [
-                        Text("$_wishlistCount"),
-                        const Text(
-                          "My Wishlist",
-                          style: TextStyle(
-                            color: Colors.grey,
-                          ),
-                        ),
-                      ],
-                    ),
-                    Column(
-                      children: [
-                        Text("$_followedStoresCount"),
-                        const Text(
-                          "Followed Stores",
-                          style: TextStyle(
-                            color: Colors.grey,
-                          ),
-                        ),
-                      ],
-                    ),
-                    Column(
-                      children: [
-                        Text("$_vouchersCount"),
-                        const Text(
-                          "Vouchers",
-                          style: TextStyle(
-                            color: Colors.grey,
-                          ),
-                        ),
-                      ],
-                    ),
-                  ],
-                ),
-              ],
-            ),
-          ),
-          Container(
-            height: 100,
-            decoration: const BoxDecoration(
-              gradient: LinearGradient(
-                colors: [Colors.blue, Colors.purple],
-                begin: Alignment.topLeft,
-                end: Alignment.bottomRight,
+                      const SizedBox(width: 16),
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(_name, style: fBlackSemiBold18),
+                          Text(_number, style: fBlackRegular14),
+                        ],
+                      ),
+                    ],
+                  ),
+                ],
               ),
             ),
-          ),
-          Expanded(
-            child: GridView.count(
-              crossAxisCount: 3,
-              padding: const EdgeInsets.all(16),
-              crossAxisSpacing: 16,
-              mainAxisSpacing: 16,
-              children: [
-                _buildGridItem(Icons.info, "Product Details"),
-                _buildGridItem(Icons.checklist, "Product Status"),
-                _buildGridItem(Icons.add_circle, "Add new Product"),
-                _buildGridItem(Icons.verified, "Authentic Check"),
-                _buildGridItem(Icons.shopping_cart, "My Orders"),
-                _buildGridItem(Icons.payment, "Payments"),
-              ],
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-
-  Widget _buildGridItem(IconData icon, String label) {
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        Icon(icon, size: 36),
-        const SizedBox(height: 8),
-        Text(label, textAlign: TextAlign.center),
-      ],
-    );
+            GetBuilder<SellerOrderStatusController>(builder: (controller) {
+              if (controller.isLoading) {
+                return const Center(child: CircularProgressIndicator());
+              } else {
+                processProductData();
+                return Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Card(
+                    child: Padding(
+                      padding: const EdgeInsets.all(16.0),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          const Text(
+                            'Products Summary',
+                            style: fBlackSemiBold18,
+                          ),
+                          const SizedBox(height: 16),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceAround,
+                            children: [
+                              Column(
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: [
+                                  Text('$listedCount', style: fBlackSemiBold20),
+                                  const Text('Listed', style: fBlackRegular16),
+                                ],
+                              ),
+                              Column(
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: [
+                                  Text('$orderedCount',
+                                      style: fBlackSemiBold20),
+                                  const Text('Ordered', style: fBlackRegular16),
+                                ],
+                              ),
+                            ],
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                );
+              }
+            }),
+          ],
+        ));
   }
 }

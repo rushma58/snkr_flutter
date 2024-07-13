@@ -7,6 +7,8 @@ import 'package:snkr_flutter/core/utils/layout.dart';
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
 
+  static const route = 'splashscreen';
+
   @override
   State<SplashScreen> createState() => _SplashScreenState();
 }
@@ -16,7 +18,7 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   void initState() {
     super.initState();
-    //_getDataFromSharedPref();
+    // _getDataFromSharedPref();
     Timer(
       const Duration(seconds: 1),
       () {
@@ -26,7 +28,9 @@ class _SplashScreenState extends State<SplashScreen> {
         //     builder: (context) => const LoginOrRegistrationScreen(),
         //   ),
         // );
-        Get.off(const LayoutScreen());
+        Get.off(const LayoutScreen(
+          initial_index: 0,
+        ));
       },
     );
   }

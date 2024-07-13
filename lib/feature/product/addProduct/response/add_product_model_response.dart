@@ -4,7 +4,7 @@ part 'add_product_model_response.g.dart';
 
 @JsonSerializable()
 class AddProductModelResponse {
-  int? id;
+  int? shoe_id;
   String? name;
   String? brand;
   String? model;
@@ -24,10 +24,10 @@ class AddProductModelResponse {
   String? dimensions;
   String? gender;
   String? status;
-  String? user_id;
+  int? user_id;
 
   AddProductModelResponse({
-    this.id,
+    this.shoe_id,
     this.name,
     this.brand,
     this.model,
