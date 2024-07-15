@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_tawk/flutter_tawk.dart';
-import 'package:webview_flutter/webview_flutter.dart';
 
 class SupportPage extends StatelessWidget {
   const SupportPage({super.key});

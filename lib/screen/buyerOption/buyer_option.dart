@@ -3,19 +3,20 @@ import 'package:get/get.dart';
 import 'package:snkr_flutter/core/utils/colors.dart';
 import 'package:snkr_flutter/core/widgets/snkr_navbar.dart';
 import 'package:snkr_flutter/feature/order/seller-order-status/controller/seller_order_status_controller.dart';
-import 'package:snkr_flutter/screen/SellerDashboard/tools/orderStatus/order_status_layout.dart';
+import 'package:snkr_flutter/screen/buyerOption/ChatSystem/chat_system.dart';
+import 'package:snkr_flutter/screen/buyerOption/getOrderHistory/order_history_layout.dart';
+import 'package:snkr_flutter/screen/compareProduct/product_compare_screen.dart';
 
 import '../../core/widgets/icons/custom_icon_button.dart';
-import 'tools/productDetails/product_detail_screen.dart';
 
-class ToolsScreenPage extends StatefulWidget {
-  const ToolsScreenPage({super.key});
+class BuyerOptionScreen extends StatefulWidget {
+  const BuyerOptionScreen({super.key});
 
   @override
-  _ToolsScreenPage createState() => _ToolsScreenPage();
+  _BuyerOptionScreen createState() => _BuyerOptionScreen();
 }
 
-class _ToolsScreenPage extends State<ToolsScreenPage> {
+class _BuyerOptionScreen extends State<BuyerOptionScreen> {
   final SellerOrderStatusController sellerOrderStatusController =
       Get.put(SellerOrderStatusController());
 
@@ -35,7 +36,7 @@ class _ToolsScreenPage extends State<ToolsScreenPage> {
       appBar: const PreferredSize(
           preferredSize: Size.fromHeight(kToolbarHeight),
           child: SnkrNavbar(
-            appBarName: "Tools",
+            appBarName: "My Profile",
           )),
       body: Stack(
         children: [
@@ -50,33 +51,37 @@ class _ToolsScreenPage extends State<ToolsScreenPage> {
               mainAxisSpacing: 10,
               children: [
                 CustomIconButton(
-                  icon: const Icon(Icons.info),
-                  icon_name: "Product Details",
+                  icon: const Icon(Icons.shopping_bag),
+                  icon_name: "My Order",
                   onTap: () {
-                    Get.to(const ProductDetailScreen());
+                    Get.to(const GetMyOrderLayout());
                   },
                 ),
                 CustomIconButton(
-                  icon: const Icon(Icons.checklist),
-                  icon_name: "Order Status",
+                  icon: const Icon(Icons.compare_arrows),
+                  icon_name: "Compare Shoe",
                   onTap: () {
-                    Get.to(const OrderStatusLayout());
+                    Get.to(const ProductCompareScreen());
                   },
                 ),
                 CustomIconButton(
-                  icon: const Icon(Icons.add_circle),
-                  icon_name: "Add new Product",
+                  icon: const Icon(Icons.chat),
+                  icon_name: "Chat",
+                  onTap: () {
+                    Get.to(const SupportPage());
+                  },
+                ),
+                CustomIconButton(
+                  icon: const Icon(Icons.route),
+                  icon_name: "Track My Order",
                   onTap: () {},
                 ),
                 CustomIconButton(
-                  icon: const Icon(Icons.verified),
-                  icon_name: "Authentic Check",
-                  onTap: () {},
-                ),
-                CustomIconButton(
-                  icon: const Icon(Icons.payment),
-                  icon_name: "Payments",
-                  onTap: () {},
+                  icon: const Icon(Icons.reviews),
+                  icon_name: "My Review",
+                  onTap: () {
+                    // Get.to(const GetMyOrderLayout());
+                  },
                 ),
               ],
             ),

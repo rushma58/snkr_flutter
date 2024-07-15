@@ -34,6 +34,7 @@ class SnkrNavbar extends StatelessWidget {
           ),
         ],
       ),
+      leading: const SizedBox(),
     );
   }
 }

@@ -7,26 +7,31 @@ class SellerOrderStatusController extends GetxController {
   final SellerOrderStatusRepository _sellerOrderStatusRepository =
       SellerOrderStatusRepository();
 
-  bool isLoading = false;
+  final RxBool _isLoading = false.obs;
+  bool get isLoading => _isLoading.value;
 
-  final _sellerOrderStatusResponse = Rx<SellerOrderStatusResponse?>(null);
+  final Rx<SellerOrderStatusResponse?> _sellerOrderStatusResponse =
+      Rx<SellerOrderStatusResponse?>(null);
   SellerOrderStatusResponse? get sellerOrderStatusResponse =>
       _sellerOrderStatusResponse.value;
 
+  @override
+  void onInit() {
+    super.onInit();
+    sellerOrderStatus();
+  }
+
   Future<void> sellerOrderStatus() async {
-    isLoading = true;
-    update();
+    _isLoading.value = true;
     try {
       SellerOrderStatusResponse? getSellerOrder =
           await _sellerOrderStatusRepository.sellerORderStatus();
       _sellerOrderStatusResponse.value = getSellerOrder;
     } catch (e) {
       debugPrint('Error fetching seller order status: $e');
-      _sellerOrderStatusResponse.value =
-          null; // Ensure it's set to null on error
+      _sellerOrderStatusResponse.value = null;
     } finally {
-      isLoading = false;
-      update(); // Notify listeners that the state has changed
+      _isLoading.value = false;
     }
   }
 }

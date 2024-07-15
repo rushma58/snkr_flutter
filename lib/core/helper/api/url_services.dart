@@ -19,3 +19,4 @@ const deleteFromCartUrl = "api/cart/";
 
 const orderPlaceUrl = "api/create/order";
 const sellerOrderStatusUrl = "api/seller/product-status";
+const orderHistoryUrl = "api/myorders";

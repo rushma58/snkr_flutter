@@ -12,10 +12,10 @@ import 'package:snkr_flutter/screen/Cart/CartPage.dart';
 import 'package:snkr_flutter/screen/CustomerDashboard/Homepage.dart';
 import 'package:snkr_flutter/screen/SellerDashboard/SellerHomepage.dart';
 
+import '../../screen/SellerDashboard/addProduct/add_product_form.dart';
 import '../../screen/SellerDashboard/tools_screen.dart';
-import '../../screen/addProduct/add_product_form.dart';
+import '../../screen/buyerOption/buyer_option.dart';
 import '../../screen/compareProduct/product_compare_screen.dart';
-import '../../screen/try.dart';
 
 class LayoutScreen extends StatefulWidget {
   final int initial_index;
@@ -134,7 +134,7 @@ class _LayoutScreenState extends State<LayoutScreen> {
       setState(() {
         _selectedIndex = index;
       });
-    } else {
+    } else if (index != 0 && token == null) {
       // Navigator.pushReplacement(
       //   context,
       //   MaterialPageRoute(builder: (context) => LoginPage()),
@@ -157,7 +157,7 @@ class _LayoutScreenState extends State<LayoutScreen> {
       case 2:
         return isBuyer ? const CartPage() : const AddProductForm();
       case 3:
-        return isBuyer ? const SupportPage() : const SellerHomepage();
+        return isBuyer ? const BuyerOptionScreen() : const SellerHomepage();
       default:
         return const SizedBox();
     }

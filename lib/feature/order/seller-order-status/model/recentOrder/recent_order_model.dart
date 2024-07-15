@@ -10,6 +10,8 @@ class RecentOrderModel {
   int? order_id;
   int? shoe_id;
   int? quantity;
+  String? shoe_name;
+  String? shoe_image;
   String? unit_price;
   String? total_price;
   String? created_at;
@@ -21,6 +23,8 @@ class RecentOrderModel {
     this.order_id,
     this.shoe_id,
     this.quantity,
+    this.shoe_name,
+    this.shoe_image,
     this.unit_price,
     this.total_price,
     this.created_at,

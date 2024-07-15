@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:google_generative_ai/google_generative_ai.dart';
 import 'package:snkr_flutter/screen/compareProduct/compare_page.dart';
@@ -112,7 +111,9 @@ class _ProductCompareScreenState extends State<ProductCompareScreen> {
                   },
                   style: ElevatedButton.styleFrom(
                     backgroundColor: cBlack,
-                    padding: const EdgeInsets.symmetric(vertical: 10),
+                    shape: const RoundedRectangleBorder(
+                      borderRadius: BorderRadius.all(Radius.circular(8)),
+                    ),
                   ),
                   child: const Text(
                     "Compare",
