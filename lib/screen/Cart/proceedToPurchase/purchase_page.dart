@@ -403,14 +403,80 @@ class _PurchasePageState extends State<PurchasePage> {
     finalPrice = totalPrice + deliveryPrice;
   }
 
+  // Future<Khalti?> initKhaltiPayment() async {
+  //   final url = Uri.parse('https://a.khalti.com/api/v2/epayment/initiate/');
+  //   final response = await http.post(
+  //     url,
+  //     headers: {
+  //       'Content-Type': 'application/json',
+  //       'Authorization':
+  //           'Key 9df58714eee24b44b99b1c6e4328a497',
+  //     },
+  //     body: jsonEncode({
+  //       "return_url": "https://a.khalti.com/api/v2/epayment/detail/",
+  //       "website_url": "https://example.com/",
+  //       "amount": finalPrice * 100, // amount in paisa
+  //       "purchase_order_id": "test12",
+  //       "purchase_order_name": "test",
+  //       "customer_info": {"name": "Khalti Bahadur", "phone": "9800000123"},
+  //       "product_details": widget.selectedItems.map((item) {
+  //         return {
+  //           "identity": item.shoe_id,
+  //           "name": "Shoe", // Adjust as necessary
+  //           "total_price": (item.total_price ?? 0) * 100,
+  //           "quantity": item.quantity,
+  //           "unit_price": (item.unit_price ?? 0) * 100
+  //         };
+  //       }).toList(),
+  //       "merchant_username": "SNKR Nepal",
+  //       "merchant_extra": ""
+  //     }),
+  //   );
+
+  //   if (response.statusCode == 200) {
+  //     final data = jsonDecode(response.body);
+  //     final pidx = data['pidx'];
+  //     final returnUrl = data['payment_url'];
+
+  //     final payConfig = KhaltiPayConfig(
+  //       publicKey: 'test_public_key_cb5f3df6f4cd4d4f9ee83aa792d17e66',
+  //       pidx: pidx,
+  //       returnUrl: Uri.parse(returnUrl),
+  //       environment: Environment.test,
+  //     );
+
+  //     return Khalti.init(
+  //       enableDebugging: true,
+  //       payConfig: payConfig,
+  //       onPaymentResult: (paymentResult, khalti) {
+  //         log(paymentResult.toString());
+  //       },
+  //       onMessage: (
+  //         khalti, {
+  //         description,
+  //         statusCode,
+  //         event,
+  //         needsPaymentConfirmation,
+  //       }) async {
+  //         log(
+  //           'Description: $description, Status Code: $statusCode, Event: $event, NeedsPaymentConfirmation: $needsPaymentConfirmation',
+  //         );
+  //       },
+  //       onReturn: () => log('Successfully redirected to return_url.'),
+  //     );
+  //   } else {
+  //     log('Failed to initiate Khalti payment: ${response.body}');
+  //     return null;
+  //   }
+  // }
+
   Future<Khalti?> initKhaltiPayment() async {
     final url = Uri.parse('https://a.khalti.com/api/v2/epayment/initiate/');
     final response = await http.post(
       url,
       headers: {
         'Content-Type': 'application/json',
-        'Authorization':
-            'Key 9df58714eee24b44b99b1c6e4328a497', // Replace with your actual key
+        'Authorization': 'Key 9df58714eee24b44b99b1c6e4328a497',
       },
       body: jsonEncode({
         "return_url": "https://a.khalti.com/api/v2/epayment/detail/",
@@ -422,7 +488,7 @@ class _PurchasePageState extends State<PurchasePage> {
         "product_details": widget.selectedItems.map((item) {
           return {
             "identity": item.shoe_id,
-            "name": "Shoe", // Adjust as necessary
+            "name": "Shoe",
             "total_price": (item.total_price ?? 0) * 100,
             "quantity": item.quantity,
             "unit_price": (item.unit_price ?? 0) * 100
@@ -432,6 +498,9 @@ class _PurchasePageState extends State<PurchasePage> {
         "merchant_extra": ""
       }),
     );
+
+    log('Response status: ${response.statusCode}');
+    log('Response body: ${response.body}');
 
     if (response.statusCode == 200) {
       final data = jsonDecode(response.body);
@@ -449,7 +518,7 @@ class _PurchasePageState extends State<PurchasePage> {
         enableDebugging: true,
         payConfig: payConfig,
         onPaymentResult: (paymentResult, khalti) {
-          log(paymentResult.toString());
+          log('Payment Result: ${paymentResult.toString()}');
         },
         onMessage: (
           khalti, {
@@ -459,7 +528,7 @@ class _PurchasePageState extends State<PurchasePage> {
           needsPaymentConfirmation,
         }) async {
           log(
-            'Description: $description, Status Code: $statusCode, Event: $event, NeedsPaymentConfirmation: $needsPaymentConfirmation',
+            'Description: $description, Status Code: $statusCode, Event: $event, Needs Payment Confirmation: $needsPaymentConfirmation',
           );
         },
         onReturn: () => log('Successfully redirected to return_url.'),

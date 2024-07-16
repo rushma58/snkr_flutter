@@ -7,6 +7,9 @@ const baseUrl = "http://127.0.0.1:8000/";
 //physical device
 //const baseUrl = "http://192.168.1.69:8000/";
 
+//physical device
+//const baseUrl = "http://localhost:8000/";
+
 const registrationUrl = "api/auth/register";
 const loginUrl = "api/auth/login";
 
