@@ -5,6 +5,7 @@ import 'package:iconify_flutter/iconify_flutter.dart';
 import 'package:iconify_flutter/icons/cil.dart';
 import 'package:iconify_flutter/icons/material_symbols.dart';
 import 'package:jwt_decoder/jwt_decoder.dart';
+import 'package:snkr_flutter/core/constants/noData/under_development.dart';
 import 'package:snkr_flutter/core/helper/sharedPreferences/shared_preferences.dart';
 import 'package:snkr_flutter/core/helper/snackBar/snack_bar_helper.dart';
 import 'package:snkr_flutter/core/utils/colors.dart';
@@ -157,7 +158,9 @@ class _LayoutScreenState extends State<LayoutScreen> {
       case 2:
         return isBuyer ? const CartPage() : const AddProductForm();
       case 3:
-        return isBuyer ? const BuyerOptionScreen() : const SellerHomepage();
+        return isBuyer
+            ? const BuyerOptionScreen()
+            : const UnderDevelopmentPage();
       default:
         return const SizedBox();
     }

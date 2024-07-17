@@ -6,10 +6,16 @@ import 'package:snkr_flutter/core/utils/colors.dart';
 import 'package:snkr_flutter/core/utils/fonts.dart';
 import 'package:snkr_flutter/feature/order/order-buyer/controller/order_history_controller.dart';
 import 'package:snkr_flutter/feature/order/order-buyer/model/orderHistory/order/order_model.dart';
+import 'package:snkr_flutter/screen/buyerOption/addRating/add_rating_screen.dart';
 
 class OrderHistoryScreen extends StatefulWidget {
   final String orderStatus;
-  const OrderHistoryScreen({super.key, required this.orderStatus});
+  final bool? review;
+  const OrderHistoryScreen({
+    super.key,
+    required this.orderStatus,
+    this.review,
+  });
 
   @override
   State<OrderHistoryScreen> createState() => _OrderHistoryScreenState();
@@ -71,7 +77,7 @@ class _OrderHistoryScreenState extends State<OrderHistoryScreen> {
         children: [
           ...order.items!.map((item) => ListTile(
                 leading: Image.network(
-                  baseUrl + item.images.toString(),
+                  imageBaseUrl + item.images.toString(),
                   width: 100,
                   fit: BoxFit.fill,
                 ),
@@ -83,9 +89,34 @@ class _OrderHistoryScreenState extends State<OrderHistoryScreen> {
                   '${item.brand} ',
                   style: fBlackRegular12,
                 ),
-                trailing: Text(
-                  'Rs. ${item.total_price}',
-                  style: fBlackRegular12,
+                trailing: Column(
+                  children: [
+                    Text(
+                      'Rs. ${item.total_price}',
+                      style: fBlackRegular12,
+                    ),
+                    Visibility(
+                        visible: widget.review ?? false,
+                        child: GestureDetector(
+                          onTap: () {
+                            Get.to(() => AddRatingScreen(
+                                  item: item,
+                                ));
+                          },
+                          child: Container(
+                            decoration: const BoxDecoration(
+                                color: cGreen,
+                                shape: BoxShape.rectangle,
+                                borderRadius:
+                                    BorderRadius.all(Radius.circular(5))),
+                            padding: const EdgeInsets.all(5),
+                            child: const Text(
+                              "Review",
+                              style: fWhiteRegular12,
+                            ),
+                          ),
+                        )),
+                  ],
                 ),
               )),
           Padding(
@@ -95,7 +126,7 @@ class _OrderHistoryScreenState extends State<OrderHistoryScreen> {
           ),
           ElevatedButton(
             style: ElevatedButton.styleFrom(
-              backgroundColor: cBlack,
+              backgroundColor: cBlack.withOpacity(0.5),
               shape: const RoundedRectangleBorder(
                 borderRadius: BorderRadius.all(Radius.circular(8)),
               ),

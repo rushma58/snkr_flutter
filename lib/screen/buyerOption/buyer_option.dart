@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:snkr_flutter/core/constants/noData/under_development.dart';
 import 'package:snkr_flutter/core/utils/colors.dart';
 import 'package:snkr_flutter/core/widgets/snkr_navbar.dart';
-import 'package:snkr_flutter/feature/order/seller-order-status/controller/seller_order_status_controller.dart';
 import 'package:snkr_flutter/screen/buyerOption/ChatSystem/chat_system.dart';
 import 'package:snkr_flutter/screen/buyerOption/getOrderHistory/order_history_layout.dart';
 import 'package:snkr_flutter/screen/compareProduct/product_compare_screen.dart';
@@ -17,9 +17,6 @@ class BuyerOptionScreen extends StatefulWidget {
 }
 
 class _BuyerOptionScreen extends State<BuyerOptionScreen> {
-  final SellerOrderStatusController sellerOrderStatusController =
-      Get.put(SellerOrderStatusController());
-
   @override
   void initState() {
     super.initState();
@@ -38,55 +35,51 @@ class _BuyerOptionScreen extends State<BuyerOptionScreen> {
           child: SnkrNavbar(
             appBarName: "My Profile",
           )),
-      body: Stack(
-        children: [
-          Container(
-            decoration: const BoxDecoration(color: cWhite),
-          ),
-          Expanded(
-            child: GridView.count(
-              crossAxisCount: 3,
-              padding: const EdgeInsets.all(10),
-              crossAxisSpacing: 10,
-              mainAxisSpacing: 10,
-              children: [
-                CustomIconButton(
-                  icon: const Icon(Icons.shopping_bag),
-                  icon_name: "My Order",
-                  onTap: () {
-                    Get.to(const GetMyOrderLayout());
-                  },
-                ),
-                CustomIconButton(
-                  icon: const Icon(Icons.compare_arrows),
-                  icon_name: "Compare Shoe",
-                  onTap: () {
-                    Get.to(const ProductCompareScreen());
-                  },
-                ),
-                CustomIconButton(
-                  icon: const Icon(Icons.chat),
-                  icon_name: "Chat",
-                  onTap: () {
-                    Get.to(const SupportPage());
-                  },
-                ),
-                CustomIconButton(
-                  icon: const Icon(Icons.route),
-                  icon_name: "Track My Order",
-                  onTap: () {},
-                ),
-                CustomIconButton(
-                  icon: const Icon(Icons.reviews),
-                  icon_name: "My Review",
-                  onTap: () {
-                    // Get.to(const GetMyOrderLayout());
-                  },
-                ),
-              ],
+      body: Container(
+        decoration: const BoxDecoration(color: cWhite),
+        child: GridView.count(
+          crossAxisCount: 3,
+          padding: const EdgeInsets.all(10),
+          crossAxisSpacing: 10,
+          mainAxisSpacing: 10,
+          children: [
+            CustomIconButton(
+              icon: const Icon(Icons.shopping_bag),
+              icon_name: "My Order",
+              onTap: () {
+                Get.to(const GetMyOrderLayout());
+              },
             ),
-          ),
-        ],
+            CustomIconButton(
+              icon: const Icon(Icons.compare_arrows),
+              icon_name: "Compare Shoe",
+              onTap: () {
+                Get.to(const ProductCompareScreen());
+              },
+            ),
+            CustomIconButton(
+              icon: const Icon(Icons.chat),
+              icon_name: "Chat",
+              onTap: () {
+                Get.to(const SupportPage());
+              },
+            ),
+            CustomIconButton(
+              icon: const Icon(Icons.route),
+              icon_name: "Track My Order",
+              onTap: () {
+                Get.to(const UnderDevelopmentPage());
+              },
+            ),
+            CustomIconButton(
+              icon: const Icon(Icons.reviews),
+              icon_name: "My Review",
+              onTap: () {
+                Get.to(const UnderDevelopmentPage());
+              },
+            ),
+          ],
+        ),
       ),
     );
   }

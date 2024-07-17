@@ -665,48 +665,73 @@ class _PurchasePageState extends State<PurchasePage> {
                   ],
                 ),
                 const SizedBox(height: 20),
-                FutureBuilder<Khalti?>(
-                  future: khaltiFuture,
-                  builder: (context, snapshot) {
-                    if (snapshot.connectionState == ConnectionState.waiting) {
-                      return const CircularProgressIndicator.adaptive();
-                    } else if (snapshot.hasError) {
-                      log('Error initializing Khalti: ${snapshot.error}');
-                      return Text('Error: ${snapshot.error}');
-                    } else if (!snapshot.hasData) {
-                      log('Failed to initiate Khalti payment');
-                      return const Text('Failed to initiate Khalti payment');
-                    }
-
-                    final khalti = snapshot.data!;
-                    return Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        SizedBox(
-                          width: double.infinity,
-                          child: ElevatedButton(
-                            onPressed: () {
-                              try {
-                                khalti.open(context);
-                              } catch (e) {
-                                log('Error opening Khalti payment: $e');
-                                ScaffoldMessenger.of(context).showSnackBar(
-                                  SnackBar(content: Text('Payment error: $e')),
-                                );
-                              }
+                Obx(() {
+                  return SizedBox(
+                    width: double.infinity,
+                    child: ElevatedButton(
+                      onPressed: orderPlaceController.isLoading.value
+                          ? null
+                          : () async {
+                              await orderPlaceController.placeOrder();
+                              // for (int cartId in cartIdsToDelete) {
+                              //   cartController.cart_id_controller.text =
+                              //       cartId.toString();
+                              //   await cartController.deleteCart();
+                              // }
                             },
-                            style: ElevatedButton.styleFrom(
-                              backgroundColor: cBlack,
-                              padding: const EdgeInsets.symmetric(vertical: 10),
-                            ),
-                            child: const Text("Pay via Khalti",
-                                style: fWhiteSemiBold16),
-                          ),
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: cBlack,
+                        padding: const EdgeInsets.symmetric(vertical: 10),
+                        shape: const RoundedRectangleBorder(
+                          borderRadius: BorderRadius.all(Radius.circular(8)),
                         ),
-                      ],
-                    );
-                  },
-                )
+                      ),
+                      child: const Text("Place Order", style: fWhiteSemiBold14),
+                    ),
+                  );
+                }),
+                // FutureBuilder<Khalti?>(
+                //   future: khaltiFuture,
+                //   builder: (context, snapshot) {
+                //     if (snapshot.connectionState == ConnectionState.waiting) {
+                //       return const CircularProgressIndicator.adaptive();
+                //     } else if (snapshot.hasError) {
+                //       log('Error initializing Khalti: ${snapshot.error}');
+                //       return Text('Error: ${snapshot.error}');
+                //     } else if (!snapshot.hasData) {
+                //       log('Failed to initiate Khalti payment');
+                //       return const Text('Failed to initiate Khalti payment');
+                //     }
+
+                //     final khalti = snapshot.data!;
+                //     return Column(
+                //       mainAxisAlignment: MainAxisAlignment.center,
+                //       children: [
+                //         SizedBox(
+                //           width: double.infinity,
+                //           child: ElevatedButton(
+                //             onPressed: () {
+                //               try {
+                //                 khalti.open(context);
+                //               } catch (e) {
+                //                 log('Error opening Khalti payment: $e');
+                //                 ScaffoldMessenger.of(context).showSnackBar(
+                //                   SnackBar(content: Text('Payment error: $e')),
+                //                 );
+                //               }
+                //             },
+                //             style: ElevatedButton.styleFrom(
+                //               backgroundColor: cBlack,
+                //               padding: const EdgeInsets.symmetric(vertical: 10),
+                //             ),
+                //             child: const Text("Pay via Khalti",
+                //                 style: fWhiteSemiBold16),
+                //           ),
+                //         ),
+                //       ],
+                //     );
+                //   },
+                // )
               ],
             ),
           ),

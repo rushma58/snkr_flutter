@@ -100,17 +100,17 @@ class FirebaseApi {
 
   Future<void> initNotifications(BuildContext context) async {
     String? existingToken = await getStringData('fcmToken');
-    if (existingToken == null) {
-      bool isPermissionGranted = await requestPermission(context);
-      if (isPermissionGranted) {
-        final fCMToken = await _firebaseMessaging.getToken();
-        print('ftoken: $fCMToken');
-        await setStringData('fcmToken', fCMToken.toString());
-        initPushNotifications();
-      }
-    } else {
-      print('Existing token: $existingToken');
-      initPushNotifications();
-    }
+    // if (existingToken == null) {
+    //   bool isPermissionGranted = await requestPermission(context);
+    //   if (isPermissionGranted) {
+    //     final fCMToken = await _firebaseMessaging.getToken();
+    //     print('ftoken: $fCMToken');
+    //     await setStringData('fcmToken', fCMToken.toString());
+    //     initPushNotifications();
+    //   }
+    // } else {
+    //   print('Existing token: $existingToken');
+    //   initPushNotifications();
+    // }
   }
 }

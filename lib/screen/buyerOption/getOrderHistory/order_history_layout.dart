@@ -100,7 +100,7 @@ class _GetMyOrderLayoutState extends State<GetMyOrderLayout> {
           OrderHistoryScreen(orderStatus: "2"),
           OrderHistoryScreen(orderStatus: "3"),
           OrderHistoryScreen(orderStatus: "4"),
-          OrderHistoryScreen(orderStatus: "5"),
+          OrderHistoryScreen(orderStatus: "5", review: true),
         ]),
       ),
     );

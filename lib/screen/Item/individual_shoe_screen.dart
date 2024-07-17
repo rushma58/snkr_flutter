@@ -8,9 +8,12 @@ import 'package:jwt_decoder/jwt_decoder.dart';
 import 'package:snkr_flutter/core/utils/colors.dart';
 import 'package:snkr_flutter/core/utils/fonts.dart';
 import 'package:snkr_flutter/feature/cart/controller/add_to_cart_controller.dart';
+import 'package:snkr_flutter/feature/order/order-buyer/model/selectedItem/selected_shoe_model.dart';
+import 'package:snkr_flutter/feature/product/addProduct/response/add_product_model_response.dart';
 import 'package:snkr_flutter/feature/product/fetchProduct/model/fetch_product_model.dart';
-import 'package:snkr_flutter/screen/Order/Address/address.dart';
-import 'package:snkr_flutter/screen/Order/OrderConfirmation/order_confirmation.dart';
+import 'package:snkr_flutter/feature/rating/addRating/controllers/rating_controller.dart';
+import 'package:snkr_flutter/feature/rating/viewRating/model/rating_model.dart';
+import 'package:snkr_flutter/screen/Cart/proceedToPurchase/purchase_page.dart';
 
 import '../../core/helper/api/url_services.dart';
 import '../../core/helper/sharedPreferences/shared_preferences.dart';
@@ -29,12 +32,15 @@ class IndividualShoeScreen extends StatefulWidget {
 class _IndividualShoeScreenState extends State<IndividualShoeScreen> {
   late bool isWishlisted = false;
 
+  RatingController ratingController = Get.put(RatingController());
+
   late CartController cartController;
 
   @override
   void initState() {
     super.initState();
     cartController = Get.put(CartController());
+    _loadRatings();
   }
 
   Future<bool> isTokenValid() async {
@@ -43,6 +49,54 @@ class _IndividualShoeScreenState extends State<IndividualShoeScreen> {
       return !JwtDecoder.isExpired(token);
     }
     return false;
+  }
+
+  List<SelectedShoeModel> get selectedItems {
+    return [
+      SelectedShoeModel(
+        shoe_id: widget.individualProduct.shoe_id,
+        quantity: 1,
+        unit_price:
+            double.parse(widget.individualProduct.final_price.toString()),
+        total_price:
+            double.parse(widget.individualProduct.final_price.toString()),
+        cartId: 0,
+      )
+    ];
+  }
+
+  List<AddProductModelResponse> get selectedItemsDetails {
+    return [
+      AddProductModelResponse(
+        shoe_id: widget.individualProduct.shoe_id,
+        name: widget.individualProduct.name,
+        brand: widget.individualProduct.brand,
+        model: widget.individualProduct.model,
+        category: widget.individualProduct.category,
+        size: widget.individualProduct.size,
+        color: widget.individualProduct.color,
+        price: widget.individualProduct.price,
+        discount_price: widget.individualProduct.discount_price,
+        commission: widget.individualProduct.commission,
+        final_price: widget.individualProduct.final_price,
+        description: widget.individualProduct.description,
+        material: widget.individualProduct.material,
+        sku: widget.individualProduct.sku,
+        release_date: widget.individualProduct.release_date,
+        images: widget.individualProduct.images,
+        weight: widget.individualProduct.weight,
+        dimensions: widget.individualProduct.dimensions,
+        gender: widget.individualProduct.gender,
+        status: widget.individualProduct.status,
+        user_id: widget.individualProduct.user_id,
+      )
+    ];
+  }
+
+  void _loadRatings() {
+    ratingController.shoe_id_controller.text =
+        widget.individualProduct.shoe_id.toString();
+    ratingController.getRating();
   }
 
   @override
@@ -68,7 +122,8 @@ class _IndividualShoeScreenState extends State<IndividualShoeScreen> {
                     child: Container(
                       //margin: const EdgeInsets.all(10),
                       child: Image.network(
-                        (baseUrl + widget.individualProduct.images.toString()),
+                        (imageBaseUrl +
+                            widget.individualProduct.images.toString()),
                         height: 300,
                         // width: 100,
                         fit: BoxFit.fitWidth,
@@ -123,7 +178,9 @@ class _IndividualShoeScreenState extends State<IndividualShoeScreen> {
                         style: fBlackRegular14,
                       )
                     ],
-                  )
+                  ),
+                  const Divider(),
+                  _buildReviewSection(),
                 ],
               ),
             ),
@@ -161,17 +218,17 @@ class _IndividualShoeScreenState extends State<IndividualShoeScreen> {
           children: [
             FloatingActionButton.extended(
               heroTag: "buy_now_tag",
-              onPressed: () {
-                Get.to(OrderConfirmScreen(
-                  address: Address(
-                      fullName: "fullName",
-                      mobileNumber: "mobileNumber",
-                      streetName: "streetName",
-                      address: "address",
-                      city: "city",
-                      state: "state",
-                      zipCode: "zipCode"),
-                ));
+              onPressed: () async {
+                bool isValid = await isTokenValid();
+                if (isValid) {
+                  Get.to(() => PurchasePage(
+                        selectedItems: selectedItems,
+                        selectedShoeDetails: selectedItemsDetails,
+                      ));
+                } else {
+                  customInfoSnackBar(
+                      "Your session has expired. Please log in again.");
+                }
               },
               label: const Text(
                 "Buy Now",
@@ -180,32 +237,6 @@ class _IndividualShoeScreenState extends State<IndividualShoeScreen> {
               icon: const Iconify(MaterialSymbols.shopping_cart_outline),
               backgroundColor: cSilver,
             ),
-            // Obx(() {
-            //   return FloatingActionButton.extended(
-            //     heroTag: "add_to_cart_tag",
-            //     onPressed: cartController.isLoading
-            //         ? null
-            //         : () async {
-            //             bool isValid = await isTokenValid();
-            //             if (isValid) {
-            //               cartController.shoe_id_controller.text =
-            //                   widget.individualProduct.shoe_id.toString();
-            //               await cartController.addToCart();
-            //             } else {
-            //               customInfoSnackBar(
-            //                   "Your session has expired. Please log in again.");
-            //               // Here you can also navigate to the login screen if needed
-            //             }
-            //           },
-            //     label: const Text(
-            //       "Add to Cart",
-            //       style: fBlackRegular14,
-            //     ),
-            //     icon: const Iconify(MaterialSymbols.shopping_cart_outline),
-            //     backgroundColor: cSilver,
-            //   );
-            // }),
-
             GetBuilder<CartController>(
               builder: (controller) {
                 return FloatingActionButton.extended(
@@ -238,164 +269,92 @@ class _IndividualShoeScreenState extends State<IndividualShoeScreen> {
     );
   }
 
-  // @override
-  // Widget build(BuildContext context) {
-  //   return Scaffold(
-  //     appBar: const PreferredSize(
-  //       preferredSize: Size.fromHeight(kToolbarHeight),
-  //       child: TopNavBar(
-  //           appBarName: "Individual Shoe",
-  //           filterRequired: false,
-  //           backFunction: ''),
-  //     ),
-  //     body: Stack(
-  //       children: [
-  //         SingleChildScrollView(
-  //           child: Padding(
-  //             padding: const EdgeInsets.all(18.0),
-  //             child: Column(
-  //               crossAxisAlignment: CrossAxisAlignment.start,
-  //               children: [
-  //                 Container(
-  //                   child: Image.network(
-  //                     (baseUrl + widget.individualProduct.images.toString()),
-  //                     fit: BoxFit.fitWidth,
-  //                   ),
-  //                 ),
-  //                 Text(
-  //                   widget.individualProduct.name.toString(),
-  //                   style: fBlackSemiBold30,
-  //                 ),
-  //                 Text(
-  //                   widget.individualProduct.sku.toString(),
-  //                   style: fBlackRegular16,
-  //                 ),
-  //                 Text(
-  //                   "Rs. ${widget.individualProduct.final_price}",
-  //                   style: fRedSemiBold16,
-  //                 ),
-  //                 const Divider(),
-  //                 Column(
-  //                   crossAxisAlignment: CrossAxisAlignment.start,
-  //                   children: [
-  //                     const Text(
-  //                       "Product Description: ",
-  //                       style: fBlackSemiBold18,
-  //                     ),
-  //                     Text(
-  //                       widget.individualProduct.description.toString(),
-  //                       style: fBlackRegular14,
-  //                     )
-  //                   ],
-  //                 ),
-  //                 const Divider(),
-  //                 Column(
-  //                   crossAxisAlignment: CrossAxisAlignment.start,
-  //                   children: [
-  //                     const Text(
-  //                       "Material Used: ",
-  //                       style: fBlackSemiBold18,
-  //                     ),
-  //                     Text(
-  //                       widget.individualProduct.material.toString(),
-  //                       style: fBlackRegular14,
-  //                     )
-  //                   ],
-  //                 ),
-  //                 const Divider(),
-  //                 DropdownButton<String>(
-  //                   hint: const Text("Select Size"),
-  //                   items: widget.individualProduct.sizes.map((String value) {
-  //                     return DropdownMenuItem<String>(
-  //                       value: value,
-  //                       child: Text(value),
-  //                     );
-  //                   }).toList(),
-  //                   onChanged: (_) {},
-  //                 ),
-  //                 DropdownButton<String>(
-  //                   hint: const Text("Select Color"),
-  //                   items: widget.individualProduct.colors.map((String value) {
-  //                     return DropdownMenuItem<String>(
-  //                       value: value,
-  //                       child: Text(value),
-  //                     );
-  //                   }).toList(),
-  //                   onChanged: (_) {},
-  //                 ),
-  //                 const Divider(),
-  //                 const Text(
-  //                   "Customer Reviews: ",
-  //                   style: fBlackSemiBold18,
-  //                 ),
-  //                 ...widget.individualProduct.reviews.map((review) {
-  //                   return Column(
-  //                     crossAxisAlignment: CrossAxisAlignment.start,
-  //                     children: [
-  //                       Text(review.reviewerName, style: fBlackRegular14),
-  //                       Text(review.comment, style: fBlackRegular14),
-  //                       Row(
-  //                         children: List.generate(5, (index) {
-  //                           return Icon(
-  //                             index < review.rating
-  //                                 ? Icons.star
-  //                                 : Icons.star_border,
-  //                           );
-  //                         }),
-  //                       ),
-  //                       const Divider(),
-  //                     ],
-  //                   );
-  //                 }).toList(),
-  //                 const Divider(),
-  //                 const Text(
-  //                   "Related Products: ",
-  //                   style: fBlackSemiBold18,
-  //                 ),
-  //                 SingleChildScrollView(
-  //                   scrollDirection: Axis.horizontal,
-  //                   child: Row(
-  //                     children: widget.relatedProducts.map((product) {
-  //                       return Padding(
-  //                         padding: const EdgeInsets.all(8.0),
-  //                         child: Column(
-  //                           children: [
-  //                             Image.network(product.image),
-  //                             Text(product.name),
-  //                             Text("Rs. ${product.price}"),
-  //                           ],
-  //                         ),
-  //                       );
-  //                     }).toList(),
-  //                   ),
-  //                 ),
-  //               ],
-  //             ),
-  //           ),
-  //         ),
-  //         Positioned(
-  //           top: 10,
-  //           right: 10,
-  //           child: Column(
-  //             children: [
-  //               IconButton(
-  //                 onPressed: () {},
-  //                 icon: const Iconify(Mdi.heart_outline),
-  //               ),
-  //               IconButton(
-  //                 onPressed: () {},
-  //                 icon: const Iconify(MaterialSymbols.shopping_cart_outline),
-  //               ),
-  //             ],
-  //           ),
-  //         ),
-  //       ],
-  //     ),
-  //     floatingActionButton: FloatingActionButton.extended(
-  //       onPressed: () {},
-  //       label: const Text("Add to Cart"),
-  //       icon: const Icon(Icons.shopping_cart),
-  //     ),
-  //   );
-  // }
+  Widget _buildReviewSection() {
+    return GetBuilder<RatingController>(
+      builder: (controller) {
+        if (controller.isLoading) {
+          return const Center(child: CircularProgressIndicator());
+        } else {
+          // final ratingResponse = controller._getRatingResponse.value;
+          final averageRating = controller.averageRating ?? 0.0;
+          final ratingCount = controller.ratingCount ?? 0;
+
+          return Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              const Text(
+                "Reviews",
+                style: fBlackSemiBold18,
+              ),
+              const SizedBox(height: 8),
+              Row(
+                //mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    averageRating.toStringAsFixed(1),
+                    style: fBlackSemiBold24,
+                  ),
+                  const SizedBox(width: 8),
+                  _buildStarRating(averageRating),
+                  const SizedBox(width: 8),
+                  Text(
+                    "($ratingCount reviews)",
+                    style: fBlackRegular14,
+                  ),
+                ],
+              ),
+              //const SizedBox(height: 16),
+              ListView.builder(
+                padding: const EdgeInsets.all(0),
+                itemCount: controller.getRatingList?.length ?? 0,
+                shrinkWrap: true,
+                physics: const NeverScrollableScrollPhysics(),
+                itemBuilder: (context, index) {
+                  final rating = controller.getRatingList![index];
+                  return _buildReviewItem(rating);
+                },
+              ),
+            ],
+          );
+        }
+      },
+    );
+  }
+
+  Widget _buildReviewItem(RatingModel rating) {
+    return Padding(
+      padding: const EdgeInsets.all(16),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Text(rating.user!.first_name ?? "Anonymous",
+                  style: fBlackSemiBold16),
+              _buildStarRating(rating.rating ?? 0.0),
+            ],
+          ),
+          const SizedBox(height: 8),
+          Text(rating.review_text ?? "", style: fBlackRegular14),
+          const SizedBox(height: 8),
+          Text(rating.created_at ?? "", style: fGrayRegular12),
+          const Divider(),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildStarRating(double rating) {
+    return Row(
+      mainAxisSize: MainAxisSize.min,
+      children: List.generate(5, (index) {
+        return Icon(
+          index < rating ? Icons.star : Icons.star_border,
+          color: Colors.amber,
+          size: 20,
+        );
+      }),
+    );
+  }
 }

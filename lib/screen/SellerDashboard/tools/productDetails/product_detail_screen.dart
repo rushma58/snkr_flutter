@@ -36,10 +36,10 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
         ),
       ),
       body: GetBuilder<SellerOrderStatusController>(builder: (controller) {
-        if (sellerOrderStatusController.isLoading) {
-          return const Center(child: CircularProgressIndicator());
-        } else if (sellerOrderStatusController.sellerOrderStatusResponse ==
-                null ||
+        // if (sellerOrderStatusController.isLoading) {
+        //   return const Center(child: CircularProgressIndicator());
+        // } else
+        if (sellerOrderStatusController.sellerOrderStatusResponse == null ||
             sellerOrderStatusController
                 .sellerOrderStatusResponse!.products!.isEmpty) {
           return const Center(child: NoDataPage());
@@ -55,7 +55,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                 child: ListTile(
                   leading: Image.network(
                     // product!.images.toString(),
-                    (baseUrl + product!.images.toString()),
+                    (imageBaseUrl + product!.images.toString()),
                     width: 50,
                     height: 50,
                     fit: BoxFit.fitWidth,
