@@ -3,7 +3,6 @@ import 'package:get/get.dart';
 import 'package:iconify_flutter/iconify_flutter.dart';
 import 'package:iconify_flutter/icons/emojione_monotone.dart';
 import 'package:iconify_flutter/icons/material_symbols.dart';
-import 'package:iconify_flutter/icons/mdi.dart';
 import 'package:jwt_decoder/jwt_decoder.dart';
 import 'package:snkr_flutter/core/utils/colors.dart';
 import 'package:snkr_flutter/core/utils/fonts.dart';
@@ -181,33 +180,36 @@ class _IndividualShoeScreenState extends State<IndividualShoeScreen> {
                   ),
                   const Divider(),
                   _buildReviewSection(),
-                ],
-              ),
-            ),
-            Positioned(
-              top: 10,
-              right: 10,
-              child: Column(
-                children: [
-                  IconButton(
-                    onPressed: () {
-                      setState(() {
-                        isWishlisted = !isWishlisted;
-                      });
-                    },
-                    icon: Iconify(
-                      isWishlisted ? Mdi.heart : Mdi.heart_outline,
-                      size: 30,
-                    ),
-                  ),
-                  IconButton(
-                    onPressed: () {},
-                    icon: const Iconify(MaterialSymbols.shopping_cart_outline,
-                        size: 30),
+                  const SizedBox(
+                    height: 50,
                   ),
                 ],
               ),
             ),
+            // Positioned(
+            //   top: 10,
+            //   right: 10,
+            //   child: Column(
+            //     children: [
+            //       IconButton(
+            //         onPressed: () {
+            //           setState(() {
+            //             isWishlisted = !isWishlisted;
+            //           });
+            //         },
+            //         icon: Iconify(
+            //           isWishlisted ? Mdi.heart : Mdi.heart_outline,
+            //           size: 30,
+            //         ),
+            //       ),
+            //       IconButton(
+            //         onPressed: () {},
+            //         icon: const Iconify(MaterialSymbols.shopping_cart_outline,
+            //             size: 30),
+            //       ),
+            //     ],
+            //   ),
+            // ),
           ],
         ),
       ),
@@ -276,8 +278,8 @@ class _IndividualShoeScreenState extends State<IndividualShoeScreen> {
           return const Center(child: CircularProgressIndicator());
         } else {
           // final ratingResponse = controller._getRatingResponse.value;
-          final averageRating = controller.averageRating ?? 0.0;
-          final ratingCount = controller.ratingCount ?? 0;
+          final averageRating = controller.averageRating;
+          final ratingCount = controller.ratingCount;
 
           return Column(
             crossAxisAlignment: CrossAxisAlignment.start,

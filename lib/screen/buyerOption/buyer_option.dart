@@ -33,7 +33,7 @@ class _BuyerOptionScreen extends State<BuyerOptionScreen> {
       appBar: const PreferredSize(
           preferredSize: Size.fromHeight(kToolbarHeight),
           child: SnkrNavbar(
-            appBarName: "My Profile",
+            appBarName: "Features",
           )),
       body: Container(
         decoration: const BoxDecoration(color: cWhite),

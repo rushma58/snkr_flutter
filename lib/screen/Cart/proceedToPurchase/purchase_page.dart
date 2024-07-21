@@ -600,7 +600,7 @@ class _PurchasePageState extends State<PurchasePage> {
                             Container(
                               margin: const EdgeInsets.only(right: 10),
                               child: Image.network(
-                                (baseUrl + product.images.toString()),
+                                (imageBaseUrl + product.images.toString()),
                                 height: 100,
                                 width: 100,
                                 fit: BoxFit.cover,

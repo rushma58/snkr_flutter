@@ -7,6 +7,7 @@ class CustomDropdownField extends StatefulWidget {
   final String labelText;
   final List<String> dropdownList;
   final String? Function(String?)? validator;
+  final void Function(String?)? onChanged;
 
   const CustomDropdownField({
     super.key,
@@ -14,6 +15,7 @@ class CustomDropdownField extends StatefulWidget {
     required this.labelText,
     this.validator,
     required this.dropdownList,
+    this.onChanged,
   });
 
   @override
@@ -63,12 +65,21 @@ class _CustomDropdownFieldState extends State<CustomDropdownField> {
           widget.labelText,
           style: fGrayRegular14,
         ),
+        // onSelected: (String? newValue) {
+        //   setState(() {
+        //     _selectedValue = newValue;
+        //     widget.controller.text = newValue!;
+        //   });
+        //   _validateField();
+        // },
+
         onSelected: (String? newValue) {
           setState(() {
             _selectedValue = newValue;
-            widget.controller.text = newValue!;
+            widget.controller.text = newValue ?? '';
           });
           _validateField();
+          widget.onChanged?.call(newValue); // Add this line
         },
         textStyle: fBlackRegular14,
         trailingIcon: const Icon(

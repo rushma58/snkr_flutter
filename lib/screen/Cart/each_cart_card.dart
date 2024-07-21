@@ -53,10 +53,10 @@ class EachCartCard extends StatelessWidget {
           Container(
             margin: const EdgeInsets.only(right: 10),
             child: Image.network(
-              (baseUrl + cart.shoe!.images.toString()),
+              (imageBaseUrl + cart.shoe!.images.toString()),
               height: 100,
               width: 100,
-              fit: BoxFit.contain,
+              fit: BoxFit.cover,
               errorBuilder: (BuildContext context, Object exception,
                   StackTrace? stackTrace) {
                 return const Iconify(EmojioneMonotone.running_shoe, size: 80);

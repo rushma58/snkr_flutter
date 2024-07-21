@@ -78,8 +78,9 @@ class _OrderHistoryScreenState extends State<OrderHistoryScreen> {
           ...order.items!.map((item) => ListTile(
                 leading: Image.network(
                   imageBaseUrl + item.images.toString(),
-                  width: 100,
-                  fit: BoxFit.fill,
+                  width: 120,
+                  height: 100,
+                  fit: BoxFit.cover,
                 ),
                 title: Text(
                   item.name.toString(),

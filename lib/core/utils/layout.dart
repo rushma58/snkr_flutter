@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:iconify_flutter/iconify_flutter.dart';
 import 'package:iconify_flutter/icons/cil.dart';
+import 'package:iconify_flutter/icons/iconoir.dart';
 import 'package:iconify_flutter/icons/material_symbols.dart';
 import 'package:jwt_decoder/jwt_decoder.dart';
 import 'package:snkr_flutter/core/constants/noData/under_development.dart';
@@ -120,10 +121,10 @@ class _LayoutScreenState extends State<LayoutScreen> {
             color: cWhite,
             size: 30,
           ),
-          const Icon(
-            Icons.person,
+          const Iconify(
+            Iconoir.task_list,
+            color: cWhite,
             size: 30,
-            color: Colors.white,
           ),
         ],
       ),
