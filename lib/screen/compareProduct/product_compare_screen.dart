@@ -170,7 +170,7 @@ class _ProductCompareScreenState extends State<ProductCompareScreen> {
                       dataRowMaxHeight: 50,
                       columnSpacing: 15,
                       headingRowColor:
-                          WidgetStateColor.resolveWith((states) => cGrayOld),
+                          MaterialStateColor.resolveWith((states) => cGrayOld),
                       headingRowHeight: 50,
                       columns: [
                         const DataColumn(
