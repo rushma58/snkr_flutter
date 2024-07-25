@@ -12,6 +12,7 @@ class RegistrationResponseModel {
   String? email_verified_at;
   String? contact_number;
   String? password;
+  String? fcmToken;
   String? payment_method;
   String? current_address;
   String? remember_token;
@@ -29,6 +30,7 @@ class RegistrationResponseModel {
     this.payment_method,
     this.current_address,
     this.updated_at,
+    this.fcmToken,
     this.created_at,
     this.email_verified_at,
     this.remember_token,

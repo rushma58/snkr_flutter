@@ -5,7 +5,7 @@ import 'package:snkr_flutter/core/helper/sharedPreferences/shared_preferences.da
 import 'package:snkr_flutter/core/helper/snackBar/snack_bar_helper.dart';
 import 'package:snkr_flutter/core/utils/colors.dart';
 import 'package:snkr_flutter/core/utils/fonts.dart';
-import 'package:snkr_flutter/screen/addProduct/add_product_form.dart';
+import 'package:snkr_flutter/screen/SellerDashboard/addProduct/add_product_form.dart';
 import 'package:snkr_flutter/screen/login/login_screen.dart';
 
 class HomeAppBar extends StatefulWidget {

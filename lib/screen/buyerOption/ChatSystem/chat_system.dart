@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_tawk/flutter_tawk.dart';
-import 'package:webview_flutter/webview_flutter.dart';
+import 'package:snkr_flutter/core/widgets/snkr_navbar.dart';
 
 class SupportPage extends StatelessWidget {
   const SupportPage({super.key});
@@ -8,10 +8,11 @@ class SupportPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('SNKR Nepal'),
-        backgroundColor: const Color(0XFFF7931E),
-        elevation: 0,
+      appBar: const PreferredSize(
+        preferredSize: Size.fromHeight(kToolbarHeight),
+        child: SnkrNavbar(
+          appBarName: "Customer Support",
+        ),
       ),
       body: Tawk(
         directChatLink:

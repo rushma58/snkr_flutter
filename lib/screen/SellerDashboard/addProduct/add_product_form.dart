@@ -9,8 +9,8 @@ import 'package:snkr_flutter/core/utils/fonts.dart';
 import 'package:snkr_flutter/core/widgets/custom_text_field.dart';
 import 'package:snkr_flutter/feature/product/addProduct/controllers/add_product_controller.dart';
 
-import '../../core/widgets/custom_date_field.dart';
-import '../../core/widgets/custom_drop_down.dart';
+import '../../../core/widgets/custom_date_field.dart';
+import '../../../core/widgets/custom_drop_down.dart';
 
 class AddProductForm extends StatefulWidget {
   const AddProductForm({super.key});

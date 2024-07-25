@@ -20,33 +20,39 @@ class CustomIconButton extends StatefulWidget {
 class _CustomIconButtonState extends State<CustomIconButton> {
   @override
   Widget build(BuildContext context) {
-    return Container(
-      decoration: const BoxDecoration(
-        color: cGray,
-        borderRadius: BorderRadius.all(
-          Radius.circular(12),
+    return GestureDetector(
+      onTap: widget.onTap,
+      child: Container(
+        decoration: const BoxDecoration(
+          color: cGray,
+          borderRadius: BorderRadius.all(
+            Radius.circular(12),
+          ),
         ),
-      ),
-      //margin: const EdgeInsets.all(1),
-      padding: const EdgeInsets.all(8),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.start,
-        crossAxisAlignment: CrossAxisAlignment.center,
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          IconButton(
-            onPressed: widget.onTap,
-            icon: widget.icon,
-            iconSize: 35,
-            color: cBlack,
-          ),
-          Text(
-            widget.icon_name,
-            style: fBlackRegular12,
-            textAlign: TextAlign.center,
-            softWrap: true,
-          ),
-        ],
+        //margin: const EdgeInsets.all(1),
+        //padding: const EdgeInsets.all(8),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            IconButton(
+              onPressed: widget.onTap,
+              icon: widget.icon,
+              iconSize: 35,
+              color: cBlack,
+            ),
+            const SizedBox(
+              height: 10,
+            ),
+            Text(
+              widget.icon_name,
+              style: fBlackRegular12,
+              textAlign: TextAlign.center,
+              softWrap: true,
+            ),
+          ],
+        ),
       ),
     );
   }

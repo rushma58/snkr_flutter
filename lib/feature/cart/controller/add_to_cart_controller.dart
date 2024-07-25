@@ -1,7 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:snkr_flutter/core/utils/layout.dart';
 import 'package:snkr_flutter/feature/cart/response/addToCart/add_to_cart_response.dart';
 import 'package:snkr_flutter/feature/cart/response/getCart/get_cart_response.dart';
 

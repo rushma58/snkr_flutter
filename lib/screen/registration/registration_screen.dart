@@ -96,6 +96,10 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                       controller: registrationController.role_controller,
                       labelText: "Role",
                       dropdownList: roleList,
+                      onChanged: (String? newValue) {
+                        registrationController.role_controller.text =
+                            newValue == "Seller" ? "1" : "0";
+                      },
                     ),
 
                     CustomTextField(

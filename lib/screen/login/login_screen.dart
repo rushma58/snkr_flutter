@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:iconify_flutter/iconify_flutter.dart';
 import 'package:iconify_flutter/icons/ion.dart';
+import 'package:snkr_flutter/core/helper/sharedPreferences/shared_preferences.dart';
 import 'package:snkr_flutter/core/utils/colors.dart';
 import 'package:snkr_flutter/core/utils/fonts.dart';
 import 'package:snkr_flutter/core/widgets/custom_text_field.dart';
@@ -19,10 +20,18 @@ class _LoginScreenState extends State<LoginScreen> {
   final loginController = Get.put(LoginController());
   final bool _obscureText = true;
   bool isChecked = false;
+  String? fcmToken;
 
   @override
   void initState() {
     super.initState();
+    _getFcmToken();
+  }
+
+  void _getFcmToken() async {
+    fcmToken = await getStringData('fcmToken');
+    debugPrint("FCM in LOGIN: $fcmToken");
+    loginController.fcmToken_controller.text = fcmToken ?? "";
   }
 
   @override
