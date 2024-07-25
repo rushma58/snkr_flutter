@@ -15,7 +15,7 @@ class LoginAPI {
     String? url = baseUrl + loginUrl;
 
     try {
-      response = await dio.get(
+      response = await dio.post(
         url,
         data: loginParamsModel.toJson(),
       );

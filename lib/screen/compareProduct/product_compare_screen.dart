@@ -160,7 +160,17 @@ class _ProductCompareScreenState extends State<ProductCompareScreen> {
                           itemBuilder: (context, item, isSelected) {
                             return ListTile(title: Text(item.name.toString()));
                           },
+                          searchFieldProps: const TextFieldProps(
+                            decoration: InputDecoration(
+                              hintText: "Search by product name",
+                            ),
+                          ),
                         ),
+                        filterFn: (item, filter) {
+                          return item.name!
+                              .toLowerCase()
+                              .contains(filter.toLowerCase());
+                        },
                         items: productController.fetchProduct!,
                         dropdownBuilder: (context, selectedItem) {
                           return selectedItem == null
@@ -174,17 +184,26 @@ class _ProductCompareScreenState extends State<ProductCompareScreen> {
                                 "${selectedShoe1!.brand} ${selectedShoe1!.name}";
                           });
                         },
-                        compareFn: (item1, item2) =>
-                            item1.shoe_id == item2.shoe_id,
+                        compareFn: (item1, item2) => item1.name == item2.name,
                       ),
-                      const SizedBox(height: 20),
+                      const SizedBox(height: 10),
                       DropdownSearch<FetchProductModel>(
                         popupProps: PopupProps.menu(
                           showSearchBox: true,
                           itemBuilder: (context, item, isSelected) {
                             return ListTile(title: Text(item.name.toString()));
                           },
+                          searchFieldProps: const TextFieldProps(
+                            decoration: InputDecoration(
+                              hintText: "Search by product name",
+                            ),
+                          ),
                         ),
+                        filterFn: (item, filter) {
+                          return item.name!
+                              .toLowerCase()
+                              .contains(filter.toLowerCase());
+                        },
                         items: productController.fetchProduct!,
                         dropdownBuilder: (context, selectedItem) {
                           return selectedItem == null
@@ -198,13 +217,13 @@ class _ProductCompareScreenState extends State<ProductCompareScreen> {
                                 "${selectedShoe2!.brand} ${selectedShoe2!.name}";
                           });
                         },
-                        compareFn: (item1, item2) =>
-                            item1.shoe_id == item2.shoe_id,
+                        compareFn: (item1, item2) => item1.name == item2.name,
                       ),
                     ],
                   );
                 }
               }),
+              const SizedBox(height: 20),
               SizedBox(
                 width: double.infinity,
                 child: ElevatedButton(
@@ -293,7 +312,7 @@ class _ProductCompareScreenState extends State<ProductCompareScreen> {
                       dataRowMaxHeight: 50,
                       columnSpacing: 15,
                       headingRowColor:
-                          WidgetStateColor.resolveWith((states) => cGrayOld),
+                          MaterialStateColor.resolveWith((states) => cGrayOld),
                       headingRowHeight: 50,
                       columns: [
                         const DataColumn(
@@ -346,8 +365,8 @@ class _ProductCompareScreenState extends State<ProductCompareScreen> {
                             comparisonResult!.shoe2['stability']),
                         _buildDataRow("Grip", comparisonResult!.shoe1['grip'],
                             comparisonResult!.shoe2['grip']),
-                        _buildDataRow("Price", selectedShoe1!.price,
-                            selectedShoe2!.price),
+                        _buildDataRow("Price", "Rs. ${selectedShoe1!.price}",
+                            "Rs. ${selectedShoe2!.price}"),
                         // _buildDataRow(
                         //     "Strike",
                         //     comparisonResult!.shoe1['strike'],
@@ -387,6 +406,9 @@ class _ProductCompareScreenState extends State<ProductCompareScreen> {
                           ),
                         ],
                       ),
+                    ),
+                    const SizedBox(
+                      height: 20,
                     ),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceAround,
