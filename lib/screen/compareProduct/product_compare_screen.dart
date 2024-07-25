@@ -1,13 +1,19 @@
 import 'dart:convert';
 
+import 'package:dropdown_search/dropdown_search.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:get/get.dart';
 import 'package:google_generative_ai/google_generative_ai.dart';
+import 'package:snkr_flutter/feature/order/order-buyer/model/selectedItem/selected_shoe_model.dart';
+import 'package:snkr_flutter/feature/product/addProduct/response/add_product_model_response.dart';
+import 'package:snkr_flutter/feature/product/fetchProduct/controller/fetch_product_controller.dart';
+import 'package:snkr_flutter/feature/product/fetchProduct/model/fetch_product_model.dart';
 import 'package:snkr_flutter/feature/shoeComparision/shoe_comparision_model.dart';
+import 'package:snkr_flutter/screen/Cart/proceedToPurchase/purchase_page.dart';
 
 import '../../core/utils/colors.dart';
 import '../../core/utils/fonts.dart';
-import '../../core/widgets/custom_text_field.dart';
 import '../../core/widgets/snkr_navbar.dart';
 
 class ProductCompareScreen extends StatefulWidget {
@@ -18,6 +24,10 @@ class ProductCompareScreen extends StatefulWidget {
 }
 
 class _ProductCompareScreenState extends State<ProductCompareScreen> {
+  final FetchProductController productController =
+      Get.find<FetchProductController>();
+  FetchProductModel? selectedShoe1;
+  FetchProductModel? selectedShoe2;
   TextEditingController shoe1Controller = TextEditingController();
   TextEditingController shoe2Controller = TextEditingController();
   late final String apiKey;
@@ -46,6 +56,62 @@ class _ProductCompareScreenState extends State<ProductCompareScreen> {
     }
   }
 
+  List<AddProductModelResponse> get selectedItem1Details {
+    return [
+      AddProductModelResponse(
+        shoe_id: selectedShoe1?.shoe_id,
+        name: selectedShoe1?.name,
+        brand: selectedShoe1?.brand,
+        model: selectedShoe1?.model,
+        category: selectedShoe1?.category,
+        size: selectedShoe1?.size,
+        color: selectedShoe1?.color,
+        price: selectedShoe1?.price,
+        discount_price: selectedShoe1?.discount_price,
+        commission: selectedShoe1?.commission,
+        final_price: selectedShoe1?.final_price,
+        description: selectedShoe1?.description,
+        material: selectedShoe1?.material,
+        sku: selectedShoe1?.sku,
+        release_date: selectedShoe1?.release_date,
+        images: selectedShoe1?.images,
+        weight: selectedShoe1?.weight,
+        dimensions: selectedShoe1?.dimensions,
+        gender: selectedShoe1?.gender,
+        status: selectedShoe1?.status,
+        user_id: selectedShoe1?.user_id,
+      )
+    ];
+  }
+
+  List<AddProductModelResponse> get selectedItem2Details {
+    return [
+      AddProductModelResponse(
+        shoe_id: selectedShoe2?.shoe_id,
+        name: selectedShoe2?.name,
+        brand: selectedShoe2?.brand,
+        model: selectedShoe2?.model,
+        category: selectedShoe2?.category,
+        size: selectedShoe2?.size,
+        color: selectedShoe2?.color,
+        price: selectedShoe2?.price,
+        discount_price: selectedShoe2?.discount_price,
+        commission: selectedShoe2?.commission,
+        final_price: selectedShoe2?.final_price,
+        description: selectedShoe2?.description,
+        material: selectedShoe2?.material,
+        sku: selectedShoe2?.sku,
+        release_date: selectedShoe2?.release_date,
+        images: selectedShoe2?.images,
+        weight: selectedShoe2?.weight,
+        dimensions: selectedShoe2?.dimensions,
+        gender: selectedShoe2?.gender,
+        status: selectedShoe2?.status,
+        user_id: selectedShoe2?.user_id,
+      )
+    ];
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -60,28 +126,85 @@ class _ProductCompareScreenState extends State<ProductCompareScreen> {
           padding: const EdgeInsets.all(12.0),
           child: Column(
             children: [
-              CustomTextField(
-                controller: shoe1Controller,
-                labelText: "Shoes 1",
-                keyboardType: TextInputType.name,
-                validator: (value) {
-                  if (value == "") {
-                    return ("This field is required");
-                  }
-                  return null;
-                },
-              ),
-              CustomTextField(
-                controller: shoe2Controller,
-                labelText: "Shoes 2",
-                keyboardType: TextInputType.name,
-                validator: (value) {
-                  if (value == "") {
-                    return ("This field is required");
-                  }
-                  return null;
-                },
-              ),
+              // CustomTextField(
+              //   controller: shoe1Controller,
+              //   labelText: "Shoes 1",
+              //   keyboardType: TextInputType.name,
+              //   validator: (value) {
+              //     if (value == "") {
+              //       return ("This field is required");
+              //     }
+              //     return null;
+              //   },
+              // ),
+              // CustomTextField(
+              //   controller: shoe2Controller,
+              //   labelText: "Shoes 2",
+              //   keyboardType: TextInputType.name,
+              //   validator: (value) {
+              //     if (value == "") {
+              //       return ("This field is required");
+              //     }
+              //     return null;
+              //   },
+              // ),
+              Obx(() {
+                if (productController.isLoading) {
+                  return const Center(child: CircularProgressIndicator());
+                } else {
+                  return Column(
+                    children: [
+                      DropdownSearch<FetchProductModel>(
+                        popupProps: PopupProps.menu(
+                          showSearchBox: true,
+                          itemBuilder: (context, item, isSelected) {
+                            return ListTile(title: Text(item.name.toString()));
+                          },
+                        ),
+                        items: productController.fetchProduct!,
+                        dropdownBuilder: (context, selectedItem) {
+                          return selectedItem == null
+                              ? const Text("Select Shoe 1")
+                              : Text(selectedItem.name.toString());
+                        },
+                        onChanged: (value) {
+                          setState(() {
+                            selectedShoe1 = value;
+                            shoe1Controller.text =
+                                "${selectedShoe1!.brand} ${selectedShoe1!.name}";
+                          });
+                        },
+                        compareFn: (item1, item2) =>
+                            item1.shoe_id == item2.shoe_id,
+                      ),
+                      const SizedBox(height: 20),
+                      DropdownSearch<FetchProductModel>(
+                        popupProps: PopupProps.menu(
+                          showSearchBox: true,
+                          itemBuilder: (context, item, isSelected) {
+                            return ListTile(title: Text(item.name.toString()));
+                          },
+                        ),
+                        items: productController.fetchProduct!,
+                        dropdownBuilder: (context, selectedItem) {
+                          return selectedItem == null
+                              ? const Text("Select Shoe 2")
+                              : Text(selectedItem.name.toString());
+                        },
+                        onChanged: (value) {
+                          setState(() {
+                            selectedShoe2 = value;
+                            shoe2Controller.text =
+                                "${selectedShoe2!.brand} ${selectedShoe2!.name}";
+                          });
+                        },
+                        compareFn: (item1, item2) =>
+                            item1.shoe_id == item2.shoe_id,
+                      ),
+                    ],
+                  );
+                }
+              }),
               SizedBox(
                 width: double.infinity,
                 child: ElevatedButton(
@@ -170,7 +293,7 @@ class _ProductCompareScreenState extends State<ProductCompareScreen> {
                       dataRowMaxHeight: 50,
                       columnSpacing: 15,
                       headingRowColor:
-                          MaterialStateColor.resolveWith((states) => cGrayOld),
+                          WidgetStateColor.resolveWith((states) => cGrayOld),
                       headingRowHeight: 50,
                       columns: [
                         const DataColumn(
@@ -223,8 +346,8 @@ class _ProductCompareScreenState extends State<ProductCompareScreen> {
                             comparisonResult!.shoe2['stability']),
                         _buildDataRow("Grip", comparisonResult!.shoe1['grip'],
                             comparisonResult!.shoe2['grip']),
-                        _buildDataRow("Price", comparisonResult!.shoe1['price'],
-                            comparisonResult!.shoe2['price']),
+                        _buildDataRow("Price", selectedShoe1!.price,
+                            selectedShoe2!.price),
                         // _buildDataRow(
                         //     "Strike",
                         //     comparisonResult!.shoe1['strike'],
@@ -264,6 +387,71 @@ class _ProductCompareScreenState extends State<ProductCompareScreen> {
                           ),
                         ],
                       ),
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+                      children: [
+                        ElevatedButton(
+                          onPressed: () {
+                            Get.to(() => PurchasePage(
+                                  selectedItems: [
+                                    SelectedShoeModel(
+                                      shoe_id: selectedShoe1!.shoe_id,
+                                      quantity: 1,
+                                      unit_price: double.parse(selectedShoe1!
+                                          .final_price
+                                          .toString()),
+                                      total_price: double.parse(selectedShoe1!
+                                          .final_price
+                                          .toString()),
+                                      cartId: 0,
+                                    )
+                                  ],
+                                  selectedShoeDetails: selectedItem1Details,
+                                ));
+                          },
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor: cBlack,
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(8),
+                            ),
+                          ),
+                          child: Text(
+                            "Buy ${selectedShoe1!.name}",
+                            style: fWhiteSemiBold14,
+                          ),
+                        ),
+                        ElevatedButton(
+                          onPressed: () {
+                            Get.to(() => PurchasePage(
+                                  selectedItems: [
+                                    SelectedShoeModel(
+                                      shoe_id: selectedShoe2!.shoe_id,
+                                      quantity: 1,
+                                      unit_price: double.parse(selectedShoe2!
+                                          .final_price
+                                          .toString()),
+                                      total_price: double.parse(selectedShoe2!
+                                          .final_price
+                                          .toString()),
+                                      cartId: 0,
+                                    )
+                                  ],
+                                  selectedShoeDetails: selectedItem2Details,
+                                ));
+                          },
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor: cBlack,
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(8),
+                            ),
+                          ),
+                          child: Text(
+                            "Buy ${selectedShoe2!.name}",
+                            style: fWhiteSemiBold14,
+                          ),
+                        ),
+                      ],
                     ),
                   ],
                 )

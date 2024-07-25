@@ -10,6 +10,7 @@ import 'package:snkr_flutter/feature/auth/login/response/login_response.dart';
 class LoginController extends GetxController {
   final email_controller = TextEditingController();
   final password_controller = TextEditingController();
+  final fcmToken_controller = TextEditingController();
 
   final LoginRepository _loginRepository = LoginRepository();
 
@@ -22,6 +23,7 @@ class LoginController extends GetxController {
       final loginParamsModel = LoginParamsModel(
         email: email_controller.text,
         password: password_controller.text,
+        fcmToken: fcmToken_controller.text,
       );
 
       loginResponse = await _loginRepository.userLogin(loginParamsModel);
