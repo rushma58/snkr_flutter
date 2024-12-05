@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:snkr_flutter/core/helper/sharedPreferences/shared_preferences.dart';
 import 'package:snkr_flutter/core/utils/colors.dart';
 import 'package:snkr_flutter/core/utils/fonts.dart';
 import 'package:snkr_flutter/feature/order/seller-order-status/controller/seller_order_status_controller.dart';
@@ -15,12 +16,12 @@ class SellerHomepage extends StatefulWidget {
 class _SellerHomepage extends State<SellerHomepage> {
   final SellerOrderStatusController sellerOrderStatusController =
       Get.put(SellerOrderStatusController());
+  String? first_name = "";
+  String? last_name = "";
+  String? contact_number = "";
 
   int listedCount = 0;
   int orderedCount = 0;
-
-  String _name = "Rushma Singh";
-  String _number = "Add Your Number";
 
   @override
   void initState() {
@@ -46,14 +47,15 @@ class _SellerHomepage extends State<SellerHomepage> {
   }
 
   Future<void> _fetchUserData() async {
-    // Simulate a delay for fetching data
     await Future.delayed(const Duration(seconds: 2));
+    first_name = await getStringData('first_name');
+    last_name = await getStringData('last_name');
+    contact_number = await getStringData('contact_number');
 
-    // This is where you would fetch data from a database in the future.
-    // For now, we simulate this with hardcoded values.
     setState(() {
-      _name = "Rushma Singh";
-      _number = "Add Your Number";
+      first_name = first_name;
+      last_name = last_name;
+      contact_number = contact_number;
     });
   }
 
@@ -81,8 +83,9 @@ class _SellerHomepage extends State<SellerHomepage> {
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Text(_name, style: fBlackSemiBold18),
-                          Text(_number, style: fBlackRegular14),
+                          Text("$first_name $last_name",
+                              style: fBlackSemiBold18),
+                          Text("$contact_number", style: fBlackRegular14),
                         ],
                       ),
                     ],

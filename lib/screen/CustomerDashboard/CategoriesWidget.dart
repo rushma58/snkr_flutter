@@ -23,12 +23,12 @@ class _CategoriesWidgetState extends State<CategoriesWidget> {
       scrollDirection: Axis.horizontal,
       child: Row(
         children: [
-          buildCategoryContainer("All", 0),
           buildCategoryContainer("Nike", 1),
           buildCategoryContainer("Adidas", 2),
           buildCategoryContainer("New Balance", 3),
           buildCategoryContainer("Puma", 4),
           buildCategoryContainer("Jordan", 5),
+          buildCategoryContainer("Converse", 6),
         ],
       ),
     );

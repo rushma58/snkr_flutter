@@ -11,21 +11,19 @@ class CustomDateField extends StatefulWidget {
   final TextInputType? keyboardType;
 
   const CustomDateField({
-    Key? key, // Use Key type for the key parameter
+    super.key, // Use Key type for the key parameter
     required this.controller,
     required this.labelText,
     this.validator,
     this.readOnly,
     this.keyboardType,
-  }) : super(key: key);
+  });
 
   @override
   State<CustomDateField> createState() => _CustomDateFieldState();
 }
 
 class _CustomDateFieldState extends State<CustomDateField> {
-  final bool _obscureText = true;
-
   Future<void> getDatePicker(
     BuildContext context,
   ) async {

@@ -122,7 +122,7 @@ import '../../feature/cart/controller/add_to_cart_controller.dart';
 class MostPopular extends StatefulWidget {
   final FetchProductModel product;
 
-  const MostPopular({Key? key, required this.product}) : super(key: key);
+  const MostPopular({super.key, required this.product});
 
   @override
   State<MostPopular> createState() => _MostPopularState();
@@ -186,7 +186,7 @@ class _MostPopularState extends State<MostPopular> {
             child: Container(
               //margin: const EdgeInsets.all(10),
               child: Image.network(
-                (baseUrl + widget.product.images.toString()),
+                (imageBaseUrl + widget.product.images.toString()),
                 height: 100,
                 //width: 100,
                 fit: BoxFit.fitWidth,

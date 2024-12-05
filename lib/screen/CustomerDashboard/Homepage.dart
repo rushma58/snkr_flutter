@@ -4,10 +4,7 @@ import 'package:snkr_flutter/core/utils/colors.dart';
 import 'package:snkr_flutter/core/utils/fonts.dart';
 import 'package:snkr_flutter/screen/CustomerDashboard/CategoriesWidget.dart';
 import 'package:snkr_flutter/screen/CustomerDashboard/HomeAppBar.dart';
-import 'package:snkr_flutter/screen/CustomerDashboard/LatestSneakers.dart';
 import 'package:snkr_flutter/screen/CustomerDashboard/MostPopular.dart';
-import 'package:snkr_flutter/screen/CustomerDashboard/Recommended.dart';
-import 'package:snkr_flutter/screen/CustomerDashboard/TopRated.dart';
 
 import '../../feature/product/fetchProduct/controller/fetch_product_controller.dart';
 import '../Item/searched_item.dart';
@@ -71,6 +68,7 @@ class Homepage extends StatelessWidget {
                             onFieldSubmitted: (value) {
                               if (value.isNotEmpty) {
                                 productController.name_controller.text = value;
+                                productController.brand_controller.text = "";
                                 productController.searchProducts(value);
                                 Get.to(
                                   () => SearchResultsPage(
@@ -179,97 +177,97 @@ class Homepage extends StatelessWidget {
 
                   /////RECOMMENDED
 
-                  Row(
-                    children: [
-                      Container(
-                        alignment: Alignment.centerLeft,
-                        margin: const EdgeInsets.symmetric(
-                            vertical: 20, horizontal: 20),
-                        child: const Text("Recommended",
-                            style: TextStyle(
-                              fontSize: 20,
-                              fontWeight: FontWeight.bold,
-                              color: Colors.black,
-                            )),
-                      ),
-                      const Spacer(),
-                      Container(
-                        alignment: Alignment.centerLeft,
-                        margin: const EdgeInsets.symmetric(
-                            vertical: 20, horizontal: 20),
-                        child: const Text("View All",
-                            style: TextStyle(
-                              fontSize: 15,
-                              fontWeight: FontWeight.bold,
-                              color: Colors.blue,
-                            )),
-                      ),
-                    ],
-                  ),
+                  // Row(
+                  //   children: [
+                  //     Container(
+                  //       alignment: Alignment.centerLeft,
+                  //       margin: const EdgeInsets.symmetric(
+                  //           vertical: 20, horizontal: 20),
+                  //       child: const Text("Recommended",
+                  //           style: TextStyle(
+                  //             fontSize: 20,
+                  //             fontWeight: FontWeight.bold,
+                  //             color: Colors.black,
+                  //           )),
+                  //     ),
+                  //     const Spacer(),
+                  //     Container(
+                  //       alignment: Alignment.centerLeft,
+                  //       margin: const EdgeInsets.symmetric(
+                  //           vertical: 20, horizontal: 20),
+                  //       child: const Text("View All",
+                  //           style: TextStyle(
+                  //             fontSize: 15,
+                  //             fontWeight: FontWeight.bold,
+                  //             color: Colors.blue,
+                  //           )),
+                  //     ),
+                  //   ],
+                  // ),
 
-                  const Recommended(),
+                  // const Recommended(),
 
-                  Row(
-                    children: [
-                      Container(
-                        alignment: Alignment.centerLeft,
-                        margin: const EdgeInsets.symmetric(
-                            vertical: 20, horizontal: 20),
-                        child: const Text("Latest Sneakers",
-                            style: TextStyle(
-                              fontSize: 20,
-                              fontWeight: FontWeight.bold,
-                              color: Colors.black,
-                            )),
-                      ),
-                      const Spacer(),
-                      Container(
-                        alignment: Alignment.centerLeft,
-                        margin: const EdgeInsets.symmetric(
-                            vertical: 20, horizontal: 20),
-                        child: const Text("View All",
-                            style: TextStyle(
-                              fontSize: 15,
-                              fontWeight: FontWeight.bold,
-                              color: Colors.blue,
-                            )),
-                      ),
-                    ],
-                  ),
+                  // Row(
+                  //   children: [
+                  //     Container(
+                  //       alignment: Alignment.centerLeft,
+                  //       margin: const EdgeInsets.symmetric(
+                  //           vertical: 20, horizontal: 20),
+                  //       child: const Text("Latest Sneakers",
+                  //           style: TextStyle(
+                  //             fontSize: 20,
+                  //             fontWeight: FontWeight.bold,
+                  //             color: Colors.black,
+                  //           )),
+                  //     ),
+                  //     const Spacer(),
+                  //     Container(
+                  //       alignment: Alignment.centerLeft,
+                  //       margin: const EdgeInsets.symmetric(
+                  //           vertical: 20, horizontal: 20),
+                  //       child: const Text("View All",
+                  //           style: TextStyle(
+                  //             fontSize: 15,
+                  //             fontWeight: FontWeight.bold,
+                  //             color: Colors.blue,
+                  //           )),
+                  //     ),
+                  //   ],
+                  // ),
 
-                  const LatestSneakers(),
+                  // const LatestSneakers(),
 
-                  /////////TOP RATED
+                  // /////////TOP RATED
 
-                  Row(
-                    children: [
-                      Container(
-                        alignment: Alignment.centerLeft,
-                        margin: const EdgeInsets.symmetric(
-                            vertical: 20, horizontal: 20),
-                        child: const Text("Top Rated",
-                            style: TextStyle(
-                              fontSize: 20,
-                              fontWeight: FontWeight.bold,
-                              color: Colors.black,
-                            )),
-                      ),
-                      const Spacer(),
-                      Container(
-                        alignment: Alignment.centerLeft,
-                        margin: const EdgeInsets.symmetric(
-                            vertical: 20, horizontal: 20),
-                        child: const Text("View All",
-                            style: TextStyle(
-                              fontSize: 15,
-                              fontWeight: FontWeight.bold,
-                              color: Colors.blue,
-                            )),
-                      ),
-                    ],
-                  ),
+                  // Row(
+                  //   children: [
+                  //     Container(
+                  //       alignment: Alignment.centerLeft,
+                  //       margin: const EdgeInsets.symmetric(
+                  //           vertical: 20, horizontal: 20),
+                  //       child: const Text("Top Rated",
+                  //           style: TextStyle(
+                  //             fontSize: 20,
+                  //             fontWeight: FontWeight.bold,
+                  //             color: Colors.black,
+                  //           )),
+                  //     ),
+                  //     const Spacer(),
+                  //     Container(
+                  //       alignment: Alignment.centerLeft,
+                  //       margin: const EdgeInsets.symmetric(
+                  //           vertical: 20, horizontal: 20),
+                  //       child: const Text("View All",
+                  //           style: TextStyle(
+                  //             fontSize: 15,
+                  //             fontWeight: FontWeight.bold,
+                  //             color: Colors.blue,
+                  //           )),
+                  //     ),
+                  //   ],
+                  // ),
 
-                  const TopRated(),
+                  // const TopRated(),
                 ],
               ),
             ),

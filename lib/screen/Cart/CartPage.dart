@@ -5,6 +5,7 @@ import 'package:iconify_flutter/icons/material_symbols.dart';
 import 'package:snkr_flutter/core/utils/fonts.dart';
 import 'package:snkr_flutter/feature/order/order-buyer/model/selectedItem/selected_shoe_model.dart';
 import 'package:snkr_flutter/screen/Cart/each_cart_card.dart';
+import 'package:snkr_flutter/screen/Cart/proceedToPurchase/purchase_esewa_page.dart';
 import 'package:snkr_flutter/screen/Cart/proceedToPurchase/purchase_page.dart';
 
 import '../../core/constants/noData/no_item_cart.dart';
@@ -14,7 +15,7 @@ import '../../feature/cart/model/getCart/get_cart_model.dart';
 import '../../feature/product/addProduct/response/add_product_model_response.dart';
 
 class CartPage extends StatefulWidget {
-  const CartPage({Key? key}) : super(key: key);
+  const CartPage({super.key});
 
   @override
   State<CartPage> createState() => _CartPageState();
@@ -128,7 +129,7 @@ class _CartPageState extends State<CartPage> {
         heroTag: "proceed_to_purchase",
         onPressed: selectedItemIds.isNotEmpty
             ? () {
-                Get.to(() => PurchasePage(
+                Get.to(() => PurchaseEsewaPage(
                       selectedItems: selectedItems,
                       selectedShoeDetails: selectedItemDetails,
                     ));

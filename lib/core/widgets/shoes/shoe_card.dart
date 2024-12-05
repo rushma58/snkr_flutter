@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:snkr_flutter/core/helper/api/url_services.dart';
 import 'package:snkr_flutter/core/utils/fonts.dart';
 
 class ShoeDetalCard extends StatefulWidget {
@@ -8,12 +9,12 @@ class ShoeDetalCard extends StatefulWidget {
   final VoidCallback onTap;
 
   const ShoeDetalCard({
-    Key? key,
+    super.key,
     required this.source,
     this.resizeMode,
     required this.label,
     required this.onTap,
-  }) : super(key: key);
+  });
 
   @override
   _ShoeDetalCardState createState() => _ShoeDetalCardState();
@@ -41,7 +42,7 @@ class _ShoeDetalCardState extends State<ShoeDetalCard> {
             //   fadeOutDuration: const Duration(milliseconds: 100),
             // ),
             Image.network(
-              widget.source.toString(),
+              imageBaseUrl + widget.source.toString(),
               height: 100,
               width: 100,
               fit: BoxFit.cover,

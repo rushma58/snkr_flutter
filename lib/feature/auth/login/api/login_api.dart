@@ -15,7 +15,7 @@ class LoginAPI {
     String? url = baseUrl + loginUrl;
 
     try {
-      response = await dio.get(
+      response = await dio.post(
         url,
         data: loginParamsModel.toJson(),
       );
@@ -24,6 +24,12 @@ class LoginAPI {
 
         await setStringData('token', loginResponse.access_token.toString());
         await setStringData('role', loginResponse.data!.role.toString());
+        await setStringData(
+            'first_name', loginResponse.data!.first_name.toString());
+        await setStringData(
+            'last_name', loginResponse.data!.last_name.toString());
+        await setStringData(
+            'contact_number', loginResponse.data!.contact_number.toString());
 
         debugPrint("${await getStringData('token')}");
       }

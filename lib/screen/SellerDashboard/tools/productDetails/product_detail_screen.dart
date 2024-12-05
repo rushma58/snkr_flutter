@@ -4,6 +4,7 @@ import 'package:snkr_flutter/core/constants/noData/no_data.dart';
 import 'package:snkr_flutter/core/utils/fonts.dart';
 import 'package:snkr_flutter/core/widgets/top_nav_bar.dart';
 
+import '../../../../core/helper/api/url_services.dart';
 import '../../../../feature/order/seller-order-status/controller/seller_order_status_controller.dart';
 
 class ProductDetailScreen extends StatefulWidget {
@@ -35,10 +36,10 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
         ),
       ),
       body: GetBuilder<SellerOrderStatusController>(builder: (controller) {
-        if (sellerOrderStatusController.isLoading) {
-          return const Center(child: CircularProgressIndicator());
-        } else if (sellerOrderStatusController.sellerOrderStatusResponse ==
-                null ||
+        // if (sellerOrderStatusController.isLoading) {
+        //   return const Center(child: CircularProgressIndicator());
+        // } else
+        if (sellerOrderStatusController.sellerOrderStatusResponse == null ||
             sellerOrderStatusController
                 .sellerOrderStatusResponse!.products!.isEmpty) {
           return const Center(child: NoDataPage());
@@ -53,10 +54,11 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                 margin: const EdgeInsets.all(5.0),
                 child: ListTile(
                   leading: Image.network(
-                    product!.images.toString(),
+                    // product!.images.toString(),
+                    (imageBaseUrl + product!.images.toString()),
                     width: 50,
                     height: 50,
-                    fit: BoxFit.cover,
+                    fit: BoxFit.fitWidth,
                     errorBuilder: (context, error, stackTrace) =>
                         const Icon(Icons.error),
                   ),
